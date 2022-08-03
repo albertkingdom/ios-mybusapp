@@ -1,0 +1,538 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 55;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		9CC2173CB96D29CEE2C1FF11 /* Pods_MyBusMapSwiftUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E557345F4C2DDCD208C0AC45 /* Pods_MyBusMapSwiftUI.framework */; };
+		A10503A7288FA90900EF461D /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A10503A6288FA90900EF461D /* AppDelegate.swift */; };
+		A10503A9288FAAB100EF461D /* GoogleMapsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A10503A8288FAAB100EF461D /* GoogleMapsView.swift */; };
+		A10503AB288FAB1F00EF461D /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A10503AA288FAB1F00EF461D /* MapViewController.swift */; };
+		A112951A288FD3AC0093D936 /* MapViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1129519288FD3AC0093D936 /* MapViewModel.swift */; };
+		A112951C289033A80093D936 /* NetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A112951B289033A80093D936 /* NetworkManager.swift */; };
+		A112951F289037110093D936 /* Station.swift in Sources */ = {isa = PBXBuildFile; fileRef = A112951E289037110093D936 /* Station.swift */; };
+		A1129521289048DE0093D936 /* Token.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1129520289048DE0093D936 /* Token.swift */; };
+		A11295232890E8FE0093D936 /* NearByStation.swift in Sources */ = {isa = PBXBuildFile; fileRef = A11295222890E8FE0093D936 /* NearByStation.swift */; };
+		A112952528911A9C0093D936 /* NearByStationSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = A112952428911A9C0093D936 /* NearByStationSheet.swift */; };
+		A11295282891834C0093D936 /* ArrivalTimeSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = A11295272891834C0093D936 /* ArrivalTimeSheet.swift */; };
+		A112952A28918E4E0093D936 /* ArrivalTime.swift in Sources */ = {isa = PBXBuildFile; fileRef = A112952928918E4E0093D936 /* ArrivalTime.swift */; };
+		A1202167288FA00400C8746A /* MyBusMapSwiftUIApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1202166288FA00400C8746A /* MyBusMapSwiftUIApp.swift */; };
+		A1202169288FA00400C8746A /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1202168288FA00400C8746A /* ContentView.swift */; };
+		A120216B288FA00800C8746A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A120216A288FA00800C8746A /* Assets.xcassets */; };
+		A120216E288FA00800C8746A /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A120216D288FA00800C8746A /* Preview Assets.xcassets */; };
+		A1821A1E28924C9A003CB0EB /* Tabs.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1821A1D28924C9A003CB0EB /* Tabs.swift */; };
+		A1821A2128929762003CB0EB /* RouteSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1821A2028929762003CB0EB /* RouteSheet.swift */; };
+		A1821A232892DCE2003CB0EB /* GoogleMapsRouteView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1821A222892DCE2003CB0EB /* GoogleMapsRouteView.swift */; };
+		A1821A2528937E73003CB0EB /* District.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1821A2428937E73003CB0EB /* District.swift */; };
+		A1821A2A2893A4A8003CB0EB /* TabContent.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1821A292893A4A8003CB0EB /* TabContent.swift */; };
+		A1821A462893D2BB003CB0EB /* StopOfRoute.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1821A452893D2BB003CB0EB /* StopOfRoute.swift */; };
+		A1A7B7502895010500893EF3 /* PlateView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1A7B74F2895010500893EF3 /* PlateView.swift */; };
+		A1A7B7522896372500893EF3 /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1A7B7512896372500893EF3 /* HomeView.swift */; };
+		A1A7B7542896395800893EF3 /* ListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1A7B7532896395800893EF3 /* ListView.swift */; };
+		A1A7B7562896462300893EF3 /* TestView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1A7B7552896462300893EF3 /* TestView.swift */; };
+		A1DA52362898E1D0006CB3D4 /* ArrivalTimeSheetViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1DA52352898E1D0006CB3D4 /* ArrivalTimeSheetViewModel.swift */; };
+		A1DA5238289A2A2E006CB3D4 /* .gitignore in Resources */ = {isa = PBXBuildFile; fileRef = A1DA5237289A2A2E006CB3D4 /* .gitignore */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		9963AC6E88EAFFE92708C125 /* Pods-MyBusMapSwiftUI.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MyBusMapSwiftUI.release.xcconfig"; path = "Target Support Files/Pods-MyBusMapSwiftUI/Pods-MyBusMapSwiftUI.release.xcconfig"; sourceTree = "<group>"; };
+		A10503A6288FA90900EF461D /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		A10503A8288FAAB100EF461D /* GoogleMapsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoogleMapsView.swift; sourceTree = "<group>"; };
+		A10503AA288FAB1F00EF461D /* MapViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapViewController.swift; sourceTree = "<group>"; };
+		A1129519288FD3AC0093D936 /* MapViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapViewModel.swift; sourceTree = "<group>"; };
+		A112951B289033A80093D936 /* NetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkManager.swift; sourceTree = "<group>"; };
+		A112951E289037110093D936 /* Station.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Station.swift; sourceTree = "<group>"; };
+		A1129520289048DE0093D936 /* Token.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Token.swift; sourceTree = "<group>"; };
+		A11295222890E8FE0093D936 /* NearByStation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NearByStation.swift; sourceTree = "<group>"; };
+		A112952428911A9C0093D936 /* NearByStationSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NearByStationSheet.swift; sourceTree = "<group>"; };
+		A11295272891834C0093D936 /* ArrivalTimeSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArrivalTimeSheet.swift; sourceTree = "<group>"; };
+		A112952928918E4E0093D936 /* ArrivalTime.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArrivalTime.swift; sourceTree = "<group>"; };
+		A1202163288FA00400C8746A /* MyBusMapSwiftUI.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MyBusMapSwiftUI.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		A1202166288FA00400C8746A /* MyBusMapSwiftUIApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyBusMapSwiftUIApp.swift; sourceTree = "<group>"; };
+		A1202168288FA00400C8746A /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		A120216A288FA00800C8746A /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		A120216D288FA00800C8746A /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		A1821A1D28924C9A003CB0EB /* Tabs.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tabs.swift; sourceTree = "<group>"; };
+		A1821A1F28924CFD003CB0EB /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
+		A1821A2028929762003CB0EB /* RouteSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RouteSheet.swift; sourceTree = "<group>"; };
+		A1821A222892DCE2003CB0EB /* GoogleMapsRouteView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoogleMapsRouteView.swift; sourceTree = "<group>"; };
+		A1821A2428937E73003CB0EB /* District.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = District.swift; sourceTree = "<group>"; };
+		A1821A292893A4A8003CB0EB /* TabContent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabContent.swift; sourceTree = "<group>"; };
+		A1821A452893D2BB003CB0EB /* StopOfRoute.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StopOfRoute.swift; sourceTree = "<group>"; };
+		A1A7B74F2895010500893EF3 /* PlateView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlateView.swift; sourceTree = "<group>"; };
+		A1A7B7512896372500893EF3 /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
+		A1A7B7532896395800893EF3 /* ListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListView.swift; sourceTree = "<group>"; };
+		A1A7B7552896462300893EF3 /* TestView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestView.swift; sourceTree = "<group>"; };
+		A1DA52352898E1D0006CB3D4 /* ArrivalTimeSheetViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArrivalTimeSheetViewModel.swift; sourceTree = "<group>"; };
+		A1DA5237289A2A2E006CB3D4 /* .gitignore */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitignore; sourceTree = "<group>"; };
+		BC94A579E390FD0B084112FA /* Pods-MyBusMapSwiftUI.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MyBusMapSwiftUI.debug.xcconfig"; path = "Target Support Files/Pods-MyBusMapSwiftUI/Pods-MyBusMapSwiftUI.debug.xcconfig"; sourceTree = "<group>"; };
+		E557345F4C2DDCD208C0AC45 /* Pods_MyBusMapSwiftUI.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_MyBusMapSwiftUI.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		A1202160288FA00400C8746A /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				9CC2173CB96D29CEE2C1FF11 /* Pods_MyBusMapSwiftUI.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		3D08078CAC8562BA53BB1F09 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				E557345F4C2DDCD208C0AC45 /* Pods_MyBusMapSwiftUI.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		896A2562A65E11F9C3581DA4 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				BC94A579E390FD0B084112FA /* Pods-MyBusMapSwiftUI.debug.xcconfig */,
+				9963AC6E88EAFFE92708C125 /* Pods-MyBusMapSwiftUI.release.xcconfig */,
+			);
+			path = Pods;
+			sourceTree = "<group>";
+		};
+		A112951D289036980093D936 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				A1821A452893D2BB003CB0EB /* StopOfRoute.swift */,
+				A112951E289037110093D936 /* Station.swift */,
+				A1129520289048DE0093D936 /* Token.swift */,
+				A11295222890E8FE0093D936 /* NearByStation.swift */,
+				A112952928918E4E0093D936 /* ArrivalTime.swift */,
+				A1821A2428937E73003CB0EB /* District.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		A11295262891827F0093D936 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				A112952428911A9C0093D936 /* NearByStationSheet.swift */,
+				A11295272891834C0093D936 /* ArrivalTimeSheet.swift */,
+				A1821A1D28924C9A003CB0EB /* Tabs.swift */,
+				A1821A2028929762003CB0EB /* RouteSheet.swift */,
+				A10503A8288FAAB100EF461D /* GoogleMapsView.swift */,
+				A1821A222892DCE2003CB0EB /* GoogleMapsRouteView.swift */,
+				A1821A292893A4A8003CB0EB /* TabContent.swift */,
+				A1A7B74F2895010500893EF3 /* PlateView.swift */,
+				A1A7B7532896395800893EF3 /* ListView.swift */,
+				A1A7B7552896462300893EF3 /* TestView.swift */,
+				A1DA52352898E1D0006CB3D4 /* ArrivalTimeSheetViewModel.swift */,
+				A1129519288FD3AC0093D936 /* MapViewModel.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		A120215A288FA00400C8746A = {
+			isa = PBXGroup;
+			children = (
+				A1DA5237289A2A2E006CB3D4 /* .gitignore */,
+				A1202165288FA00400C8746A /* MyBusMapSwiftUI */,
+				A1202164288FA00400C8746A /* Products */,
+				896A2562A65E11F9C3581DA4 /* Pods */,
+				3D08078CAC8562BA53BB1F09 /* Frameworks */,
+			);
+			sourceTree = "<group>";
+		};
+		A1202164288FA00400C8746A /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				A1202163288FA00400C8746A /* MyBusMapSwiftUI.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		A1202165288FA00400C8746A /* MyBusMapSwiftUI */ = {
+			isa = PBXGroup;
+			children = (
+				A1821A2628938895003CB0EB /* Custom Protocol */,
+				A11295262891827F0093D936 /* Views */,
+				A112951D289036980093D936 /* Model */,
+				A1202166288FA00400C8746A /* MyBusMapSwiftUIApp.swift */,
+				A1A7B7512896372500893EF3 /* HomeView.swift */,
+				A1202168288FA00400C8746A /* ContentView.swift */,
+				A120216A288FA00800C8746A /* Assets.xcassets */,
+				A120216C288FA00800C8746A /* Preview Content */,
+				A10503A6288FA90900EF461D /* AppDelegate.swift */,
+				A10503AA288FAB1F00EF461D /* MapViewController.swift */,
+				A112951B289033A80093D936 /* NetworkManager.swift */,
+				A1821A1F28924CFD003CB0EB /* README.md */,
+			);
+			path = MyBusMapSwiftUI;
+			sourceTree = "<group>";
+		};
+		A120216C288FA00800C8746A /* Preview Content */ = {
+			isa = PBXGroup;
+			children = (
+				A120216D288FA00800C8746A /* Preview Assets.xcassets */,
+			);
+			path = "Preview Content";
+			sourceTree = "<group>";
+		};
+		A1821A2628938895003CB0EB /* Custom Protocol */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = "Custom Protocol";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		A1202162288FA00400C8746A /* MyBusMapSwiftUI */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = A1202171288FA00800C8746A /* Build configuration list for PBXNativeTarget "MyBusMapSwiftUI" */;
+			buildPhases = (
+				F8B042F34002DC3BB3EB0305 /* [CP] Check Pods Manifest.lock */,
+				A120215F288FA00400C8746A /* Sources */,
+				A1202160288FA00400C8746A /* Frameworks */,
+				A1202161288FA00400C8746A /* Resources */,
+				B160EC8851E5B0C14D43ED0E /* [CP] Copy Pods Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = MyBusMapSwiftUI;
+			productName = MyBusMapSwiftUI;
+			productReference = A1202163288FA00400C8746A /* MyBusMapSwiftUI.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		A120215B288FA00400C8746A /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = 1;
+				LastSwiftUpdateCheck = 1320;
+				LastUpgradeCheck = 1320;
+				TargetAttributes = {
+					A1202162288FA00400C8746A = {
+						CreatedOnToolsVersion = 13.2.1;
+					};
+				};
+			};
+			buildConfigurationList = A120215E288FA00400C8746A /* Build configuration list for PBXProject "MyBusMapSwiftUI" */;
+			compatibilityVersion = "Xcode 13.0";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = A120215A288FA00400C8746A;
+			productRefGroup = A1202164288FA00400C8746A /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				A1202162288FA00400C8746A /* MyBusMapSwiftUI */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		A1202161288FA00400C8746A /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A120216E288FA00800C8746A /* Preview Assets.xcassets in Resources */,
+				A1DA5238289A2A2E006CB3D4 /* .gitignore in Resources */,
+				A120216B288FA00800C8746A /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		B160EC8851E5B0C14D43ED0E /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-MyBusMapSwiftUI/Pods-MyBusMapSwiftUI-resources-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Copy Pods Resources";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-MyBusMapSwiftUI/Pods-MyBusMapSwiftUI-resources-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-MyBusMapSwiftUI/Pods-MyBusMapSwiftUI-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		F8B042F34002DC3BB3EB0305 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-MyBusMapSwiftUI-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		A120215F288FA00400C8746A /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A1821A2528937E73003CB0EB /* District.swift in Sources */,
+				A1129521289048DE0093D936 /* Token.swift in Sources */,
+				A10503A7288FA90900EF461D /* AppDelegate.swift in Sources */,
+				A1821A2128929762003CB0EB /* RouteSheet.swift in Sources */,
+				A1A7B7502895010500893EF3 /* PlateView.swift in Sources */,
+				A1202169288FA00400C8746A /* ContentView.swift in Sources */,
+				A1A7B7542896395800893EF3 /* ListView.swift in Sources */,
+				A1A7B7522896372500893EF3 /* HomeView.swift in Sources */,
+				A112952528911A9C0093D936 /* NearByStationSheet.swift in Sources */,
+				A1821A2A2893A4A8003CB0EB /* TabContent.swift in Sources */,
+				A112952A28918E4E0093D936 /* ArrivalTime.swift in Sources */,
+				A1A7B7562896462300893EF3 /* TestView.swift in Sources */,
+				A112951F289037110093D936 /* Station.swift in Sources */,
+				A10503A9288FAAB100EF461D /* GoogleMapsView.swift in Sources */,
+				A1821A1E28924C9A003CB0EB /* Tabs.swift in Sources */,
+				A1DA52362898E1D0006CB3D4 /* ArrivalTimeSheetViewModel.swift in Sources */,
+				A11295282891834C0093D936 /* ArrivalTimeSheet.swift in Sources */,
+				A11295232890E8FE0093D936 /* NearByStation.swift in Sources */,
+				A1821A462893D2BB003CB0EB /* StopOfRoute.swift in Sources */,
+				A112951C289033A80093D936 /* NetworkManager.swift in Sources */,
+				A1821A232892DCE2003CB0EB /* GoogleMapsRouteView.swift in Sources */,
+				A10503AB288FAB1F00EF461D /* MapViewController.swift in Sources */,
+				A1202167288FA00400C8746A /* MyBusMapSwiftUIApp.swift in Sources */,
+				A112951A288FD3AC0093D936 /* MapViewModel.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		A120216F288FA00800C8746A /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++17";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		A1202170288FA00800C8746A /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++17";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		A1202172288FA00800C8746A /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = BC94A579E390FD0B084112FA /* Pods-MyBusMapSwiftUI.debug.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_ASSET_PATHS = "\"MyBusMapSwiftUI/Preview Content\"";
+				DEVELOPMENT_TEAM = UZ2Z639589;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "The app need access location.";
+				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.a2006mike.MyBusMapSwiftUI;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 1;
+			};
+			name = Debug;
+		};
+		A1202173288FA00800C8746A /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 9963AC6E88EAFFE92708C125 /* Pods-MyBusMapSwiftUI.release.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_ASSET_PATHS = "\"MyBusMapSwiftUI/Preview Content\"";
+				DEVELOPMENT_TEAM = UZ2Z639589;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "The app need access location.";
+				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.a2006mike.MyBusMapSwiftUI;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 1;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		A120215E288FA00400C8746A /* Build configuration list for PBXProject "MyBusMapSwiftUI" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				A120216F288FA00800C8746A /* Debug */,
+				A1202170288FA00800C8746A /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		A1202171288FA00800C8746A /* Build configuration list for PBXNativeTarget "MyBusMapSwiftUI" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				A1202172288FA00800C8746A /* Debug */,
+				A1202173288FA00800C8746A /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = A120215B288FA00400C8746A /* Project object */;
+}
