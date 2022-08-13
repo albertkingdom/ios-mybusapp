@@ -8,40 +8,64 @@
 import SwiftUI
 
 struct ListView: View {
-    @StateObject var viewModel = MapViewModel.shared
+    @ObservedObject var viewModel = MapViewModel.shared
     @State var push: Bool = false
-    @State var savedList: [[String:String]] = []
+    @State var localSavedFavList: [Favorite] = []
+    @State var showAlert: Bool = false
     var body: some View {
         ZStack {
             VStack {
                 Text("收藏")
                     .font(Font.title)
-                List(savedList, id: \.self) { item in
-                    if let routeName = item["routeName"],
-                       let stopID = item["stopID"],
-                       let stopName = item["stopName"] {
-                        HStack {
-                            Text(routeName)
-                            Text(stopName)
-                            Spacer()
-                        }
+                
+                if !viewModel.isLogin {
+
+                    List {
+                        ForEach(localSavedFavList) { item in
+                            HStack {
+                                HStack {
+                                    Text(item.name ?? "")
+                                    
+                                    Spacer()
+                                    Image(systemName: "heart.fill")
+                                }
+                            }
                             .onTapGesture {
-                                onClickRouteName(routeName: routeName)
+                                onClickRouteName(routeName: item.name ?? "")
                                 push.toggle()
                             }
+                        }.onDelete(perform: onDeleteLocal(with:))
                     }
+                    .onAppear {
+                        print("listview onappear")
+                        localSavedFavList = UserDefaultManager.shared.getSavedStopFromLocal()
+                    }
+                } else {
                     
-                    
-                    
+                    List {
+                        ForEach(viewModel.favoriteList) { item in
+                            HStack {
+                                HStack {
+                                    Text(item.name ?? "")
+                                    
+                                    Spacer()
+                                    Image(systemName: "heart.fill")
+                                }
+                            }
+                            .onTapGesture {
+                                onClickRouteName(routeName: item.name ?? "")
+                                push.toggle()
+                            }
+                            
+                        }.onDelete(perform: onDeleteRemote)
+                    }
+                    .onAppear {
+                        viewModel.getRemoteData()
+                    }
                 }
                 
-                .navigationTitle("收藏站牌")
-                .onAppear {
-                    getSavedStop()
-                }
             }
             if push {
-               // TestView(push: $push)
                 RouteSheet(
                     push: $push,
                     location: $viewModel.location,
@@ -52,19 +76,19 @@ struct ListView: View {
             }
         }
     }
-    
-    func getSavedStop() {
-
-        let userdefault = UserDefaults.standard
-        let obj = userdefault.object(forKey: "favorite")
-        let list = obj as? [[String: String]]
-
-        if let existingSavedObj = userdefault.object(forKey: "favorite"),
-            let existingList = existingSavedObj as? [[String: String]]{
-            print("getSavedStop \(existingList)")
-            savedList = existingList
-        }
+    func onDeleteRemote(with offset: IndexSet) {
+        print("on delete index \(offset)")
+        let index = offset[offset.startIndex]
+        print("index \(index)")
+        let favorite = viewModel.favoriteList[index]
+        FirebaseManager.shared.removeFromRemote(favorite: favorite)
     }
+    func onDeleteLocal(with offset: IndexSet) {
+        let index = offset[offset.startIndex]
+        let favorite = localSavedFavList[index]
+        localSavedFavList = UserDefaultManager.shared.removeSaveStopFromLocal(target: favorite)
+    }
+
     func onClickRouteName(routeName: String) {
         print("onClickRouteName \(routeName)")
         viewModel.clickedRouteName = routeName

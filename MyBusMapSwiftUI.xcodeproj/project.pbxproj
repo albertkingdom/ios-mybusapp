@@ -23,6 +23,11 @@
 		A1202169288FA00400C8746A /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1202168288FA00400C8746A /* ContentView.swift */; };
 		A120216B288FA00800C8746A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A120216A288FA00800C8746A /* Assets.xcassets */; };
 		A120216E288FA00800C8746A /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A120216D288FA00800C8746A /* Preview Assets.xcassets */; };
+		A162B8CB28A4F93200FF82FE /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = A162B8CA28A4F93200FF82FE /* GoogleService-Info.plist */; };
+		A162B8CD28A4FB6A00FF82FE /* GoogleSignInButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = A162B8CC28A4FB6A00FF82FE /* GoogleSignInButton.swift */; };
+		A162B8CF28A550CC00FF82FE /* Favorite.swift in Sources */ = {isa = PBXBuildFile; fileRef = A162B8CE28A550CC00FF82FE /* Favorite.swift */; };
+		A162B8D228A61CA200FF82FE /* FirebaseManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A162B8D128A61CA200FF82FE /* FirebaseManager.swift */; };
+		A162B8D428A63C4F00FF82FE /* UserDefaultManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A162B8D328A63C4E00FF82FE /* UserDefaultManager.swift */; };
 		A1821A1E28924C9A003CB0EB /* Tabs.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1821A1D28924C9A003CB0EB /* Tabs.swift */; };
 		A1821A2128929762003CB0EB /* RouteSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1821A2028929762003CB0EB /* RouteSheet.swift */; };
 		A1821A232892DCE2003CB0EB /* GoogleMapsRouteView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1821A222892DCE2003CB0EB /* GoogleMapsRouteView.swift */; };
@@ -35,6 +40,7 @@
 		A1A7B7562896462300893EF3 /* TestView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1A7B7552896462300893EF3 /* TestView.swift */; };
 		A1DA52362898E1D0006CB3D4 /* ArrivalTimeSheetViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1DA52352898E1D0006CB3D4 /* ArrivalTimeSheetViewModel.swift */; };
 		A1DA5238289A2A2E006CB3D4 /* .gitignore in Resources */ = {isa = PBXBuildFile; fileRef = A1DA5237289A2A2E006CB3D4 /* .gitignore */; };
+		A1DA523B28A4F5ED006CB3D4 /* UserView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1DA523A28A4F5ED006CB3D4 /* UserView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -55,6 +61,11 @@
 		A1202168288FA00400C8746A /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		A120216A288FA00800C8746A /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		A120216D288FA00800C8746A /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		A162B8CA28A4F93200FF82FE /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		A162B8CC28A4FB6A00FF82FE /* GoogleSignInButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoogleSignInButton.swift; sourceTree = "<group>"; };
+		A162B8CE28A550CC00FF82FE /* Favorite.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Favorite.swift; sourceTree = "<group>"; };
+		A162B8D128A61CA200FF82FE /* FirebaseManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseManager.swift; sourceTree = "<group>"; };
+		A162B8D328A63C4E00FF82FE /* UserDefaultManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultManager.swift; sourceTree = "<group>"; };
 		A1821A1D28924C9A003CB0EB /* Tabs.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tabs.swift; sourceTree = "<group>"; };
 		A1821A1F28924CFD003CB0EB /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		A1821A2028929762003CB0EB /* RouteSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RouteSheet.swift; sourceTree = "<group>"; };
@@ -68,6 +79,8 @@
 		A1A7B7552896462300893EF3 /* TestView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestView.swift; sourceTree = "<group>"; };
 		A1DA52352898E1D0006CB3D4 /* ArrivalTimeSheetViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArrivalTimeSheetViewModel.swift; sourceTree = "<group>"; };
 		A1DA5237289A2A2E006CB3D4 /* .gitignore */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitignore; sourceTree = "<group>"; };
+		A1DA523928A4F442006CB3D4 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
+		A1DA523A28A4F5ED006CB3D4 /* UserView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserView.swift; sourceTree = "<group>"; };
 		BC94A579E390FD0B084112FA /* Pods-MyBusMapSwiftUI.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MyBusMapSwiftUI.debug.xcconfig"; path = "Target Support Files/Pods-MyBusMapSwiftUI/Pods-MyBusMapSwiftUI.debug.xcconfig"; sourceTree = "<group>"; };
 		E557345F4C2DDCD208C0AC45 /* Pods_MyBusMapSwiftUI.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_MyBusMapSwiftUI.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -110,6 +123,7 @@
 				A11295222890E8FE0093D936 /* NearByStation.swift */,
 				A112952928918E4E0093D936 /* ArrivalTime.swift */,
 				A1821A2428937E73003CB0EB /* District.swift */,
+				A162B8CE28A550CC00FF82FE /* Favorite.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -129,6 +143,8 @@
 				A1A7B7552896462300893EF3 /* TestView.swift */,
 				A1DA52352898E1D0006CB3D4 /* ArrivalTimeSheetViewModel.swift */,
 				A1129519288FD3AC0093D936 /* MapViewModel.swift */,
+				A1DA523A28A4F5ED006CB3D4 /* UserView.swift */,
+				A162B8CC28A4FB6A00FF82FE /* GoogleSignInButton.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -136,6 +152,7 @@
 		A120215A288FA00400C8746A = {
 			isa = PBXGroup;
 			children = (
+				A162B8CA28A4F93200FF82FE /* GoogleService-Info.plist */,
 				A1DA5237289A2A2E006CB3D4 /* .gitignore */,
 				A1202165288FA00400C8746A /* MyBusMapSwiftUI */,
 				A1202164288FA00400C8746A /* Products */,
@@ -155,6 +172,8 @@
 		A1202165288FA00400C8746A /* MyBusMapSwiftUI */ = {
 			isa = PBXGroup;
 			children = (
+				A162B8D028A61C3200FF82FE /* Util */,
+				A1DA523928A4F442006CB3D4 /* Info.plist */,
 				A1821A2628938895003CB0EB /* Custom Protocol */,
 				A11295262891827F0093D936 /* Views */,
 				A112951D289036980093D936 /* Model */,
@@ -179,6 +198,15 @@
 			path = "Preview Content";
 			sourceTree = "<group>";
 		};
+		A162B8D028A61C3200FF82FE /* Util */ = {
+			isa = PBXGroup;
+			children = (
+				A162B8D128A61CA200FF82FE /* FirebaseManager.swift */,
+				A162B8D328A63C4E00FF82FE /* UserDefaultManager.swift */,
+			);
+			path = Util;
+			sourceTree = "<group>";
+		};
 		A1821A2628938895003CB0EB /* Custom Protocol */ = {
 			isa = PBXGroup;
 			children = (
@@ -198,6 +226,7 @@
 				A1202160288FA00400C8746A /* Frameworks */,
 				A1202161288FA00400C8746A /* Resources */,
 				B160EC8851E5B0C14D43ED0E /* [CP] Copy Pods Resources */,
+				A6CD2A32F952111C991EE0DA /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -247,6 +276,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				A120216E288FA00800C8746A /* Preview Assets.xcassets in Resources */,
+				A162B8CB28A4F93200FF82FE /* GoogleService-Info.plist in Resources */,
 				A1DA5238289A2A2E006CB3D4 /* .gitignore in Resources */,
 				A120216B288FA00800C8746A /* Assets.xcassets in Resources */,
 			);
@@ -255,6 +285,23 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
+		A6CD2A32F952111C991EE0DA /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-MyBusMapSwiftUI/Pods-MyBusMapSwiftUI-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-MyBusMapSwiftUI/Pods-MyBusMapSwiftUI-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-MyBusMapSwiftUI/Pods-MyBusMapSwiftUI-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
 		B160EC8851E5B0C14D43ED0E /* [CP] Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -301,8 +348,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A162B8D428A63C4F00FF82FE /* UserDefaultManager.swift in Sources */,
 				A1821A2528937E73003CB0EB /* District.swift in Sources */,
 				A1129521289048DE0093D936 /* Token.swift in Sources */,
+				A1DA523B28A4F5ED006CB3D4 /* UserView.swift in Sources */,
 				A10503A7288FA90900EF461D /* AppDelegate.swift in Sources */,
 				A1821A2128929762003CB0EB /* RouteSheet.swift in Sources */,
 				A1A7B7502895010500893EF3 /* PlateView.swift in Sources */,
@@ -310,11 +359,13 @@
 				A1A7B7542896395800893EF3 /* ListView.swift in Sources */,
 				A1A7B7522896372500893EF3 /* HomeView.swift in Sources */,
 				A112952528911A9C0093D936 /* NearByStationSheet.swift in Sources */,
+				A162B8CD28A4FB6A00FF82FE /* GoogleSignInButton.swift in Sources */,
 				A1821A2A2893A4A8003CB0EB /* TabContent.swift in Sources */,
 				A112952A28918E4E0093D936 /* ArrivalTime.swift in Sources */,
 				A1A7B7562896462300893EF3 /* TestView.swift in Sources */,
 				A112951F289037110093D936 /* Station.swift in Sources */,
 				A10503A9288FAAB100EF461D /* GoogleMapsView.swift in Sources */,
+				A162B8D228A61CA200FF82FE /* FirebaseManager.swift in Sources */,
 				A1821A1E28924C9A003CB0EB /* Tabs.swift in Sources */,
 				A1DA52362898E1D0006CB3D4 /* ArrivalTimeSheetViewModel.swift in Sources */,
 				A11295282891834C0093D936 /* ArrivalTimeSheet.swift in Sources */,
@@ -323,6 +374,7 @@
 				A112951C289033A80093D936 /* NetworkManager.swift in Sources */,
 				A1821A232892DCE2003CB0EB /* GoogleMapsRouteView.swift in Sources */,
 				A10503AB288FAB1F00EF461D /* MapViewController.swift in Sources */,
+				A162B8CF28A550CC00FF82FE /* Favorite.swift in Sources */,
 				A1202167288FA00400C8746A /* MyBusMapSwiftUIApp.swift in Sources */,
 				A112951A288FD3AC0093D936 /* MapViewModel.swift in Sources */,
 			);
@@ -459,6 +511,7 @@
 				DEVELOPMENT_TEAM = UZ2Z639589;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = MyBusMapSwiftUI/Info.plist;
 				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "The app need access location.";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
@@ -491,6 +544,7 @@
 				DEVELOPMENT_TEAM = UZ2Z639589;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = MyBusMapSwiftUI/Info.plist;
 				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "The app need access location.";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;

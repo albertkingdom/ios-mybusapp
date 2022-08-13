@@ -21,6 +21,11 @@ struct HomeView: View {
                         Image(systemName: "list.bullet")
                         Text("List")
                     }
+            UserView()
+                .tabItem {
+                    Image(systemName: "person.fill")
+                    Text("User")
+                }
         }
         
         

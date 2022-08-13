@@ -126,7 +126,8 @@ struct RouteSheet: View {
                                         TabContent(arrivalTimes: arrivalTimes[key] ?? [],
                                                    push: $push,
                                                    clickOnRouteName: { _ in  },
-                                                   rowContent: .stopName)
+                                                   rowContent: .stopName,
+                                                   isLogin: $mapViewModel.isLogin)
                                     }
                                 }
                                 

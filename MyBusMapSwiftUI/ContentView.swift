@@ -31,6 +31,7 @@ struct ContentView: View {
                 .edgesIgnoringSafeArea(.top)
                 .onAppear {
                     viewModel.checkIfLocationServiceIsEnabled()
+                    viewModel.checkIfLogin()
                 }
 
            

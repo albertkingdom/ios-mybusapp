@@ -8,6 +8,10 @@
 import Foundation
 import CoreLocation
 import GoogleMaps
+import FirebaseCore
+import FirebaseFirestoreSwift
+import FirebaseAuth
+import FirebaseFirestore
 
 @MainActor
 class MapViewModel: NSObject, ObservableObject, CLLocationManagerDelegate {
@@ -24,7 +28,19 @@ class MapViewModel: NSObject, ObservableObject, CLLocationManagerDelegate {
     var clickedRouteName: String = ""
     var existedHighLightMarkers: [GMSMarker] = []
     @Published var isLoading: Bool = true
+    let db = Firestore.firestore()
+    @Published var isLogin: Bool = false
+    @Published var favoriteList: [Favorite] = []
+    var remotwFavoriteRouteNames: [String] = []
     
+    func checkIfLogin() {
+        if let _ = Auth.auth().currentUser {
+            isLogin = true
+            print("isLogin")
+        } else {
+            print("isNotLogin")
+        }
+    }
     
     func checkIfLocationServiceIsEnabled() {
         if CLLocationManager.locationServicesEnabled() {
@@ -220,6 +236,42 @@ class MapViewModel: NSObject, ObservableObject, CLLocationManagerDelegate {
             currentStationID = selectStation.subStations.first?.stationID ?? ""
         }
         
+        
+    }
+    
+    func getRemoteData() {
+        if let user = Auth.auth().currentUser,
+           let email = user.email
+        {
+            let docRef = db.collection("favoriteRoute").document(email)
+            
+            docRef.addSnapshotListener { documentSnapshot, error in
+                guard let document = documentSnapshot else {
+                    print("Error fetching document: \(error!)")
+                    return
+                }
+                guard let data = document.data() else {
+                    print("Document data was empty.")
+                    return
+                }
+                print("Current data: \(data)")
+                
+                do {
+                    let list = try document.data(as: FavoriteList.self)
+                    print("getRemoteData favoriteList \(list)")
+                    self.favoriteList = list.list ?? []
+                    self.remotwFavoriteRouteNames = self.favoriteList.compactMap({
+                        $0.name
+                    })
+                }catch {
+                    print(error.localizedDescription)
+                }
+    
+            }
+            
+        } else {
+            print("not login")
+        }
         
     }
 }

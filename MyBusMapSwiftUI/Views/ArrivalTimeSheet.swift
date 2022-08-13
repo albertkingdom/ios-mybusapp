@@ -9,7 +9,7 @@ import SwiftUI
 
 struct ArrivalTimeSheet: View {
     @StateObject var viewModel = ArrivalTimeSheetViewModel.shared
-    @StateObject var mapViewModel = MapViewModel.shared
+    @ObservedObject var mapViewModel = MapViewModel.shared
     @State var sheetMode: SheetMode = .half {
         didSet {
             draggedOffset = calculateOffset()
@@ -132,7 +132,8 @@ struct ArrivalTimeSheet: View {
                                     TabContent(arrivalTimes: arrivalTimes[key] ?? [],
                                                push: $push,
                                                clickOnRouteName: clickOnRouteName,
-                                               rowContent: .routeName
+                                               rowContent: .routeName,
+                                               isLogin: $mapViewModel.isLogin
                                                //savedStopID: viewModel.savedStopID
                                     )
                                 }
@@ -179,13 +180,8 @@ struct ArrivalTimeSheet: View {
         
     }
     func getSavedStop() {
-        print("getSavedStop from arrival time sheet")
-        let userdefault = UserDefaults.standard
-    
-        if let existingSavedObj = userdefault.object(forKey: "favorite"),
-            let existingList = existingSavedObj as? [[String: String]]{
-            print("getSavedStop \(existingList)")
-            viewModel.savedList = existingList
+        if mapViewModel.isLogin {
+            viewModel.getLocalSavedFavList()
         }
     }
 }

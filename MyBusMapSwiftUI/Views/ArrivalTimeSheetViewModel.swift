@@ -9,28 +9,17 @@ import Foundation
 
 class ArrivalTimeSheetViewModel: NSObject, ObservableObject {
     static let shared = ArrivalTimeSheetViewModel()
-    let userdefault = UserDefaults.standard
-    var savedList: [[String:String]] = [] {
+    var localSavedFavList: [Favorite] = [] {
         didSet {
-            savedStopID = savedList.map { $0["stopID"] ?? ""}
+            localSavedRouteName = localSavedFavList.compactMap({
+                $0.name
+            })
         }
     }
-//    var savedStopID: [String] {
-//        var ids = [String]()
-//        ids = savedList.map { $0["stopID"] ?? ""}
-//        print(ids)
-//        return ids
-//
-//    }
-    @Published var savedStopID: [String] = []
-    
-    func getSavedStop() {
-        //print("getSavedStop from ArrivalTimeSheetViewModel")
-        
-        if let existingSavedObj = userdefault.object(forKey: "favorite"),
-            let existingList = existingSavedObj as? [[String: String]]{
-            print("getSavedStop from ArrivalTimeSheetViewModel \(existingList)")
-            savedList = existingList
-        }
+
+    @Published var localSavedRouteName: [String] = []
+    //@Published var savedStopID: [String] = []
+    func getLocalSavedFavList() {
+        localSavedFavList = UserDefaultManager.shared.getSavedStopFromLocal()
     }
 }

@@ -9,5 +9,10 @@ target 'MyBusMapSwiftUI' do
 
   # Pods for MyBusMapSwiftUI
  pod 'GoogleMaps', '7.0.0'
+ pod 'FirebaseAuth'
+ pod 'GoogleSignIn'
+ pod 'Kingfisher', '~> 7.0'
+ pod 'FirebaseFirestore'
+ pod 'FirebaseFirestoreSwift'
 
 end
