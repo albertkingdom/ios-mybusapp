@@ -28,6 +28,7 @@
 		A162B8CF28A550CC00FF82FE /* Favorite.swift in Sources */ = {isa = PBXBuildFile; fileRef = A162B8CE28A550CC00FF82FE /* Favorite.swift */; };
 		A162B8D228A61CA200FF82FE /* FirebaseManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A162B8D128A61CA200FF82FE /* FirebaseManager.swift */; };
 		A162B8D428A63C4F00FF82FE /* UserDefaultManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A162B8D328A63C4E00FF82FE /* UserDefaultManager.swift */; };
+		A17E340328A754090058C8AE /* PlacesSearch.swift in Sources */ = {isa = PBXBuildFile; fileRef = A17E340228A754090058C8AE /* PlacesSearch.swift */; };
 		A1821A1E28924C9A003CB0EB /* Tabs.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1821A1D28924C9A003CB0EB /* Tabs.swift */; };
 		A1821A2128929762003CB0EB /* RouteSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1821A2028929762003CB0EB /* RouteSheet.swift */; };
 		A1821A232892DCE2003CB0EB /* GoogleMapsRouteView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1821A222892DCE2003CB0EB /* GoogleMapsRouteView.swift */; };
@@ -66,6 +67,7 @@
 		A162B8CE28A550CC00FF82FE /* Favorite.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Favorite.swift; sourceTree = "<group>"; };
 		A162B8D128A61CA200FF82FE /* FirebaseManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseManager.swift; sourceTree = "<group>"; };
 		A162B8D328A63C4E00FF82FE /* UserDefaultManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultManager.swift; sourceTree = "<group>"; };
+		A17E340228A754090058C8AE /* PlacesSearch.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlacesSearch.swift; sourceTree = "<group>"; };
 		A1821A1D28924C9A003CB0EB /* Tabs.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tabs.swift; sourceTree = "<group>"; };
 		A1821A1F28924CFD003CB0EB /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		A1821A2028929762003CB0EB /* RouteSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RouteSheet.swift; sourceTree = "<group>"; };
@@ -145,6 +147,7 @@
 				A1129519288FD3AC0093D936 /* MapViewModel.swift */,
 				A1DA523A28A4F5ED006CB3D4 /* UserView.swift */,
 				A162B8CC28A4FB6A00FF82FE /* GoogleSignInButton.swift */,
+				A17E340228A754090058C8AE /* PlacesSearch.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -377,6 +380,7 @@
 				A162B8CF28A550CC00FF82FE /* Favorite.swift in Sources */,
 				A1202167288FA00400C8746A /* MyBusMapSwiftUIApp.swift in Sources */,
 				A112951A288FD3AC0093D936 /* MapViewModel.swift in Sources */,
+				A17E340328A754090058C8AE /* PlacesSearch.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

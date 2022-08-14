@@ -15,6 +15,7 @@ struct GoogleMapsView: UIViewRepresentable {
     @Binding var nearByStations: [NearByStation]
     @Binding var highlightMarkersCoordinates: [[String:Double]]
     @Binding var existedHighLightMarkers: [GMSMarker]
+    @Binding var existedMarkers: [GMSMarker]
     @Binding var showHighlightMarker: Bool
     @Binding var showNearByStationSheet: Bool
     var onSelectMarker: (GMSMarker) -> Void
@@ -40,9 +41,17 @@ struct GoogleMapsView: UIViewRepresentable {
         )
         uiView.animate(to: currentLocation)
         
-        let markers = prepareMarkers()
         let highlightMarkers = prepareHighlightMarkers()
+
+        let markers = prepareMarkers()
+        // delete all existed markers from map
+        for marker in existedMarkers {
+            marker.map = nil
+        }
+        // save a copy of new markers
+        existedMarkers = markers
         
+        // put markers on map
         for marker in markers {
             marker.map = uiView
            
@@ -99,6 +108,7 @@ struct GoogleMapsView: UIViewRepresentable {
                 
             }
         }
+        print("prepareMarkers \(markers)")
         return markers
     }
     func prepareHighlightMarkers() -> [GMSMarker] {

@@ -14,5 +14,6 @@ target 'MyBusMapSwiftUI' do
  pod 'Kingfisher', '~> 7.0'
  pod 'FirebaseFirestore'
  pod 'FirebaseFirestoreSwift'
+ pod 'GooglePlaces', '7.0.0'
 
 end
