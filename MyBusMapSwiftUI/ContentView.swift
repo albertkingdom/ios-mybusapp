@@ -29,7 +29,8 @@ struct ContentView: View {
                            existedMarkers: $viewModel.existedMarkers,
                            showHighlightMarker: $showHighlightMarker,
                            showNearByStationSheet: $showNearByStationSheet,
-                           onSelectMarker: onSelectMarker(marker:)
+                           onSelectMarker: onSelectMarker(marker:),
+                           onTapMyLocationBtn: onTapMyLocationButton
             )
                 .edgesIgnoringSafeArea(.top)
                 .onAppear {
@@ -148,6 +149,9 @@ struct ContentView: View {
     }
     func onSelectMarker (marker: GMSMarker) {
         viewModel.onSelectMarker(marker: marker)
+    }
+    func onTapMyLocationButton() {
+        viewModel.checkIfLocationServiceIsEnabled()
     }
 }
 
