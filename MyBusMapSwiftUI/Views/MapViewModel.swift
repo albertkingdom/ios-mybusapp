@@ -17,7 +17,11 @@ import FirebaseFirestore
 class MapViewModel: NSObject, ObservableObject, CLLocationManagerDelegate {
     static let shared = MapViewModel()
     private var locationManager: CLLocationManager?
-    @Published var location: CLLocation?
+    @Published var location: CLLocation? {
+        didSet {
+            fetchNearByStationsWrapper()
+        }
+    }
     @Published var nearByStations: [NearByStation] = []
     @Published var arrivalTimes: [ArrivalTime] = []
     @Published var sortedArrivalTimes: [Int: [ArrivalTime]] = [:]
@@ -27,6 +31,7 @@ class MapViewModel: NSObject, ObservableObject, CLLocationManagerDelegate {
     var currentStationID: String = ""
     var clickedRouteName: String = ""
     var existedHighLightMarkers: [GMSMarker] = []
+    var existedMarkers: [GMSMarker] = []
     @Published var isLoading: Bool = true
     let db = Firestore.firestore()
     @Published var isLogin: Bool = false
@@ -83,12 +88,16 @@ class MapViewModel: NSObject, ObservableObject, CLLocationManagerDelegate {
         print("location \(locations)")
         locationManager?.stopUpdatingLocation()
         Task {
-            let stations = await fetchNearByStations()
+            await fetchNearByStations()
         }
     }
-    
-    func fetchNearByStations() async {
-
+    func fetchNearByStationsWrapper()  {
+        Task {
+            await fetchNearByStations()
+        }
+    }
+    private func fetchNearByStations() async {
+        
         let coordinate = (location?.coordinate.latitude ?? 0, location?.coordinate.longitude ?? 0)
         do {
             let token = try await NetworkManager.shared.fetchToken()

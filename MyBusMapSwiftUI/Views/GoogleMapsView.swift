@@ -15,9 +15,11 @@ struct GoogleMapsView: UIViewRepresentable {
     @Binding var nearByStations: [NearByStation]
     @Binding var highlightMarkersCoordinates: [[String:Double]]
     @Binding var existedHighLightMarkers: [GMSMarker]
+    @Binding var existedMarkers: [GMSMarker]
     @Binding var showHighlightMarker: Bool
     @Binding var showNearByStationSheet: Bool
     var onSelectMarker: (GMSMarker) -> Void
+    var onTapMyLocationBtn: () -> Void
     
     func makeUIView(context: Context) -> GMSMapView {
         let camera = GMSCameraPosition.london
@@ -39,14 +41,28 @@ struct GoogleMapsView: UIViewRepresentable {
             zoom: 15
         )
         uiView.animate(to: currentLocation)
+
+        updateMarkersOnMap(uiView: uiView)
         
+        updateHighlightMarkersOnMap(uiView: uiView)
+        
+    }
+    func updateMarkersOnMap(uiView: GMSMapView) {
         let markers = prepareMarkers()
-        let highlightMarkers = prepareHighlightMarkers()
-        
+        // delete all existed markers from map
+        for marker in existedMarkers {
+            marker.map = nil
+        }
+        // save a copy of new markers
+        existedMarkers = markers
+        // put markers on map
         for marker in markers {
             marker.map = uiView
            
         }
+    }
+    func updateHighlightMarkersOnMap(uiView: GMSMapView) {
+        let highlightMarkers = prepareHighlightMarkers()
         if !showHighlightMarker {
             // delete all highlight markers
             for marker in existedHighLightMarkers {
@@ -62,28 +78,44 @@ struct GoogleMapsView: UIViewRepresentable {
             
         }
         
-       
     }
+    
     func makeCoordinator() -> MapViewCoordinator {
         return MapViewCoordinator(parent: self,
                                   showNearByStationSheet: $showNearByStationSheet,
-                                  onSelectMarker: onSelectMarker)
+                                  onSelectMarker: onSelectMarker,
+                                  location: $location,
+                                  onTapMyLocationBtn: onTapMyLocationBtn
+        )
     }
     
     final class MapViewCoordinator: NSObject, GMSMapViewDelegate {
         let parent: GoogleMapsView
         @Binding var showNearByStationSheet: Bool
         var onSelectMarker: (GMSMarker) -> Void
+        @Binding var locationSource: CLLocation?
+        var onTapMyLocationBtn: () -> Void
         
-        init(parent: GoogleMapsView, showNearByStationSheet: Binding<Bool>, onSelectMarker: @escaping (GMSMarker) -> Void) {
+        init(parent: GoogleMapsView,
+             showNearByStationSheet: Binding<Bool>,
+             onSelectMarker: @escaping (GMSMarker) -> Void,
+             location: Binding<CLLocation?>,
+             onTapMyLocationBtn: @escaping () -> Void
+        ) {
             self.parent = parent
             _showNearByStationSheet = showNearByStationSheet
             self.onSelectMarker = onSelectMarker
+            _locationSource = location
+            self.onTapMyLocationBtn = onTapMyLocationBtn
         }
         func mapView(_ mapView: GMSMapView, didTap marker: GMSMarker) -> Bool {
             print("did tap marker")
             showNearByStationSheet.toggle()
             onSelectMarker(marker)
+            return false
+        }
+        func didTapMyLocationButton(for mapView: GMSMapView) -> Bool {
+            onTapMyLocationBtn()
             return false
         }
     }
@@ -99,6 +131,7 @@ struct GoogleMapsView: UIViewRepresentable {
                 
             }
         }
+        print("prepareMarkers \(markers)")
         return markers
     }
     func prepareHighlightMarkers() -> [GMSMarker] {

@@ -18,22 +18,68 @@ struct ContentView: View {
     @State var push: Bool = false
     @State var showText = true
     @State var showHighlightMarker: Bool = false
+    @State var showLocationSearch = false
+    @State var query: String = "Tap to search"
     var body: some View {
         ZStack {
             GoogleMapsView(location: $viewModel.location,
                            nearByStations: $viewModel.nearByStations,
                            highlightMarkersCoordinates: $viewModel.highlightCoordinate,
                            existedHighLightMarkers: $viewModel.existedHighLightMarkers,
+                           existedMarkers: $viewModel.existedMarkers,
                            showHighlightMarker: $showHighlightMarker,
                            showNearByStationSheet: $showNearByStationSheet,
-                           onSelectMarker: onSelectMarker(marker:)
+                           onSelectMarker: onSelectMarker(marker:),
+                           onTapMyLocationBtn: onTapMyLocationButton
             )
                 .edgesIgnoringSafeArea(.top)
                 .onAppear {
                     viewModel.checkIfLocationServiceIsEnabled()
                     viewModel.checkIfLogin()
                 }
+         
+            if showLocationSearch {
+                PlacesSearch(showLocationSearch: $showLocationSearch,
+                             location: $viewModel.location,
+                             query: $query
+                )
+                    .ignoresSafeArea()
+                    .zIndex(5)
+            }
+            VStack {
+                HStack {
+                    Spacer()
+                    Button(action: {
+                        showLocationSearch = true
 
+                    }, label: {
+                        HStack {
+                            Image(systemName: "magnifyingglass")
+                                .foregroundColor(Color.primary)
+                            Text(query)
+
+                                .foregroundColor(Color.gray)
+                            Spacer()
+                            Image(systemName: "xmark")
+                                .foregroundColor(.primary)
+                                .onTapGesture {
+                                    query = "Tap to search"
+                                }
+                        }
+                        .padding(.horizontal, 10)
+                        
+
+                    })
+                        .frame(width: UIScreen.main.bounds.width - 30, height: 50)
+                        .background(Color.white)
+                    Spacer()
+                }
+                
+                Spacer()
+            }
+            .padding(.top, 30)
+
+            
            
             
             if showNearByStationSheet {
@@ -103,6 +149,9 @@ struct ContentView: View {
     }
     func onSelectMarker (marker: GMSMarker) {
         viewModel.onSelectMarker(marker: marker)
+    }
+    func onTapMyLocationButton() {
+        viewModel.checkIfLocationServiceIsEnabled()
     }
 }
 
