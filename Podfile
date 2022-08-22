@@ -15,5 +15,6 @@ target 'MyBusMapSwiftUI' do
  pod 'FirebaseFirestore'
  pod 'FirebaseFirestoreSwift'
  pod 'GooglePlaces', '7.0.0'
+ pod 'RealmSwift', '~>10'
 
 end

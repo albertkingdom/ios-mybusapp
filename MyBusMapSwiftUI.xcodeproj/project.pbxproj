@@ -28,6 +28,8 @@
 		A162B8CF28A550CC00FF82FE /* Favorite.swift in Sources */ = {isa = PBXBuildFile; fileRef = A162B8CE28A550CC00FF82FE /* Favorite.swift */; };
 		A162B8D228A61CA200FF82FE /* FirebaseManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A162B8D128A61CA200FF82FE /* FirebaseManager.swift */; };
 		A162B8D428A63C4F00FF82FE /* UserDefaultManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A162B8D328A63C4E00FF82FE /* UserDefaultManager.swift */; };
+		A17DDF0B28B3352300D04296 /* FavoriteRealm.swift in Sources */ = {isa = PBXBuildFile; fileRef = A17DDF0A28B3352300D04296 /* FavoriteRealm.swift */; };
+		A17DDF0D28B336C400D04296 /* RealmManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A17DDF0C28B336C400D04296 /* RealmManager.swift */; };
 		A17E340328A754090058C8AE /* PlacesSearch.swift in Sources */ = {isa = PBXBuildFile; fileRef = A17E340228A754090058C8AE /* PlacesSearch.swift */; };
 		A1821A1E28924C9A003CB0EB /* Tabs.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1821A1D28924C9A003CB0EB /* Tabs.swift */; };
 		A1821A2128929762003CB0EB /* RouteSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1821A2028929762003CB0EB /* RouteSheet.swift */; };
@@ -67,6 +69,8 @@
 		A162B8CE28A550CC00FF82FE /* Favorite.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Favorite.swift; sourceTree = "<group>"; };
 		A162B8D128A61CA200FF82FE /* FirebaseManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseManager.swift; sourceTree = "<group>"; };
 		A162B8D328A63C4E00FF82FE /* UserDefaultManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultManager.swift; sourceTree = "<group>"; };
+		A17DDF0A28B3352300D04296 /* FavoriteRealm.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteRealm.swift; sourceTree = "<group>"; };
+		A17DDF0C28B336C400D04296 /* RealmManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealmManager.swift; sourceTree = "<group>"; };
 		A17E340228A754090058C8AE /* PlacesSearch.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlacesSearch.swift; sourceTree = "<group>"; };
 		A1821A1D28924C9A003CB0EB /* Tabs.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tabs.swift; sourceTree = "<group>"; };
 		A1821A1F28924CFD003CB0EB /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
@@ -126,6 +130,7 @@
 				A112952928918E4E0093D936 /* ArrivalTime.swift */,
 				A1821A2428937E73003CB0EB /* District.swift */,
 				A162B8CE28A550CC00FF82FE /* Favorite.swift */,
+				A17DDF0A28B3352300D04296 /* FavoriteRealm.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -135,6 +140,7 @@
 			children = (
 				A112952428911A9C0093D936 /* NearByStationSheet.swift */,
 				A11295272891834C0093D936 /* ArrivalTimeSheet.swift */,
+				A1DA52352898E1D0006CB3D4 /* ArrivalTimeSheetViewModel.swift */,
 				A1821A2028929762003CB0EB /* RouteSheet.swift */,
 				A1821A1D28924C9A003CB0EB /* Tabs.swift */,
 				A10503A8288FAAB100EF461D /* GoogleMapsView.swift */,
@@ -143,7 +149,6 @@
 				A1A7B74F2895010500893EF3 /* PlateView.swift */,
 				A1A7B7532896395800893EF3 /* ListView.swift */,
 				A1A7B7552896462300893EF3 /* TestView.swift */,
-				A1DA52352898E1D0006CB3D4 /* ArrivalTimeSheetViewModel.swift */,
 				A1129519288FD3AC0093D936 /* MapViewModel.swift */,
 				A1DA523A28A4F5ED006CB3D4 /* UserView.swift */,
 				A162B8CC28A4FB6A00FF82FE /* GoogleSignInButton.swift */,
@@ -206,6 +211,7 @@
 			children = (
 				A162B8D128A61CA200FF82FE /* FirebaseManager.swift */,
 				A162B8D328A63C4E00FF82FE /* UserDefaultManager.swift */,
+				A17DDF0C28B336C400D04296 /* RealmManager.swift */,
 			);
 			path = Util;
 			sourceTree = "<group>";
@@ -352,6 +358,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				A162B8D428A63C4F00FF82FE /* UserDefaultManager.swift in Sources */,
+				A17DDF0B28B3352300D04296 /* FavoriteRealm.swift in Sources */,
 				A1821A2528937E73003CB0EB /* District.swift in Sources */,
 				A1129521289048DE0093D936 /* Token.swift in Sources */,
 				A1DA523B28A4F5ED006CB3D4 /* UserView.swift in Sources */,
@@ -375,6 +382,7 @@
 				A11295232890E8FE0093D936 /* NearByStation.swift in Sources */,
 				A1821A462893D2BB003CB0EB /* StopOfRoute.swift in Sources */,
 				A112951C289033A80093D936 /* NetworkManager.swift in Sources */,
+				A17DDF0D28B336C400D04296 /* RealmManager.swift in Sources */,
 				A1821A232892DCE2003CB0EB /* GoogleMapsRouteView.swift in Sources */,
 				A10503AB288FAB1F00EF461D /* MapViewController.swift in Sources */,
 				A162B8CF28A550CC00FF82FE /* Favorite.swift in Sources */,

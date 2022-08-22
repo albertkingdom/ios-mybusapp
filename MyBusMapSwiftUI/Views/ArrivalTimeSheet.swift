@@ -134,7 +134,6 @@ struct ArrivalTimeSheet: View {
                                                clickOnRouteName: clickOnRouteName,
                                                rowContent: .routeName,
                                                isLogin: $mapViewModel.isLogin
-                                               //savedStopID: viewModel.savedStopID
                                     )
                                 }
                             }
@@ -170,14 +169,9 @@ struct ArrivalTimeSheet: View {
         }
         )
         .onAppear {
-            getSavedStop()
+
         }
         
-    }
-    func getSavedStop() {
-        if mapViewModel.isLogin {
-            viewModel.getLocalSavedFavList()
-        }
     }
 }
 enum RowContent {

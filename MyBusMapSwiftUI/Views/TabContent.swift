@@ -10,6 +10,7 @@ import SwiftUI
 import FirebaseFirestore
 import FirebaseFirestoreSwift
 import FirebaseAuth
+import RealmSwift
 
 struct TabContent: View {
     var viewModel = ArrivalTimeSheetViewModel.shared
@@ -19,7 +20,7 @@ struct TabContent: View {
     let clickOnRouteName: (String) -> Void
     let rowContent: RowContent
     @Binding var isLogin: Bool
-
+    @State var realmFavList: Results<FavoriteRealm> = RealmManager.shared.readAllFromDB()
     
     var body: some View {
         if #available(iOS 15.0, *) {
@@ -50,11 +51,11 @@ struct TabContent: View {
                     
                     Aux(rowContent: rowContent,
                         arrivalTime: arrivalTime,
-                      
-                        
                         isSaved: checkStatus(stopID: arrivalTime.stopID, routeName: arrivalTime.routeName.zhTw, isLogin: isLogin),
-                        isLogin: $isLogin
-                    )
+                        isLogin: $isLogin,
+                        deleteFavFromDB: self.deleteFavFromDB(routeName:)
+                       )
+                    
                 }
                 .contentShape(Rectangle())
                 .onTapGesture {
@@ -69,10 +70,8 @@ struct TabContent: View {
             .listStyle(.plain)
             .listRowSeparator(.hidden)
             .navigationBarHidden(true)
-            //.frame(height: 400, alignment: Alignment.topLeading)
             .onAppear {
-                //print("savedStopID \(viewModel.savedStopID)")
-                print("tab content update")
+
             }
             
             
@@ -99,14 +98,15 @@ struct TabContent: View {
                         
                     }
                     Spacer()
-                    switch rowContent {
-                    case .routeName:
-                        Image(systemName: "heart")
-                    case .stopName:
-                        PlateView(estimateTime: arrivalTime.estimateTime)
-                    
-                    }
+
+                    Aux(rowContent: rowContent,
+                        arrivalTime: arrivalTime,
+                        isSaved: checkStatus(stopID: arrivalTime.stopID, routeName: arrivalTime.routeName.zhTw, isLogin: isLogin),
+                        isLogin: $isLogin,
+                        deleteFavFromDB: self.deleteFavFromDB(routeName:)
+                       )
                 }
+                .contentShape(Rectangle())
                 .onTapGesture {
                     print("on tap route name")
                     withAnimation(.default) {
@@ -118,7 +118,6 @@ struct TabContent: View {
             }
             .listStyle(.plain)
             .navigationBarHidden(true)
-            //.frame(height: 100, alignment: Alignment.bottom)
             
         }
     }
@@ -148,11 +147,21 @@ struct TabContent: View {
             if isLogin && mapViewModel.remotwFavoriteRouteNames.contains(routeName) {
                 return true
             }
-            if !isLogin && viewModel.localSavedRouteName.contains(routeName) {
+//            if !isLogin && viewModel.localSavedRouteName.contains(routeName) {
+//                return true
+//            }
+            if !isLogin && realmFavList.contains(where: { item in
+                item.name == routeName
+            }) {
                 return true
             }
         }
         return false
+    }
+    
+    func deleteFavFromDB(routeName: String) {
+        let favToDelete = realmFavList.first(where: {$0.name == routeName}) ?? FavoriteRealm()
+        RealmManager.shared.deleteFromDB(objectToDelete: favToDelete)
     }
    
 }
@@ -160,10 +169,9 @@ struct TabContent: View {
 struct Aux: View {
     let rowContent: RowContent
     let arrivalTime: ArrivalTime
-    //let saveStop: ([String: String], String) -> Void
-    //let removeSaveStop: ([String: String], String) -> Void
     @State var isSaved: Bool
     @Binding var isLogin: Bool
+    let deleteFavFromDB: (String) -> Void
     
     var body: some View {
         switch rowContent {
@@ -177,7 +185,7 @@ struct Aux: View {
                         if isLogin {
                             FirebaseManager.shared.removeFromRemote(favorite: favorite)
                         } else {
-                            UserDefaultManager.shared.removeSaveStopFromLocal(target: favorite)
+                            deleteFavFromDB(arrivalTime.routeName.zhTw)
                         }
                         isSaved.toggle()
                     }
@@ -188,14 +196,14 @@ struct Aux: View {
                         // add to user default
 
                         let favorite = Favorite(name: arrivalTime.routeName.zhTw, stationID: "")
+                        let favoriteRealm = FavoriteRealm(name: arrivalTime.routeName.zhTw, stationID: "")
                         if isLogin {
                             print("isLogin save to remote")
                             FirebaseManager.shared.saveToRemote(favorite: favorite)
                             
                         } else {
                             print("is not Login save to local")
-                            UserDefaultManager.shared.saveStopToLocal(info: favorite)
-                            
+                            RealmManager.shared.saveToDB(favoriteRealm)
                         }
                         isSaved.toggle()
                     }
@@ -233,7 +241,6 @@ struct TabContent_Previews: PreviewProvider {
                    clickOnRouteName: {_ in },
                    rowContent: .routeName,
                    isLogin: .constant(false)
-                //savedStopID: ["1003"]
         )
     }
     
