@@ -62,22 +62,21 @@ struct GoogleMapsView: UIViewRepresentable {
         }
     }
     func updateHighlightMarkersOnMap(uiView: GMSMapView) {
-        let highlightMarkers = prepareHighlightMarkers()
         if !showHighlightMarker {
             // delete all highlight markers
-            for marker in existedHighLightMarkers {
+            existedHighLightMarkers.forEach { marker in
                 marker.map = nil
             }
             existedHighLightMarkers.removeAll()
         } else {
+            let highlightMarkers = prepareHighlightMarkers()
             // add highlight markers to map
-            existedHighLightMarkers = highlightMarkers
-            for marker in highlightMarkers {
-                marker.map = uiView
-            }
-            
+            existedHighLightMarkers.removeAll()
+           
+            existedHighLightMarkers.append(contentsOf: highlightMarkers)
+
+            existedHighLightMarkers.forEach({$0.map = uiView})
         }
-        
     }
     
     func makeCoordinator() -> MapViewCoordinator {
@@ -142,6 +141,7 @@ struct GoogleMapsView: UIViewRepresentable {
             marker.position = CLLocationCoordinate2D(latitude: highlightMarker["lat"] ?? 0, longitude: highlightMarker["lon"] ?? 0)
             markers.append(marker)
         }
+        print("prepareHighlightMarkers markers \(markers)")
         return markers
     }
 }

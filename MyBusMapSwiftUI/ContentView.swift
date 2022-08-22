@@ -115,6 +115,7 @@ struct ContentView: View {
                     stops: $viewModel.sortedStopsForRouteName
                 )
 //                    .transition(.asymmetric(insertion: .move(edge: .leading), removal: .move(edge: .leading)))
+                    .edgesIgnoringSafeArea(.top)
                     .transition(.slide)
                     .zIndex(1)
                     
@@ -149,6 +150,7 @@ struct ContentView: View {
     }
     func onSelectMarker (marker: GMSMarker) {
         viewModel.onSelectMarker(marker: marker)
+        showHighlightMarker = true
     }
     func onTapMyLocationButton() {
         viewModel.checkIfLocationServiceIsEnabled()

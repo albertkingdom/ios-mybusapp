@@ -15,8 +15,9 @@ struct ListView: View {
     var body: some View {
         ZStack {
             VStack {
-                Text("收藏")
-                    .font(Font.title)
+                Text("路線收藏")
+                    .font(Font.headline)
+                    .padding()
                 
                 if !viewModel.isLogin {
 
@@ -37,7 +38,6 @@ struct ListView: View {
                         }.onDelete(perform: onDeleteLocal(with:))
                     }
                     .onAppear {
-                        print("listview onappear")
                         localSavedFavList = UserDefaultManager.shared.getSavedStopFromLocal()
                     }
                 } else {
@@ -77,9 +77,7 @@ struct ListView: View {
         }
     }
     func onDeleteRemote(with offset: IndexSet) {
-        print("on delete index \(offset)")
         let index = offset[offset.startIndex]
-        print("index \(index)")
         let favorite = viewModel.favoriteList[index]
         FirebaseManager.shared.removeFromRemote(favorite: favorite)
     }
@@ -90,7 +88,6 @@ struct ListView: View {
     }
 
     func onClickRouteName(routeName: String) {
-        print("onClickRouteName \(routeName)")
         viewModel.clickedRouteName = routeName
         Task {
             await viewModel.fetchArrivalTimeForRouteNameAsync(routeName: routeName)

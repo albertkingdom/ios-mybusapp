@@ -135,8 +135,8 @@
 			children = (
 				A112952428911A9C0093D936 /* NearByStationSheet.swift */,
 				A11295272891834C0093D936 /* ArrivalTimeSheet.swift */,
-				A1821A1D28924C9A003CB0EB /* Tabs.swift */,
 				A1821A2028929762003CB0EB /* RouteSheet.swift */,
+				A1821A1D28924C9A003CB0EB /* Tabs.swift */,
 				A10503A8288FAAB100EF461D /* GoogleMapsView.swift */,
 				A1821A222892DCE2003CB0EB /* GoogleMapsRouteView.swift */,
 				A1821A292893A4A8003CB0EB /* TabContent.swift */,

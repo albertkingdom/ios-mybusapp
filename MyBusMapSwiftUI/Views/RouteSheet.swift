@@ -146,6 +146,7 @@ struct RouteSheet: View {
             .background(Color.white)
             .cornerRadius(15)
             .offset(y: draggedOffset)
+            .ignoresSafeArea(edges: [.bottom])
             .compositingGroup()
             .shadow(color: .black, radius: 4, x: 0, y: -1)
             .mask(Rectangle()
@@ -165,7 +166,6 @@ struct RouteSheet: View {
                             }
                         }
             )
-            //.ignoresSafeArea()
         }
         
     }

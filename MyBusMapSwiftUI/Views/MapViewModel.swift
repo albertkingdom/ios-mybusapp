@@ -27,7 +27,7 @@ class MapViewModel: NSObject, ObservableObject, CLLocationManagerDelegate {
     @Published var sortedArrivalTimes: [Int: [ArrivalTime]] = [:]
     @Published var sortedArrivalTimesForRouteName: [Int: [ArrivalTime]] = [:]
     @Published var sortedStopsForRouteName: [Int: [StopForRouteName]] = [:]
-    @Published var highlightCoordinate: [[String:Double]] = []
+    var highlightCoordinate: [[String:Double]] = []
     var currentStationID: String = ""
     var clickedRouteName: String = ""
     var existedHighLightMarkers: [GMSMarker] = []
@@ -236,12 +236,13 @@ class MapViewModel: NSObject, ObservableObject, CLLocationManagerDelegate {
     
     func onSelectMarker(marker: GMSMarker) {
         let stationName = marker.title
-        if let selectStation = nearByStations.first { station in
+        if let selectStation = nearByStations.first (where:{ station in
             station.stationName == stationName
-        } {
+        }) {
             Task {
                 await fetchArrivalTime(subStations: selectStation.subStations)
             }
+            highlightMarker(subStations: selectStation.subStations)
             currentStationID = selectStation.subStations.first?.stationID ?? ""
         }
         

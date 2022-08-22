@@ -26,6 +26,8 @@ struct TabContent: View {
             List(arrivalTimes, id:\.id) { arrivalTime in
                 HStack {
                     Text(calcEstimateTime(stopStatus: arrivalTime.stopStatus, estimateTime: arrivalTime.estimateTime ?? 0))
+                        .lineLimit(1)
+                        .minimumScaleFactor(0.5)
                         .padding()
                         .frame(width: 90, height: 50)
                         .overlay(
@@ -79,6 +81,8 @@ struct TabContent: View {
             List(arrivalTimes, id:\.id) { arrivalTime in
                 HStack {
                     Text(calcEstimateTime(stopStatus: arrivalTime.stopStatus, estimateTime: arrivalTime.estimateTime ?? 0))
+                        .lineLimit(1)
+                        .minimumScaleFactor(0.5)
                         .padding()
                         .frame(width: 90)
                         .overlay(

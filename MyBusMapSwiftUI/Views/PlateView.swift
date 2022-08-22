@@ -13,8 +13,12 @@ struct PlateView: View {
         HStack {
             if let time = estimateTime, time < 60 {
                 Text("接近中") // should be plate number
-                    .frame(width: 50)
-                    .background(Color.green)
+                    .lineLimit(1)
+                    .minimumScaleFactor(0.5)
+                    .padding(5)
+                    .frame(width: 80)
+                    .foregroundColor(Color.white)
+                    .background(Color.gray)
             }
             
             

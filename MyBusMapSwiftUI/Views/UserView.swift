@@ -21,15 +21,15 @@ struct UserView: View {
             if imageUri == nil {
                 Image(systemName: "person.fill")
                     .resizable()
-                    .border(.black, width: 1)
-                    .frame(width: 120, height: 120, alignment: .center)
-                    .cornerRadius(60)
+                    //.border(.black, width: 1)
+                    .frame(width: 100, height: 100, alignment: .center)
+                    .cornerRadius(50)
             } else {
                 KFImage(imageUri)
                     .resizable()
-                    .border(.black, width: 1)
-                    .frame(width: 120, height: 120, alignment: .center)
-                    .cornerRadius(60)
+                    //.border(.black, width: 1)
+                    .frame(width: 100, height: 100, alignment: .center)
+                    .cornerRadius(50)
             }
             Text(userEmail)
             if !isLogin {
@@ -46,12 +46,15 @@ struct UserView: View {
                 Button {
                     signOut()
                 } label: {
-                    Text("Sign Out")
+                    Text("登出".uppercased())
                         .foregroundColor(Color.black)
                 }
+                .padding()
+                .frame(maxWidth: .infinity ,alignment: .center)
+                .background(Color(red: 211/255, green: 211/255, blue: 211/255))
             }
         }
-        .padding([.bottom, .top], 50)
+        .padding([.top], 50)
         .onAppear {
             updateUI()
         }

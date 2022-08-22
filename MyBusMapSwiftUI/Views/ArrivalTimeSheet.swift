@@ -34,10 +34,10 @@ struct ArrivalTimeSheet: View {
         return tabs
     }
     var title: String {
-        guard let arrivalTimes = arrivalTimes[0] else {
+        guard let arrivalTimeList = arrivalTimes[0], !arrivalTimeList.isEmpty else {
             return ""
         }
-        return arrivalTimes[0].stopName.zhTw
+        return arrivalTimeList[0].stopName.zhTw
     }
     
     private func calculateOffset() -> CGFloat {
@@ -155,6 +155,7 @@ struct ArrivalTimeSheet: View {
         .background(Color.white)
         .cornerRadius(15)
         .offset(y: draggedOffset)
+        .ignoresSafeArea(edges: [.bottom])
         .compositingGroup()
         .shadow(color: .black, radius: 4, x: 0, y: -1)
         .mask(Rectangle()
@@ -162,17 +163,11 @@ struct ArrivalTimeSheet: View {
         .gesture(DragGesture()
                     .onChanged{ value in
             
-            print("draggedOffset \(value.translation)")
+            //print("draggedOffset \(value.translation)")
         }
                     .onEnded{ value in
-                onDrag(yTranslation: value.translation.height)
-                if value.translation.height > 0 {
-                    print("drag end +y")
-                    
-                }else {
-                    print("drag end -y")
-                }
-            }
+            onDrag(yTranslation: value.translation.height)
+        }
         )
         .onAppear {
             getSavedStop()
