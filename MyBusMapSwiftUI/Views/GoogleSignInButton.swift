@@ -9,7 +9,7 @@ import Foundation
 import SwiftUI
 import GoogleSignIn
 
-struct GoogleSignInButton: UIViewRepresentable {
+struct CustomGoogleSignInButton: UIViewRepresentable {
 
     @Environment(\.colorScheme) var colorScheme
 

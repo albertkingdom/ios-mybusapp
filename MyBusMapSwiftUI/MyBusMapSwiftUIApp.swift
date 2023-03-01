@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import GoogleSignIn
 
 @main
 struct MyBusMapSwiftUIApp: App {
@@ -14,6 +15,9 @@ struct MyBusMapSwiftUIApp: App {
         WindowGroup {
 //            ContentView()
             HomeView()
+                .onOpenURL { url in
+                    GIDSignIn.sharedInstance.handle(url)
+                }
         }
     }
 }

@@ -8,6 +8,7 @@
 import SwiftUI
 import FirebaseCore
 import GoogleSignIn
+import GoogleSignInSwift
 import FirebaseAuth
 import Kingfisher
 
@@ -33,12 +34,9 @@ struct UserView: View {
             }
             Text(userEmail)
             if !isLogin {
-                GoogleSignInButton()
+                GoogleSignInButton(action: handleGoogleSignin)
                     .frame(height: 50, alignment: .center)
                     .padding(.horizontal, 50)
-                    .onTapGesture {
-                        googleSignIn()
-                    }
             }
             Spacer()
             
@@ -59,29 +57,31 @@ struct UserView: View {
             updateUI()
         }
     }
-    func googleSignIn() {
-        guard let clientID = FirebaseApp.app()?.options.clientID else { return }
 
+    func handleGoogleSignin() {
+        guard let clientID = FirebaseApp.app()?.options.clientID else { return }
+        
         // Create Google Sign In configuration object.
         let config = GIDConfiguration(clientID: clientID)
+        
 
-        // Start the sign in flow!
-        GIDSignIn.sharedInstance.signIn(with: config, presenting: (UIApplication.shared.windows.first?.rootViewController)!) { user, error in
-
+        guard let presentingViewController = (UIApplication.shared.connectedScenes.first as? UIWindowScene)?.windows.first?.rootViewController else {return}
+        
+        GIDSignIn.sharedInstance.signIn(with: config, presenting: presentingViewController) { user, error in
             if let error = error {
                 print(error.localizedDescription)
                 return
             }
-
-          guard
-            let authentication = user?.authentication,
-            let idToken = authentication.idToken
-          else {
-            return
-          }
-
-          let credential = GoogleAuthProvider.credential(withIDToken: idToken,
-                                                         accessToken: authentication.accessToken)
+            
+            guard
+                let authentication = user?.authentication,
+                let idToken = authentication.idToken
+            else {
+                return
+            }
+            
+            let credential = GoogleAuthProvider.credential(withIDToken: idToken,
+                                                           accessToken: authentication.accessToken)
             // send credential to firebase
             Auth.auth().signIn(with: credential) { authResult, error in
                 if let error = error {
@@ -92,7 +92,6 @@ struct UserView: View {
                 updateUI()
             }
         }
-        
     }
     
     func signOut() {
