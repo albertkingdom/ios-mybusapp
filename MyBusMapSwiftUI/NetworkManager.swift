@@ -10,14 +10,28 @@ import SwiftUI
 
 class NetworkManager {
     static let shared = NetworkManager()
-//    var token = ""
+    let clientID = Bundle.main.infoDictionary?["API_CLIENT_ID"] as? String
+    let clientKey = Bundle.main.infoDictionary?["API_CLIENT_KEY"] as? String
+    let SOURCE_URL = "https://tdx.transportdata.tw"
+    var TOKEN_URL: String {
+        return "\(SOURCE_URL)/auth/realms/TDXConnect/protocol/openid-connect/token"
+    }
+    var NEARBY_STOP_URL: String {
+        return "\(SOURCE_URL)/MOTC/v2/Bus/Station/NearBy"
+    }
+    var NEARBY_STOP_COORD_URL: String {
+        return "\(SOURCE_URL)/api/advanced/v2/Bus/Station/NearBy"
+    }
+    
     func fetchToken() {
-        let clientID = "albertkingdom.develop-f4ad6104-d27d-46a4"
-        let clientKey = "f26624ff-5940-4e77-a38e-f17e042e1767"
-        guard let url = URL(string: "https://tdx.transportdata.tw/auth/realms/TDXConnect/protocol/openid-connect/token") else {return}
+    
+        guard let url = URL(string: TOKEN_URL),
+              let clientID = clientID,
+              let clientKey = clientKey
+        else {return}
         var request = URLRequest(url: url)
         request.httpMethod = "post"
-        request.setValue("application/x-www-form-urlencoded",                                 forHTTPHeaderField: "Content-Type")
+        request.setValue("application/x-www-form-urlencoded", forHTTPHeaderField: "Content-Type")
         let parameters = "grant_type=client_credentials&client_id=\(clientID)&client_secret=\(clientKey)"
         let postData =  parameters.data(using: .utf8)
         request.httpBody = postData
@@ -30,7 +44,7 @@ class NetworkManager {
                 let decoder = JSONDecoder()
                 do {
                     let token = try decoder.decode(Token.self, from: data)
-//                    self.token = token.accessToken
+
                 } catch {
                     print("error \(error)")
                 }
@@ -38,15 +52,18 @@ class NetworkManager {
         }.resume()
     }
     func fetchToken() async throws -> Token {
-        let clientID = "albertkingdom.develop-f4ad6104-d27d-46a4"
-        let clientKey = "f26624ff-5940-4e77-a38e-f17e042e1767"
-        guard let url = URL(string: "https://tdx.transportdata.tw/auth/realms/TDXConnect/protocol/openid-connect/token") else {
-            throw NetworkError.invalidURL
+
+        guard let url = URL(string: TOKEN_URL) else {
+            throw NetworkError.InvalidURL
             
         }
+        guard let clientID = clientID,
+              let clientKey = clientKey
+        else { throw NetworkError.MissingApiKey}
+
         var request = URLRequest(url: url)
         request.httpMethod = "post"
-        request.setValue("application/x-www-form-urlencoded",                                 forHTTPHeaderField: "Content-Type")
+        request.setValue("application/x-www-form-urlencoded", forHTTPHeaderField: "Content-Type")
         let parameters = "grant_type=client_credentials&client_id=\(clientID)&client_secret=\(clientKey)"
         let postData =  parameters.data(using: .utf8)
         request.httpBody = postData
@@ -68,16 +85,15 @@ class NetworkManager {
             }.resume()
         }
     }
-    func fetchNearByStops(completion: @escaping (Result<[Station], Error>) -> Void) {
-        var urlComponet = URLComponents(string: "https://ptx.transportdata.tw/MOTC/v2/Bus/Station/NearBy")
+    func fetchNearByStops(completion: @escaping (Result<[Station], Error>) -> Void) throws {
+        var urlComponet = URLComponents(string: NEARBY_STOP_URL)
         urlComponet?.queryItems = [
             URLQueryItem(name: "$spatialFilter", value: "nearby(25.0392167, 121.445724, 300)"),
             URLQueryItem(name: "$format", value: "JSON")
         ]
         
         guard let url = urlComponet?.url else {
-            print("invalid url")
-            return
+            throw NetworkError.InvalidURL
         }
         var request = URLRequest(url: url)
 //        request.setValue("Bearer \(token)", forHTTPHeaderField: "Authorization")
@@ -101,14 +117,14 @@ class NetworkManager {
     }
     
     func fetchNearByStops(coordinate: (Double, Double), token: Token) async throws -> [Station] {
-        var urlComponet = URLComponents(string: "https://tdx.transportdata.tw/api/advanced/v2/Bus/Station/NearBy")
+        var urlComponet = URLComponents(string: NEARBY_STOP_COORD_URL)
         urlComponet?.queryItems = [
             URLQueryItem(name: "$spatialFilter", value: "nearby(\(coordinate.0), \(coordinate.1), 300)"),
             URLQueryItem(name: "$format", value: "JSON")
         ]
         
         guard let url = urlComponet?.url else {
-            throw NetworkError.invalidURL
+            throw NetworkError.InvalidURL
         }
         
         var request = URLRequest(url: url)
@@ -133,16 +149,16 @@ class NetworkManager {
     }
     func fetchArrivalTimeAsync(city: String, stationID: String, token: Token) async throws -> [ArrivalTime] {
 
-        var urlComponet = URLComponents(string: "https://tdx.transportdata.tw/api/advanced/v2/Bus/EstimatedTimeOfArrival/City/\(city)/PassThrough/Station/\(stationID)")
-        urlComponet?.queryItems = [
+        var urlComponent = URLComponents(string: "\(SOURCE_URL)/api/advanced/v2/Bus/EstimatedTimeOfArrival/City/\(city)/PassThrough/Station/\(stationID)")!
+        urlComponent.queryItems = [
             URLQueryItem(name: "$top", value: "30"),
             URLQueryItem(name: "$format", value: "JSON")
         ]
         
-        guard let url = urlComponet?.url else {
-            throw NetworkError.invalidURL
+        guard let url = urlComponent.url else {
+            throw NetworkError.InvalidURL
         }
-        
+
         var request = URLRequest(url: url)
         request.setValue("Bearer \(token.accessToken)", forHTTPHeaderField: "Authorization")
         
@@ -167,13 +183,14 @@ class NetworkManager {
     func getDistrictAsync(coordinate: (Double, Double), token: Token) async throws -> District {
         //https://tdx.transportdata.tw/api/advanced/V3/Map/GeoLocating/District/LocationX/121.7062/LocationY/25.1357?%24format=JSON
         let (lat, lon) = coordinate
-        var urlComponet = URLComponents(string: "https://tdx.transportdata.tw/api/advanced/V3/Map/GeoLocating/District/LocationX/\(lon)/LocationY/\(lat)")
-        urlComponet?.queryItems = [
+       
+        var urlComponent = URLComponents(string: "\(SOURCE_URL)/api/advanced/V3/Map/GeoLocating/District/LocationX/\(lon)/LocationY/\(lat)")!
+
+        urlComponent.queryItems = [
             URLQueryItem(name: "$format", value: "JSON")
         ]
-        
-        guard let url = urlComponet?.url else {
-            throw NetworkError.invalidURL
+        guard let url = urlComponent.url else {
+            throw NetworkError.InvalidURL
         }
         
         var request = URLRequest(url: url)
@@ -199,18 +216,16 @@ class NetworkManager {
     func fetchArrivalTimeForRouteNameAsync(cityName: String, routeName: String, token: Token) async throws -> [ArrivalTime] {
         //https://tdx.transportdata.tw/api/basic/v2/Bus/EstimatedTimeOfArrival/City/NewTaipei/99?%24filter=RouteName%2FZh_tw%20eq%20%2799%27&%24orderby=StopID&%24format=JSON
         
-       
-        var urlComponet = URLComponents(string: "https://tdx.transportdata.tw")!
-        let path = "/api/basic/v2/Bus/EstimatedTimeOfArrival/City/\(cityName)/\(routeName)"
-        urlComponet.path = path
-        urlComponet.queryItems = [
+        var urlComponent = URLComponents(string: "\(SOURCE_URL)/api/basic/v2/Bus/EstimatedTimeOfArrival/City/\(cityName)/\(routeName)")
+
+        urlComponent?.queryItems = [
             URLQueryItem(name: "$filter", value: "RouteName/Zh_tw eq '\(routeName)'"),
             URLQueryItem(name: "$orderby", value: "StopID"),
             URLQueryItem(name: "$format", value: "JSON")
         ]
         
-        guard let url = urlComponet.url else {
-            throw NetworkError.invalidURL
+        guard let url = urlComponent?.url else {
+            throw NetworkError.InvalidURL
         }
         
         var request = URLRequest(url: url)
@@ -236,18 +251,15 @@ class NetworkManager {
     
     func fetchStopsAsync(cityName: String, routeName: String, token: Token) async throws -> [StopOfRoute] {
         // https://tdx.transportdata.tw/api/basic/v2/Bus/StopOfRoute/City/NewTaipei/99?%24filter=RouteName%2FZh_tw%20eq%20%2799%27&%24format=JSON
-
-        var urlComponet = URLComponents(string: "https://tdx.transportdata.tw")!
-        let path = "/api/basic/v2/Bus/StopOfRoute/City/\(cityName)/\(routeName)"
-        urlComponet.path = path
+        var urlComponent = URLComponents(string: "\(SOURCE_URL)/api/basic/v2/Bus/StopOfRoute/City/\(cityName)/\(routeName)")
         
-        urlComponet.queryItems = [
+        urlComponent?.queryItems = [
             URLQueryItem(name: "$filter", value: "RouteName/Zh_tw eq '\(routeName)'"),
             URLQueryItem(name: "$format", value: "JSON")
         ]
-        
-        guard let url = urlComponet.url else {
-            throw NetworkError.invalidURL
+
+        guard let url = urlComponent?.url else {
+            throw NetworkError.InvalidURL
         }
         
         var request = URLRequest(url: url)
@@ -271,7 +283,8 @@ class NetworkManager {
         }
     }
     enum NetworkError: Error {
-        case invalidURL
+        case InvalidURL
+        case MissingApiKey
     }
 }
 

@@ -143,6 +143,7 @@
 		DF03DAE129AF193400FD4377 /* FirebaseCoreExtension.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = FirebaseCoreExtension.xcframework; path = Carthage/Build/FirebaseCoreExtension.xcframework; sourceTree = "<group>"; };
 		DF03DAF329AF452D00FD4377 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		DF81285C29AF667F008095FE /* GoogleMaps.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = GoogleMaps.bundle; path = "Carthage/Build/GoogleMaps.xcframework/ios-arm64_x86_64-simulator/GoogleMaps.framework/Resources/GoogleMaps.bundle"; sourceTree = "<group>"; };
+		DF81285F29B05D98008095FE /* Config.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Config.xcconfig; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -259,6 +260,7 @@
 				A10503AA288FAB1F00EF461D /* MapViewController.swift */,
 				A112951B289033A80093D936 /* NetworkManager.swift */,
 				A1821A1F28924CFD003CB0EB /* README.md */,
+				DF81285F29B05D98008095FE /* Config.xcconfig */,
 			);
 			path = MyBusMapSwiftUI;
 			sourceTree = "<group>";
@@ -443,6 +445,7 @@
 /* Begin XCBuildConfiguration section */
 		A120216F288FA00800C8746A /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = DF81285F29B05D98008095FE /* Config.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_ANALYZER_NONNULL = YES;
@@ -505,6 +508,7 @@
 		};
 		A1202170288FA00800C8746A /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = DF81285F29B05D98008095FE /* Config.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_ANALYZER_NONNULL = YES;

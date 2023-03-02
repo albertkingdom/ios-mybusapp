@@ -62,3 +62,6 @@ xcuserdata/
 
 Carthage/Checkouts/
 Carthage/Build/
+
+
+*.xcconfig
