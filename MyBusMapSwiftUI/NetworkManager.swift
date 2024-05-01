@@ -17,7 +17,7 @@ class NetworkManager {
         return "\(SOURCE_URL)/auth/realms/TDXConnect/protocol/openid-connect/token"
     }
     var NEARBY_STOP_URL: String {
-        return "\(SOURCE_URL)/MOTC/v2/Bus/Station/NearBy"
+        return "\(SOURCE_URL)/api/advanced/v2/Bus/Station/NearBy"
     }
     var NEARBY_STOP_COORD_URL: String {
         return "\(SOURCE_URL)/api/advanced/v2/Bus/Station/NearBy"

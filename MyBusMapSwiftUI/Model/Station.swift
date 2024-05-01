@@ -13,7 +13,7 @@ struct Station: Codable {
     let stationPosition: StationPosition
     let stationAddress: String? = nil
     let stops: [Stop]
-    let locationCityCode, bearing: String
+    let locationCityCode: String
     let updateTime: String
     let versionID: Int
 
@@ -25,7 +25,7 @@ struct Station: Codable {
         case stationAddress = "StationAddress"
         case stops = "Stops"
         case locationCityCode = "LocationCityCode"
-        case bearing = "Bearing"
+//        case bearing = "Bearing"
         case updateTime = "UpdateTime"
         case versionID = "VersionID"
     }

@@ -34,8 +34,8 @@ struct ContentView: View {
             )
                 .edgesIgnoringSafeArea(.top)
                 .onAppear {
-                    viewModel.checkIfLocationServiceIsEnabled()
                     viewModel.checkIfLogin()
+                    viewModel.checkLocationAuthorization()
                 }
          
             if showLocationSearch {
@@ -153,7 +153,7 @@ struct ContentView: View {
         showHighlightMarker = true
     }
     func onTapMyLocationButton() {
-        viewModel.checkIfLocationServiceIsEnabled()
+        viewModel.checkLocationAuthorization()
     }
 }
 

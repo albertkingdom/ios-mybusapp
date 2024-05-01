@@ -13,7 +13,7 @@ import FirebaseFirestoreSwift
 import FirebaseAuth
 import FirebaseFirestore
 
-@MainActor
+
 class MapViewModel: NSObject, ObservableObject, CLLocationManagerDelegate {
     static let shared = MapViewModel()
     private var locationManager: CLLocationManager?
@@ -47,18 +47,14 @@ class MapViewModel: NSObject, ObservableObject, CLLocationManagerDelegate {
         }
     }
     
-    func checkIfLocationServiceIsEnabled() {
-        if CLLocationManager.locationServicesEnabled() {
-            locationManager = CLLocationManager() // will call locationManagerDidChangeAuthorization method
-            locationManager?.desiredAccuracy = kCLLocationAccuracyBest
-            locationManager!.delegate = self
-            
-        } else {
-            print("location is unavailable")
-        }
-    }
+   
+       
     
-    private func checkLocationAuthorization() {
+    
+    func checkLocationAuthorization() {
+        locationManager = CLLocationManager() // will call locationManagerDidChangeAuthorization method
+        locationManager?.desiredAccuracy = kCLLocationAccuracyBest
+        locationManager!.delegate = self
         guard let locationManager = locationManager else {
             return
         }
@@ -66,21 +62,21 @@ class MapViewModel: NSObject, ObservableObject, CLLocationManagerDelegate {
         switch locationManager.authorizationStatus {
         case .notDetermined:
             locationManager.requestWhenInUseAuthorization()
+            print("notDetermined")
         case .restricted:
             print("location service is restricted")
         case .denied:
             print("location service is denied")
         case .authorizedAlways, .authorizedWhenInUse:
             locationManager.startUpdatingLocation()
+            print("startUpdatingLocation")
             break
         @unknown default:
             break
         }
     }
     
-    func locationManagerDidChangeAuthorization(_ manager: CLLocationManager) {
-        checkLocationAuthorization()
-    }
+
     
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
 
@@ -91,6 +87,9 @@ class MapViewModel: NSObject, ObservableObject, CLLocationManagerDelegate {
             await fetchNearByStations()
         }
     }
+    func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
+            print("Failed to get location: \(error)")
+        }
     func fetchNearByStationsWrapper()  {
         Task {
             await fetchNearByStations()
@@ -99,11 +98,12 @@ class MapViewModel: NSObject, ObservableObject, CLLocationManagerDelegate {
     private func fetchNearByStations() async {
         
         let coordinate = (location?.coordinate.latitude ?? 0, location?.coordinate.longitude ?? 0)
+        print()
         do {
             let token = try await NetworkManager.shared.fetchToken()
             
             let stations = try await NetworkManager.shared.fetchNearByStops(coordinate: coordinate, token: token)
-            //print("fetchNearByStations stations \(stations)")
+            print("fetchNearByStations stations \(stations)")
             handleNearByStationsResponse(stations: stations)
         } catch {
             print("fetchNearByStations error \(error)")
@@ -140,7 +140,9 @@ class MapViewModel: NSObject, ObservableObject, CLLocationManagerDelegate {
                 )
             }
         }
-        self.nearByStations = nearbyStations
+        DispatchQueue.main.async {
+            self.nearByStations = nearbyStations
+        }
         
     }
     
