@@ -16,25 +16,35 @@ struct NearByStationSheet: View {
     @State var isloading = true
     @State var sheetMode: SheetMode = .half {
         didSet {
-            draggedOffset = calculateOffset()
+            //            draggedOffset = calculateOffset()
+            calculateHeight()
         }
     }
-    @State var draggedOffset: CGFloat = UIScreen.main.bounds.height/2
+//    @State var draggedOffset: CGFloat = UIScreen.main.bounds.height/2
     //@Binding var sheetMode: SheetMode
     @Binding var nearByStations: [NearByStation]
     @Binding var showNearByStationSheet: Bool
     let clickOnStationName: ([SubStation]) -> Void
+    @State var heightFraction=0.4
+    @State var viewH: Double=0.0
+    @Binding var dynamicHeight: Double
 
-    private func calculateOffset() -> CGFloat {
+    private func calculateHeight() {
         
         switch sheetMode {
             case .quarter:
-                return UIScreen.main.bounds.height - 200
+            heightFraction=0.2
+            dynamicHeight=viewH*heightFraction
             case .half:
-                return UIScreen.main.bounds.height/2
+            heightFraction=0.4
+            dynamicHeight=viewH*heightFraction
+
             case .full:
-                return 0
+            heightFraction=1
+            dynamicHeight=viewH*heightFraction
+
         }
+        print("dynamicHeight \(dynamicHeight)")
         
     }
     private func onDrag(yTranslation: CGFloat){
@@ -62,94 +72,111 @@ struct NearByStationSheet: View {
         }
     }
     var body: some View {
+        GeometryReader { geometry in
+            VStack {
+                Spacer()
+                VStack {
+                    ZStack {
+                        Rectangle()
+                            .frame(width: 50, height: 5, alignment: .center)
+                            .foregroundColor(.gray)
+                            .padding(.bottom)
+                        
+                    }
+                    
+
+                    Text("附近站牌")
+                        .multilineTextAlignment(.leading)
+                    
+                    if #available(iOS 15.0, *) {
+                        List(nearByStations, id:\.id) { station in
+                            HStack {
+                                VStack(alignment: .leading) {
+                                    Text("\(station.stationName)")
+                                    Text("\(station.subStations.count)個站牌")
+                                        .foregroundColor(Color.secondary)
+                                        .font(Font.system(size: 14))
+                                }
+                                Spacer()
+                            }
+                            .contentShape(Rectangle())
+                            .onTapGesture {
+                                print("tap on station name!")
+                                showNearByStationSheet = false
+                                clickOnStationName(station.subStations)
+                            }
+                            .listRowSeparator(.hidden)
+                        }
+                        .listStyle(.plain)
+                        
+                        
+                    } else {
+                        // Fallback on earlier versions
+                        List(nearByStations, id:\.id) { station in
+                            HStack {
+                                VStack(alignment: .leading) {
+                                    Text("\(station.stationName)")
+                                    Text("\(station.subStations.count)個站牌")
+                                        .foregroundColor(Color.secondary)
+                                        .font(Font.system(size: 14))
+                                }
+                                
+                                Spacer()
+                            }
+                            .contentShape(Rectangle())
+                            .onTapGesture {
+                                print("tap on station name!")
+                                showNearByStationSheet = false
+                                
+                                clickOnStationName(station.subStations)
+                            }
+                            
+                        }
+                        .listStyle(.plain)
+                        
+                    }
+                    
+                    
+                }
+                .frame(height: geometry.size.height*heightFraction)
+                .padding(.top)
+                .background(Color.white)
+                .cornerRadius(15)
+
+        //        .offset(y: draggedOffset)
+                
+                .ignoresSafeArea(edges: [.bottom])
+                .compositingGroup()
+                .shadow(color: .black, radius: 4, x: 0, y: -1)
+                .mask(Rectangle()
+                        .padding(.top, -20))
+                .gesture(
+                    DragGesture()
+                        .onChanged{ value in
+                            
+                            print("draggedOffset \(value.translation)")
+                        }
+                        .onEnded{ value in
+                            onDrag(yTranslation: value.translation.height)
+                            if value.translation.height > 0 {
+                                print("drag end +y")
+                                
+                            }else {
+                                print("drag end -y")
+                            }
+                        }
+                )
+            }
+            .onAppear{
+                self.viewH = geometry.size.height*heightFraction
+            }
+            .onChange(of: geometry.size.height) { newSize in
+                print("new H value \(newSize)")
+                viewH = newSize*heightFraction
+            }
+        }
         
-        VStack {
-            ZStack {
-                Rectangle()
-                    .frame(width: 50, height: 5, alignment: .center)
-                    .foregroundColor(.gray)
-                    .padding(.bottom)
-                
-                }
-            
-            
-            Text("附近站牌")
-                .multilineTextAlignment(.leading)
-            
-            if #available(iOS 15.0, *) {
-                List(nearByStations, id:\.id) { station in
-                    HStack {
-                        VStack(alignment: .leading) {
-                            Text("\(station.stationName)")
-                            Text("\(station.subStations.count)個站牌")
-                                .foregroundColor(Color.secondary)
-                                .font(Font.system(size: 14))
-                        }
-                        Spacer()
-                    }
-                    .contentShape(Rectangle())
-                    .onTapGesture {
-                        print("tap on station name!")
-                        showNearByStationSheet = false
-                        clickOnStationName(station.subStations)
-                    }
-                    .listRowSeparator(.hidden)
-                }
-                .listStyle(.plain)
-                
-                
-            } else {
-                // Fallback on earlier versions
-                List(nearByStations, id:\.id) { station in
-                    HStack {
-                        VStack(alignment: .leading) {
-                            Text("\(station.stationName)")
-                            Text("\(station.subStations.count)個站牌")
-                                .foregroundColor(Color.secondary)
-                                .font(Font.system(size: 14))
-                        }
-                        
-                        Spacer()
-                    }
-                    .contentShape(Rectangle())
-                    .onTapGesture {
-                        print("tap on station name!")
-                        showNearByStationSheet = false
-                        
-                        clickOnStationName(station.subStations)
-                    }
-                    
-                }
-                .listStyle(.plain)
-                
-            }
-            
-            
-        }
-        .padding(.top)
-        .background(Color.white)
-        .cornerRadius(15)
-        .offset(y: draggedOffset)
-        .ignoresSafeArea(edges: [.bottom])
-        .compositingGroup()
-        .shadow(color: .black, radius: 4, x: 0, y: -1)
-        .mask(Rectangle()
-                .padding(.top, -20))
-        .gesture(DragGesture()
-                    .onChanged{ value in
-            
-            print("draggedOffset \(value.translation)")
-        }
-                    .onEnded{ value in
-                onDrag(yTranslation: value.translation.height)
-                if value.translation.height > 0 {
-                    print("drag end +y")
-                    
-                }else {
-                    print("drag end -y")
-                }
-            }
-        )
+       
         
         
     }
@@ -178,7 +205,8 @@ struct NearByStationSheet_Previews: PreviewProvider {
             ])
             
         ]), showNearByStationSheet: .constant(true)
-                      , clickOnStationName: { _ in print("")}
+                      , clickOnStationName: { _ in print("")},
+            dynamicHeight: .constant(0.0)
         )
     }
 }

@@ -18,17 +18,17 @@ struct GoogleMapsView: UIViewRepresentable {
     @Binding var existedMarkers: [GMSMarker]
     @Binding var showHighlightMarker: Bool
     @Binding var showNearByStationSheet: Bool
+    @Binding var bottomPadding: Double
     var onSelectMarker: (GMSMarker) -> Void
     var onTapMyLocationBtn: () -> Void
     
     func makeUIView(context: Context) -> GMSMapView {
         let camera = GMSCameraPosition.london
         let mapView = GMSMapView(frame: CGRect.zero, camera: camera)
-        mapView.settings.myLocationButton = true
         mapView.isMyLocationEnabled = true
         
-        mapView.padding = UIEdgeInsets(top: 0, left: 0, bottom: UIScreen.main.bounds.height/2, right: 10) // adjust mylocation button position
-        
+//        mapView.padding = UIEdgeInsets(top: 0, left: 0, bottom: bottomPadding+50, right: 10) // adjust mylocation button position
+        print("bottomPadding \(bottomPadding)")
         
         mapView.delegate = context.coordinator
         return mapView
@@ -46,7 +46,31 @@ struct GoogleMapsView: UIViewRepresentable {
         
         updateHighlightMarkersOnMap(uiView: uiView)
         
+//        moveLocationButton(uiView)
+        uiView.settings.myLocationButton = true
+        let padding=bottomPadding+Double(100)
+        uiView.padding = UIEdgeInsets(top: 0.0, left: 0.0, bottom: padding, right: 10.0) // adjust mylocation button position
+
     }
+    private func moveLocationButton(_ mapView: GMSMapView) {
+            for object in mapView.subviews {
+                if object.thisClassName == "GMSUISettingsPaddingView" {
+                    for view in object.subviews {
+                        if view.thisClassName == "GMSUISettingsView" {
+                            for btn in view.subviews {
+                                if btn.thisClassName == "GMSx_MDCFloatingButton" {
+                                    var frame = btn.frame
+                                    frame.origin.x = frame.origin.x + 50
+                                    frame.origin.y = frame.origin.y + 200
+                                    btn.frame = frame
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    
     func updateMarkersOnMap(uiView: GMSMapView) {
         let markers = prepareMarkers()
         // delete all existed markers from map
@@ -149,3 +173,8 @@ struct GoogleMapsView: UIViewRepresentable {
 extension GMSCameraPosition  {
      static var london = GMSCameraPosition.camera(withLatitude: 51.507, longitude: 0, zoom: 15)
  }
+extension NSObject {
+    var thisClassName: String {
+        return NSStringFromClass(type(of: self))
+    }
+}
