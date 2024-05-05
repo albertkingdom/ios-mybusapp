@@ -20,5 +20,5 @@ UI設計和功能模仿App Store上知名公車app: [Bus+](https://apps.apple.co
 
 ### Screenshots
 
-<img src="https://imgur.com/WHTlykT.png"  width="150" height="300" />
+<img src="https://imgur.com/fbFPlGX.png"  width="150" height="300" />
 
