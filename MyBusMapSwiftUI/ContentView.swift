@@ -86,48 +86,50 @@ struct ContentView: View {
                 .padding(.top, 30)
                 
                 
-                
-                
-                if showNearByStationSheet {
-                                    NearByStationSheet(
-                                                       nearByStations: $viewModel.nearByStations,
-                                                       showNearByStationSheet: $showNearByStationSheet,
-                                                       clickOnStationName: onClickStationName(subStations: ),
-                                                       dynamicHeight: $bottomPadding
-                                    )
-                    
-                }
-                if !showNearByStationSheet {
-                    ArrivalTimeSheet(
-                        arrivalTimes: $viewModel.sortedArrivalTimes,
-                        push: $push,
-                        showNearByStationSheet: $showNearByStationSheet,
-                        clickOnRouteName: onClickRouteName(routeName:),
-                        unHighlightMarkers: unHighlightMarker,
-                        clearData: clearData
-                    )
-                    .onDisappear {
-                        print("ArrivalTimeSheet onDisappear")
-                        //viewModel.sortedArrivalTimes.removeAll()
-                        //viewModel.currentStationID = ""
+                    ZStack {
+                        if showNearByStationSheet {
+                            NearByStationSheet(
+                                nearByStations: $viewModel.nearByStations,
+                                showNearByStationSheet: $showNearByStationSheet,
+                                clickOnStationName: onClickStationName(subStations: ),
+                                dynamicHeight: $bottomPadding
+                            )
+                            
+                        }
+                        if !showNearByStationSheet {
+                            ArrivalTimeSheet(
+                                arrivalTimes: $viewModel.sortedArrivalTimes,
+                                push: $push,
+                                showNearByStationSheet: $showNearByStationSheet,
+                                clickOnRouteName: onClickRouteName(routeName:),
+                                unHighlightMarkers: unHighlightMarker,
+                                clearData: clearData
+                            )
+                            .onDisappear {
+                                print("ArrivalTimeSheet onDisappear")
+                                //viewModel.sortedArrivalTimes.removeAll()
+                                //viewModel.currentStationID = ""
+                            }
+                        }
+                    }
+                    if push {
+                        RouteSheet(
+                            push: $push,
+                            location: $viewModel.location,
+                            title: viewModel.clickedRouteName,
+                            arrivalTimes: $viewModel.sortedArrivalTimesForRouteName,
+                            stops: $viewModel.sortedStopsForRouteName
+                        )
+                        //                    .transition(.asymmetric(insertion: .move(edge: .leading), removal: .move(edge: .leading)))
+                        .edgesIgnoringSafeArea(.top)
+                        .transition(.slide)
+                        .zIndex(1)
+                        
                     }
                 }
                 
-                if push {
-                    RouteSheet(
-                        push: $push,
-                        location: $viewModel.location,
-                        title: viewModel.clickedRouteName,
-                        arrivalTimes: $viewModel.sortedArrivalTimesForRouteName,
-                        stops: $viewModel.sortedStopsForRouteName
-                    )
-                    //                    .transition(.asymmetric(insertion: .move(edge: .leading), removal: .move(edge: .leading)))
-                    .edgesIgnoringSafeArea(.top)
-                    .transition(.slide)
-                    .zIndex(1)
-                    
-                }
-            }
+
+            
             .zIndex(2)
         
     }
@@ -169,3 +171,5 @@ struct ContentView_Previews: PreviewProvider {
         ContentView()
     }
 }
+
+

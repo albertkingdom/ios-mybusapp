@@ -47,8 +47,8 @@ class MapViewModel: NSObject, ObservableObject, CLLocationManagerDelegate {
         }
     }
     
-   
-       
+    
+    
     
     
     func checkLocationAuthorization() {
@@ -76,10 +76,10 @@ class MapViewModel: NSObject, ObservableObject, CLLocationManagerDelegate {
         }
     }
     
-
+    
     
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-
+        
         self.location = locations.last
         print("location \(locations)")
         locationManager?.stopUpdatingLocation()
@@ -88,8 +88,8 @@ class MapViewModel: NSObject, ObservableObject, CLLocationManagerDelegate {
         }
     }
     func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
-            print("Failed to get location: \(error)")
-        }
+        print("Failed to get location: \(error)")
+    }
     func fetchNearByStationsWrapper()  {
         Task {
             await fetchNearByStations()
@@ -98,7 +98,6 @@ class MapViewModel: NSObject, ObservableObject, CLLocationManagerDelegate {
     private func fetchNearByStations() async {
         
         let coordinate = (location?.coordinate.latitude ?? 0, location?.coordinate.longitude ?? 0)
-        print()
         do {
             let token = try await NetworkManager.shared.fetchToken()
             
@@ -147,7 +146,9 @@ class MapViewModel: NSObject, ObservableObject, CLLocationManagerDelegate {
     }
     
     func fetchArrivalTime(subStations: [SubStation]) async {
-        isLoading = true
+        DispatchQueue.main.async {
+            self.isLoading = true
+        }
         //let city = "NewTaipei"
         let stationID = subStations[0].stationID
         let coordinate = (location?.coordinate.latitude ?? 0, location?.coordinate.longitude ?? 0)
@@ -157,9 +158,12 @@ class MapViewModel: NSObject, ObservableObject, CLLocationManagerDelegate {
             let arrivalTimes = try await NetworkManager.shared.fetchArrivalTimeAsync(city: city.city, stationID: stationID, token: token)
             print("fetchArrivalTime  \(arrivalTimes)")
             let sorted = handleArrivalTime(arrivalTimes: arrivalTimes)
-            self.sortedArrivalTimes = sorted
-            
-            isLoading = false
+            DispatchQueue.main.async {
+                
+                self.sortedArrivalTimes = sorted
+                
+                self.isLoading = false
+            }
         } catch {
             print("fetchArrivalTime error \(error)")
         }
@@ -180,7 +184,10 @@ class MapViewModel: NSObject, ObservableObject, CLLocationManagerDelegate {
     }
     
     func fetchArrivalTimeForRouteNameAsync(routeName: String) async {
-        isLoading = true
+        DispatchQueue.main.async {
+            
+            self.isLoading = true
+        }
         let coordinate = (location?.coordinate.latitude ?? 0, location?.coordinate.longitude ?? 0)
         do {
             let token = try await NetworkManager.shared.fetchToken()
@@ -189,8 +196,11 @@ class MapViewModel: NSObject, ObservableObject, CLLocationManagerDelegate {
             print("fetchArrivalTimeForRouteNameAsync  \(arrivalTimes)")
             
             let sorted = handleArrivalTime(arrivalTimes: arrivalTimes)
-            self.sortedArrivalTimesForRouteName = sorted
-            isLoading = false
+            DispatchQueue.main.async {
+                
+                self.sortedArrivalTimesForRouteName = sorted
+                self.isLoading = false
+            }
         } catch {
             print("fetchArrivalTimeForRouteNameAsync error \(error)")
         }
@@ -204,7 +214,9 @@ class MapViewModel: NSObject, ObservableObject, CLLocationManagerDelegate {
             let routes = try await NetworkManager.shared.fetchStopsAsync(cityName: city.city, routeName: routeName, token: token)
             print("fetchStopsAsync  \(routes)")
             let dict = handleStops(routes: routes)
-            sortedStopsForRouteName = dict
+            DispatchQueue.main.async {
+                self.sortedStopsForRouteName = dict
+            }
         } catch {
             print("fetchStopsAsync error \(error)")
         }
@@ -278,7 +290,7 @@ class MapViewModel: NSObject, ObservableObject, CLLocationManagerDelegate {
                 }catch {
                     print(error.localizedDescription)
                 }
-    
+                
             }
             
         } else {
