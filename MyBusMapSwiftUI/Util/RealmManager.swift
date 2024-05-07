@@ -10,11 +10,23 @@ import RealmSwift
 
 class RealmManager {
     static let shared = RealmManager()
-    let realm = try! Realm()
+    private let realm: Realm
+
+    init() {
+        do {
+            realm = try Realm()
+        } catch {
+            fatalError("Failed to initialize Realm: \(error)")
+        }
+    }
     
     func saveToDB(_ favorite: FavoriteRealm) {
-        try! realm.write {
-            realm.add(favorite)
+        do {
+            try realm.write {
+                realm.add(favorite)
+            }
+        } catch {
+            print("Error saving to Realm: \(error)")
         }
         print("Realm is located at: \(realm.configuration.fileURL!)")
         
@@ -24,8 +36,12 @@ class RealmManager {
         return favorites
     }
     func deleteFromDB(objectToDelete: FavoriteRealm) {
-        try! realm.write {
-            realm.delete(objectToDelete)
+        do {
+            try realm.write {
+                realm.delete(objectToDelete)
+            }
+        } catch {
+            print("Error deleting from Realm: \(error)")
         }
     }
 }

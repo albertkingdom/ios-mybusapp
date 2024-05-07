@@ -45,7 +45,7 @@ struct GoogleMapsView: UIViewRepresentable {
         updateMarkersOnMap(uiView: uiView)
         
         updateHighlightMarkersOnMap(uiView: uiView)
-        
+    
 //        moveLocationButton(uiView)
         uiView.settings.myLocationButton = true
         let padding=bottomPadding+Double(100)
@@ -60,8 +60,8 @@ struct GoogleMapsView: UIViewRepresentable {
                             for btn in view.subviews {
                                 if btn.thisClassName == "GMSx_MDCFloatingButton" {
                                     var frame = btn.frame
-                                    frame.origin.x = frame.origin.x + 50
-                                    frame.origin.y = frame.origin.y + 200
+                                    frame.origin.x += 50
+                                    frame.origin.y += 200
                                     btn.frame = frame
                                 }
                             }

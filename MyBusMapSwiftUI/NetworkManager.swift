@@ -54,12 +54,11 @@ class NetworkManager {
     func fetchToken() async throws -> Token {
 
         guard let url = URL(string: TOKEN_URL) else {
-            throw NetworkError.InvalidURL
-            
+            throw NetworkError.invalidURL
         }
         guard let clientID = clientID,
               let clientKey = clientKey
-        else { throw NetworkError.MissingApiKey}
+        else { throw NetworkError.missingApiKey}
 
         var request = URLRequest(url: url)
         request.httpMethod = "post"
@@ -93,7 +92,7 @@ class NetworkManager {
         ]
         
         guard let url = urlComponet?.url else {
-            throw NetworkError.InvalidURL
+            throw NetworkError.invalidURL
         }
         var request = URLRequest(url: url)
 //        request.setValue("Bearer \(token)", forHTTPHeaderField: "Authorization")
@@ -124,7 +123,7 @@ class NetworkManager {
         ]
         
         guard let url = urlComponet?.url else {
-            throw NetworkError.InvalidURL
+            throw NetworkError.invalidURL
         }
         
         var request = URLRequest(url: url)
@@ -156,7 +155,7 @@ class NetworkManager {
         ]
         
         guard let url = urlComponent.url else {
-            throw NetworkError.InvalidURL
+            throw NetworkError.invalidURL
         }
 
         var request = URLRequest(url: url)
@@ -190,7 +189,7 @@ class NetworkManager {
             URLQueryItem(name: "$format", value: "JSON")
         ]
         guard let url = urlComponent.url else {
-            throw NetworkError.InvalidURL
+            throw NetworkError.invalidURL
         }
         
         var request = URLRequest(url: url)
@@ -225,7 +224,7 @@ class NetworkManager {
         ]
         
         guard let url = urlComponent?.url else {
-            throw NetworkError.InvalidURL
+            throw NetworkError.invalidURL
         }
         
         var request = URLRequest(url: url)
@@ -259,18 +258,15 @@ class NetworkManager {
         ]
 
         guard let url = urlComponent?.url else {
-            throw NetworkError.InvalidURL
+            throw NetworkError.invalidURL
         }
-        
         var request = URLRequest(url: url)
         request.setValue("Bearer \(token.accessToken)", forHTTPHeaderField: "Authorization")
-        
         return try await withCheckedThrowingContinuation { continuation in
-            URLSession.shared.dataTask(with: request) { data, response, error in
+            URLSession.shared.dataTask(with: request) { data, _, error in
                 if let data = data {
                     do {
                         let decoder = JSONDecoder()
-                        
                         let stopsResponse = try decoder.decode([StopOfRoute].self, from: data)
                         continuation.resume(with: .success(stopsResponse))
                     } catch {
@@ -283,8 +279,8 @@ class NetworkManager {
         }
     }
     enum NetworkError: Error {
-        case InvalidURL
-        case MissingApiKey
+        case invalidURL
+        case missingApiKey
     }
 }
 
