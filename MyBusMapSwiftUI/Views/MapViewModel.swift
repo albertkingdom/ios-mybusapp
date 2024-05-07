@@ -164,6 +164,10 @@ class MapViewModel: NSObject, ObservableObject, CLLocationManagerDelegate {
                 
                 self.isLoading = false
             }
+        } catch let DecodingError.typeMismatch(type, context) {
+            print("Type '\(type)' mismatch:", context.debugDescription)
+            print("codingPath:", context.codingPath)
+        
         } catch {
             print("fetchArrivalTime error \(error)")
         }

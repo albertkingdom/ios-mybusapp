@@ -123,6 +123,7 @@
 		A1E172292BE6290600ED5916 /* RoundedCorner.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoundedCorner.swift; sourceTree = "<group>"; };
 		A1E1722B2BE6866400ED5916 /* BottomContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BottomContainer.swift; sourceTree = "<group>"; };
 		A1E1722D2BE688E200ED5916 /* shareFunction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = shareFunction.swift; sourceTree = "<group>"; };
+		A1E172392BE92EB600ED5916 /* .swiftlint.yml */ = {isa = PBXFileReference; lastKnownFileType = text.yaml; path = .swiftlint.yml; sourceTree = "<group>"; };
 		DF03DA9B29AF088900FD4377 /* Cartfile */ = {isa = PBXFileReference; lastKnownFileType = text; path = Cartfile; sourceTree = "<group>"; };
 		DF03DA9E29AF0BD900FD4377 /* GoogleMapsCore.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = GoogleMapsCore.xcframework; path = Carthage/Build/GoogleMapsCore.xcframework; sourceTree = "<group>"; };
 		DF03DA9F29AF0BD900FD4377 /* GoogleMapsBase.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = GoogleMapsBase.xcframework; path = Carthage/Build/GoogleMapsBase.xcframework; sourceTree = "<group>"; };
@@ -237,6 +238,7 @@
 		A120215A288FA00400C8746A = {
 			isa = PBXGroup;
 			children = (
+				A1E172392BE92EB600ED5916 /* .swiftlint.yml */,
 				DF03DA9B29AF088900FD4377 /* Cartfile */,
 				DF81285C29AF667F008095FE /* GoogleMaps.bundle */,
 				DF03DAF329AF452D00FD4377 /* GoogleService-Info.plist */,
@@ -337,6 +339,7 @@
 				A120215F288FA00400C8746A /* Sources */,
 				A1202160288FA00400C8746A /* Frameworks */,
 				A1202161288FA00400C8746A /* Resources */,
+				A1E1723E2BEA623A00ED5916 /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -414,6 +417,27 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		A1E1723E2BEA623A00ED5916 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			alwaysOutOfDate = 1;
+			buildActionMask = 12;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "# Type a script or drag a script file from your workspace to insert its path.\nexport PATH=\"$PATH:/opt/homebrew/bin\"\n\nif which swiftlint >/dev/null; then\n    swiftlint\nelse\n    echo \"warning: SwiftLint not installed, download from https://github.com/realm/SwiftLint\"\nfi\n";
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		A120215F288FA00400C8746A /* Sources */ = {
