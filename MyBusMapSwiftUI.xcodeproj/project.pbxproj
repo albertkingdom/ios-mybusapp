@@ -45,15 +45,15 @@
 		A1E1722A2BE6290600ED5916 /* RoundedCorner.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1E172292BE6290600ED5916 /* RoundedCorner.swift */; };
 		A1E1722C2BE6866400ED5916 /* BottomContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1E1722B2BE6866400ED5916 /* BottomContainer.swift */; };
 		A1E1722E2BE688E200ED5916 /* shareFunction.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1E1722D2BE688E200ED5916 /* shareFunction.swift */; };
+		A1E172412BEA6B6100ED5916 /* GoogleMaps in Frameworks */ = {isa = PBXBuildFile; productRef = A1E172402BEA6B6100ED5916 /* GoogleMaps */; };
+		A1E172432BEA6B6100ED5916 /* GoogleMapsBase in Frameworks */ = {isa = PBXBuildFile; productRef = A1E172422BEA6B6100ED5916 /* GoogleMapsBase */; };
+		A1E172452BEA6B6100ED5916 /* GoogleMapsCore in Frameworks */ = {isa = PBXBuildFile; productRef = A1E172442BEA6B6100ED5916 /* GoogleMapsCore */; };
+		A1E172482BEA6BDD00ED5916 /* GooglePlaces in Frameworks */ = {isa = PBXBuildFile; productRef = A1E172472BEA6BDD00ED5916 /* GooglePlaces */; };
 		A1F168422BDFF1250080F57E /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = A1F168412BDFF1250080F57E /* FirebaseAuth */; };
 		A1F168442BDFF1250080F57E /* FirebaseCrashlytics in Frameworks */ = {isa = PBXBuildFile; productRef = A1F168432BDFF1250080F57E /* FirebaseCrashlytics */; };
 		A1F168462BDFF1250080F57E /* FirebaseFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = A1F168452BDFF1250080F57E /* FirebaseFirestore */; };
 		A1F168482BDFF1250080F57E /* FirebaseFirestoreSwift in Frameworks */ = {isa = PBXBuildFile; productRef = A1F168472BDFF1250080F57E /* FirebaseFirestoreSwift */; };
 		A1F168522BDFF1250080F57E /* FirebaseInstallations in Frameworks */ = {isa = PBXBuildFile; productRef = A1F168512BDFF1250080F57E /* FirebaseInstallations */; };
-		DF03DA9C29AF088900FD4377 /* Cartfile in Resources */ = {isa = PBXBuildFile; fileRef = DF03DA9B29AF088900FD4377 /* Cartfile */; };
-		DF03DAA129AF0BDA00FD4377 /* GoogleMapsCore.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = DF03DA9E29AF0BD900FD4377 /* GoogleMapsCore.xcframework */; };
-		DF03DAA329AF0BDA00FD4377 /* GoogleMapsBase.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = DF03DA9F29AF0BD900FD4377 /* GoogleMapsBase.xcframework */; };
-		DF03DAA529AF0BDA00FD4377 /* GoogleMaps.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = DF03DAA029AF0BDA00FD4377 /* GoogleMaps.xcframework */; };
 		DF03DAAB29AF0C7100FD4377 /* Accelerate.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DF03DAAA29AF0C7100FD4377 /* Accelerate.framework */; };
 		DF03DAB229AF0C9400FD4377 /* CoreTelephony.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DF03DAAC29AF0C9400FD4377 /* CoreTelephony.framework */; };
 		DF03DAB329AF0C9400FD4377 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DF03DAAD29AF0C9400FD4377 /* CoreGraphics.framework */; };
@@ -70,15 +70,12 @@
 		DF03DAC529AF0CDD00FD4377 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DF03DAC429AF0CDD00FD4377 /* QuartzCore.framework */; };
 		DF03DAC729AF0CE400FD4377 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DF03DAC629AF0CE400FD4377 /* SystemConfiguration.framework */; };
 		DF03DAC929AF0CEA00FD4377 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DF03DAC829AF0CEA00FD4377 /* UIKit.framework */; };
-		DF03DACB29AF0D8900FD4377 /* GooglePlaces.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = DF03DACA29AF0D8900FD4377 /* GooglePlaces.xcframework */; };
-		DF03DACF29AF0DE000FD4377 /* GooglePlaces.bundle in Resources */ = {isa = PBXBuildFile; fileRef = DF03DACE29AF0DE000FD4377 /* GooglePlaces.bundle */; };
 		DF03DAED29AF222800FD4377 /* GoogleSignIn in Frameworks */ = {isa = PBXBuildFile; productRef = DF03DAEC29AF222800FD4377 /* GoogleSignIn */; };
 		DF03DAEF29AF222800FD4377 /* GoogleSignInSwift in Frameworks */ = {isa = PBXBuildFile; productRef = DF03DAEE29AF222800FD4377 /* GoogleSignInSwift */; };
 		DF03DAF229AF229500FD4377 /* Kingfisher in Frameworks */ = {isa = PBXBuildFile; productRef = DF03DAF129AF229500FD4377 /* Kingfisher */; };
 		DF03DAF429AF452D00FD4377 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = DF03DAF329AF452D00FD4377 /* GoogleService-Info.plist */; };
 		DF03DAF729AF4DDF00FD4377 /* Realm in Frameworks */ = {isa = PBXBuildFile; productRef = DF03DAF629AF4DDF00FD4377 /* Realm */; };
 		DF03DAF929AF4DDF00FD4377 /* RealmSwift in Frameworks */ = {isa = PBXBuildFile; productRef = DF03DAF829AF4DDF00FD4377 /* RealmSwift */; };
-		DF81285D29AF667F008095FE /* GoogleMaps.bundle in Resources */ = {isa = PBXBuildFile; fileRef = DF81285C29AF667F008095FE /* GoogleMaps.bundle */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -124,7 +121,6 @@
 		A1E1722B2BE6866400ED5916 /* BottomContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BottomContainer.swift; sourceTree = "<group>"; };
 		A1E1722D2BE688E200ED5916 /* shareFunction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = shareFunction.swift; sourceTree = "<group>"; };
 		A1E172392BE92EB600ED5916 /* .swiftlint.yml */ = {isa = PBXFileReference; lastKnownFileType = text.yaml; path = .swiftlint.yml; sourceTree = "<group>"; };
-		DF03DA9B29AF088900FD4377 /* Cartfile */ = {isa = PBXFileReference; lastKnownFileType = text; path = Cartfile; sourceTree = "<group>"; };
 		DF03DA9E29AF0BD900FD4377 /* GoogleMapsCore.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = GoogleMapsCore.xcframework; path = Carthage/Build/GoogleMapsCore.xcframework; sourceTree = "<group>"; };
 		DF03DA9F29AF0BD900FD4377 /* GoogleMapsBase.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = GoogleMapsBase.xcframework; path = Carthage/Build/GoogleMapsBase.xcframework; sourceTree = "<group>"; };
 		DF03DAA029AF0BDA00FD4377 /* GoogleMaps.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = GoogleMaps.xcframework; path = Carthage/Build/GoogleMaps.xcframework; sourceTree = "<group>"; };
@@ -145,13 +141,11 @@
 		DF03DAC629AF0CE400FD4377 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		DF03DAC829AF0CEA00FD4377 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		DF03DACA29AF0D8900FD4377 /* GooglePlaces.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = GooglePlaces.xcframework; path = Carthage/Build/GooglePlaces.xcframework; sourceTree = "<group>"; };
-		DF03DACE29AF0DE000FD4377 /* GooglePlaces.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = GooglePlaces.bundle; path = "Carthage/Build/GooglePlaces.xcframework/ios-arm64_x86_64-simulator/GooglePlaces.framework/Resources/GooglePlaces.bundle"; sourceTree = "<group>"; };
 		DF03DAD229AF0FFA00FD4377 /* Kingfisher.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Kingfisher.framework; path = Carthage/Build/iOS/Kingfisher.framework; sourceTree = "<group>"; };
 		DF03DADB29AF18FC00FD4377 /* RealmSwift.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = RealmSwift.xcframework; path = Carthage/Build/RealmSwift.xcframework; sourceTree = "<group>"; };
 		DF03DADC29AF18FD00FD4377 /* Realm.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = Realm.xcframework; path = Carthage/Build/Realm.xcframework; sourceTree = "<group>"; };
 		DF03DAE129AF193400FD4377 /* FirebaseCoreExtension.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = FirebaseCoreExtension.xcframework; path = Carthage/Build/FirebaseCoreExtension.xcframework; sourceTree = "<group>"; };
 		DF03DAF329AF452D00FD4377 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
-		DF81285C29AF667F008095FE /* GoogleMaps.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = GoogleMaps.bundle; path = "Carthage/Build/GoogleMaps.xcframework/ios-arm64_x86_64-simulator/GoogleMaps.framework/Resources/GoogleMaps.bundle"; sourceTree = "<group>"; };
 		DF81285F29B05D98008095FE /* Config.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Config.xcconfig; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -163,6 +157,7 @@
 				DF03DAC929AF0CEA00FD4377 /* UIKit.framework in Frameworks */,
 				DF03DAC729AF0CE400FD4377 /* SystemConfiguration.framework in Frameworks */,
 				DF03DAC529AF0CDD00FD4377 /* QuartzCore.framework in Frameworks */,
+				A1E172482BEA6BDD00ED5916 /* GooglePlaces in Frameworks */,
 				DF03DAC329AF0CD300FD4377 /* OpenGLES.framework in Frameworks */,
 				DF03DAC129AF0CCD00FD4377 /* Metal.framework in Frameworks */,
 				DF03DABF29AF0CBF00FD4377 /* libz.tbd in Frameworks */,
@@ -174,8 +169,8 @@
 				DF03DAB329AF0C9400FD4377 /* CoreGraphics.framework in Frameworks */,
 				A1F168522BDFF1250080F57E /* FirebaseInstallations in Frameworks */,
 				DF03DAB429AF0C9500FD4377 /* CoreLocation.framework in Frameworks */,
-				DF03DACB29AF0D8900FD4377 /* GooglePlaces.xcframework in Frameworks */,
 				DF03DAF729AF4DDF00FD4377 /* Realm in Frameworks */,
+				A1E172432BEA6B6100ED5916 /* GoogleMapsBase in Frameworks */,
 				DF03DAF929AF4DDF00FD4377 /* RealmSwift in Frameworks */,
 				DF03DAF229AF229500FD4377 /* Kingfisher in Frameworks */,
 				A1F168462BDFF1250080F57E /* FirebaseFirestore in Frameworks */,
@@ -184,11 +179,10 @@
 				DF03DAB729AF0C9500FD4377 /* CoreImage.framework in Frameworks */,
 				DF03DAAB29AF0C7100FD4377 /* Accelerate.framework in Frameworks */,
 				DF03DAEF29AF222800FD4377 /* GoogleSignInSwift in Frameworks */,
-				DF03DAA529AF0BDA00FD4377 /* GoogleMaps.xcframework in Frameworks */,
+				A1E172412BEA6B6100ED5916 /* GoogleMaps in Frameworks */,
 				A1F168442BDFF1250080F57E /* FirebaseCrashlytics in Frameworks */,
-				DF03DAA329AF0BDA00FD4377 /* GoogleMapsBase.xcframework in Frameworks */,
-				DF03DAA129AF0BDA00FD4377 /* GoogleMapsCore.xcframework in Frameworks */,
 				DF03DAED29AF222800FD4377 /* GoogleSignIn in Frameworks */,
+				A1E172452BEA6B6100ED5916 /* GoogleMapsCore in Frameworks */,
 				A1F168422BDFF1250080F57E /* FirebaseAuth in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -239,10 +233,7 @@
 			isa = PBXGroup;
 			children = (
 				A1E172392BE92EB600ED5916 /* .swiftlint.yml */,
-				DF03DA9B29AF088900FD4377 /* Cartfile */,
-				DF81285C29AF667F008095FE /* GoogleMaps.bundle */,
 				DF03DAF329AF452D00FD4377 /* GoogleService-Info.plist */,
-				DF03DACE29AF0DE000FD4377 /* GooglePlaces.bundle */,
 				A1DA5237289A2A2E006CB3D4 /* .gitignore */,
 				A1202165288FA00400C8746A /* MyBusMapSwiftUI */,
 				A1202164288FA00400C8746A /* Products */,
@@ -357,6 +348,10 @@
 				A1F168452BDFF1250080F57E /* FirebaseFirestore */,
 				A1F168472BDFF1250080F57E /* FirebaseFirestoreSwift */,
 				A1F168512BDFF1250080F57E /* FirebaseInstallations */,
+				A1E172402BEA6B6100ED5916 /* GoogleMaps */,
+				A1E172422BEA6B6100ED5916 /* GoogleMapsBase */,
+				A1E172442BEA6B6100ED5916 /* GoogleMapsCore */,
+				A1E172472BEA6BDD00ED5916 /* GooglePlaces */,
 			);
 			productName = MyBusMapSwiftUI;
 			productReference = A1202163288FA00400C8746A /* MyBusMapSwiftUI.app */;
@@ -391,6 +386,8 @@
 				DF03DAF029AF229500FD4377 /* XCRemoteSwiftPackageReference "Kingfisher" */,
 				DF03DAF529AF4DDE00FD4377 /* XCRemoteSwiftPackageReference "realm-swift" */,
 				A1F168342BDFF1250080F57E /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
+				A1E1723F2BEA6B6100ED5916 /* XCRemoteSwiftPackageReference "ios-maps-sdk" */,
+				A1E172462BEA6BDD00ED5916 /* XCRemoteSwiftPackageReference "ios-places-sdk" */,
 			);
 			productRefGroup = A1202164288FA00400C8746A /* Products */;
 			projectDirPath = "";
@@ -406,13 +403,10 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				DF03DA9C29AF088900FD4377 /* Cartfile in Resources */,
 				A120216E288FA00800C8746A /* Preview Assets.xcassets in Resources */,
 				A1DA5238289A2A2E006CB3D4 /* .gitignore in Resources */,
-				DF03DACF29AF0DE000FD4377 /* GooglePlaces.bundle in Resources */,
 				A120216B288FA00800C8746A /* Assets.xcassets in Resources */,
 				DF03DAF429AF452D00FD4377 /* GoogleService-Info.plist in Resources */,
-				DF81285D29AF667F008095FE /* GoogleMaps.bundle in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -615,10 +609,6 @@
 				DEVELOPMENT_ASSET_PATHS = "\"MyBusMapSwiftUI/Preview Content\"";
 				DEVELOPMENT_TEAM = UZ2Z639589;
 				ENABLE_PREVIEWS = YES;
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(PROJECT_DIR)/Carthage/Build/iOS",
-				);
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = MyBusMapSwiftUI/Info.plist;
 				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "The app need access location.";
@@ -652,10 +642,6 @@
 				DEVELOPMENT_ASSET_PATHS = "\"MyBusMapSwiftUI/Preview Content\"";
 				DEVELOPMENT_TEAM = UZ2Z639589;
 				ENABLE_PREVIEWS = YES;
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(PROJECT_DIR)/Carthage/Build/iOS",
-				);
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = MyBusMapSwiftUI/Info.plist;
 				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "The app need access location.";
@@ -702,6 +688,22 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		A1E1723F2BEA6B6100ED5916 /* XCRemoteSwiftPackageReference "ios-maps-sdk" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/googlemaps/ios-maps-sdk";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 8.4.0;
+			};
+		};
+		A1E172462BEA6BDD00ED5916 /* XCRemoteSwiftPackageReference "ios-places-sdk" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/googlemaps/ios-places-sdk";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 8.5.0;
+			};
+		};
 		A1F168342BDFF1250080F57E /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/firebase/firebase-ios-sdk";
@@ -737,6 +739,26 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		A1E172402BEA6B6100ED5916 /* GoogleMaps */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = A1E1723F2BEA6B6100ED5916 /* XCRemoteSwiftPackageReference "ios-maps-sdk" */;
+			productName = GoogleMaps;
+		};
+		A1E172422BEA6B6100ED5916 /* GoogleMapsBase */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = A1E1723F2BEA6B6100ED5916 /* XCRemoteSwiftPackageReference "ios-maps-sdk" */;
+			productName = GoogleMapsBase;
+		};
+		A1E172442BEA6B6100ED5916 /* GoogleMapsCore */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = A1E1723F2BEA6B6100ED5916 /* XCRemoteSwiftPackageReference "ios-maps-sdk" */;
+			productName = GoogleMapsCore;
+		};
+		A1E172472BEA6BDD00ED5916 /* GooglePlaces */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = A1E172462BEA6BDD00ED5916 /* XCRemoteSwiftPackageReference "ios-places-sdk" */;
+			productName = GooglePlaces;
+		};
 		A1F168412BDFF1250080F57E /* FirebaseAuth */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = A1F168342BDFF1250080F57E /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
