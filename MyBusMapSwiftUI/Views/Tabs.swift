@@ -57,7 +57,7 @@ struct Tabs: View {
                 }
             }
         }
-        .frame(height: 55)
+//        .frame(height: 55)
         .onAppear(perform: {
 //            UIScrollView.appearance().backgroundColor = UIColor(#colorLiteral(red: 0.6196078431, green: 0.1098039216, blue: 0.2509803922, alpha: 1))
             UIScrollView.appearance().bounces = fixed ? false : true

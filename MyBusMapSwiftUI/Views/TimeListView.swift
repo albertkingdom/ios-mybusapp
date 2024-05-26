@@ -12,7 +12,46 @@ import FirebaseFirestoreSwift
 import FirebaseAuth
 import RealmSwift
 
-struct TabContent: View {
+struct TimeListItem: View {
+    var status: String
+    var title: String
+    var arrivalTime: ArrivalTime
+    var rowContent: RowContent
+    @Binding var isLogin: Bool
+    var isSaved: Bool
+    var deleteFavFromDB: (String) -> Void
+    var onTap: () -> Void
+
+    var body: some View {
+        HStack {
+            Text(status)
+                .lineLimit(1)
+                .minimumScaleFactor(0.5)
+                .padding()
+                .frame(width: 90, height: 50)
+                .overlay(
+                    RoundedRectangle(cornerRadius: 20)
+                        .stroke(.gray, lineWidth: 2)
+                )
+            VStack(alignment: .leading) {
+                Text(title)
+            }
+            Spacer()
+            Aux(rowContent: rowContent,
+                arrivalTime: arrivalTime,
+                isSaved: isSaved,
+                isLogin: $isLogin,
+                deleteFavFromDB: deleteFavFromDB
+               )
+        }
+        .contentShape(Rectangle())
+        .onTapGesture {
+            onTap()
+        }
+    }
+}
+
+struct TimeListView: View {
     var viewModel = ArrivalTimeSheetViewModel.shared
     @ObservedObject var mapViewModel = MapViewModel.shared
     @State var arrivalTimes: [ArrivalTime]
@@ -21,104 +60,51 @@ struct TabContent: View {
     let rowContent: RowContent
     @Binding var isLogin: Bool
     @State var realmFavList: Results<FavoriteRealm> = RealmManager.shared.readAllFromDB()
-    
+    var timeList: some View {
+        List(arrivalTimes, id: \.id) { arrivalTime in
+            let status = calcEstimateTime(
+                stopStatus: arrivalTime.stopStatus,
+                estimateTime: arrivalTime.estimateTime ?? 0)
+            var title: String {
+                switch rowContent {
+                case .routeName:
+                    return arrivalTime.routeName.zhTw
+                case .stopName:
+                    return arrivalTime.stopName.zhTw
+                }
+            }
+            var isSaved: Bool {
+                return checkStatus(stopID: arrivalTime.stopID, 
+                                   routeName: arrivalTime.routeName.zhTw,
+                                   isLogin: isLogin)
+            }
+  
+            TimeListItem(status: status,
+                         title: title,
+                         arrivalTime: arrivalTime,
+                         rowContent: rowContent,
+                         isLogin: $isLogin,
+                         isSaved: isSaved,
+                         deleteFavFromDB: deleteFavFromDB(routeName:),
+                         onTap: {
+                print("on tap route name")
+                withAnimation(.default) {
+                    push.toggle()
+                }
+                let routeName = arrivalTime.routeName.zhTw
+                clickOnRouteName(routeName)
+            })
+        }
+        .listStyle(.plain)
+        .listRowSeparator(.hidden)
+        .navigationBarHidden(true)
+    }
     var body: some View {
         if #available(iOS 15.0, *) {
-            List(arrivalTimes, id:\.id) { arrivalTime in
-                HStack {
-                    Text(calcEstimateTime(stopStatus: arrivalTime.stopStatus, estimateTime: arrivalTime.estimateTime ?? 0))
-                        .lineLimit(1)
-                        .minimumScaleFactor(0.5)
-                        .padding()
-                        .frame(width: 90, height: 50)
-                        .overlay(
-                            RoundedRectangle(cornerRadius: 20)
-                                .stroke(.gray, lineWidth: 2)
-                        )
-                    VStack(alignment: .leading) {
-                        switch rowContent {
-                        case .routeName:
-                            Text("\(arrivalTime.routeName.zhTw)")
-                        case .stopName:
-                            Text("\(arrivalTime.stopName.zhTw)")
-                        }
-                        
-                        
-                    }
-                    Spacer()
-                    
-                 
-                    
-                    Aux(rowContent: rowContent,
-                        arrivalTime: arrivalTime,
-                        isSaved: checkStatus(stopID: arrivalTime.stopID, routeName: arrivalTime.routeName.zhTw, isLogin: isLogin),
-                        isLogin: $isLogin,
-                        deleteFavFromDB: self.deleteFavFromDB(routeName:)
-                       )
-                    
-                }
-                .contentShape(Rectangle())
-                .onTapGesture {
-                    print("on tap route name")
-                    withAnimation(.default) {
-                        push.toggle()
-                    }
-                    let routeName = arrivalTime.routeName.zhTw
-                    clickOnRouteName(routeName)
-                }
-            }
-            .listStyle(.plain)
+            timeList
             .listRowSeparator(.hidden)
-            .navigationBarHidden(true)
-            .onAppear {
-
-            }
-            
-            
         } else {
-            // Fallback on earlier versions
-            List(arrivalTimes, id:\.id) { arrivalTime in
-                HStack {
-                    Text(calcEstimateTime(stopStatus: arrivalTime.stopStatus, estimateTime: arrivalTime.estimateTime ?? 0))
-                        .lineLimit(1)
-                        .minimumScaleFactor(0.5)
-                        .padding()
-                        .frame(width: 90)
-                        .overlay(
-                            RoundedRectangle(cornerRadius: 20)
-                                .stroke(.gray, lineWidth: 2)
-                        )
-                    VStack(alignment: .leading) {
-                        switch rowContent {
-                        case .routeName:
-                            Text("\(arrivalTime.routeName.zhTw)")
-                        case .stopName:
-                            Text("\(arrivalTime.stopName.zhTw)")
-                        }
-                        
-                    }
-                    Spacer()
-
-                    Aux(rowContent: rowContent,
-                        arrivalTime: arrivalTime,
-                        isSaved: checkStatus(stopID: arrivalTime.stopID, routeName: arrivalTime.routeName.zhTw, isLogin: isLogin),
-                        isLogin: $isLogin,
-                        deleteFavFromDB: self.deleteFavFromDB(routeName:)
-                       )
-                }
-                .contentShape(Rectangle())
-                .onTapGesture {
-                    print("on tap route name")
-                    withAnimation(.default) {
-                        push.toggle()
-                    }
-                    let routeName = arrivalTime.routeName.zhTw
-                    clickOnRouteName(routeName)
-                }
-            }
-            .listStyle(.plain)
-            .navigationBarHidden(true)
-            
+           timeList
         }
     }
     private func calcEstimateTime(stopStatus: Int, estimateTime: Int) -> String {
@@ -208,18 +194,15 @@ struct Aux: View {
                         isSaved.toggle()
                     }
             }
-
-            
-            
+          
         case .stopName:
-            PlateView(estimateTime: arrivalTime.estimateTime)
-        
+            PlateView(estimateTime: arrivalTime.estimateTime)        
         }
     }
 }
 struct TabContent_Previews: PreviewProvider {
     static var previews: some View {
-        TabContent(arrivalTimes: [
+        TimeListView(arrivalTimes: [
             ArrivalTime(stopID: "100",
                         stopName: Name(zhTw: "材試所", en: "材試所"),
                         routeName: Name(zhTw: "99", en: "99"),
@@ -243,6 +226,4 @@ struct TabContent_Previews: PreviewProvider {
                    isLogin: .constant(false)
         )
     }
-    
-    
 }

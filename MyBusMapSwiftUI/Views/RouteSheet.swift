@@ -9,7 +9,7 @@ import SwiftUI
 import GoogleMaps
 
 struct RouteSheet: View {
-    @StateObject var mapViewModel = MapViewModel.shared
+    @ObservedObject var mapViewModel = MapViewModel.shared
     @Binding var push: Bool
     @Binding var location: CLLocation?
     
@@ -21,7 +21,7 @@ struct RouteSheet: View {
     @State var maxViewH: Double=100.0 // bottom sheet高度上限
     let heightFraction=0.4
     
-    var tabs: [Tab] {
+    var directionTabs: [Tab] {
         var tabs:[Tab] = []
         for time in arrivalTimes.keys {
             let tab = Tab(icon: Image(systemName: "music.note"), title: time == 0 ? "去" : "回")
@@ -30,110 +30,79 @@ struct RouteSheet: View {
         return tabs
     }
     @State private var selectedTab: Int = 0
-    
+    // 切換"去程", "回程"
+    var directionRow: some View {
+        NavigationView {
+            GeometryReader { geo in
+                Tabs(tabs: directionTabs, geoWidth: geo.size.width, selectedTab: $selectedTab)
+            }
+        }
+    }
     
     var body: some View {
         GeometryReader { geometry in
-            
             ZStack(alignment: .leading) {
                 GoogleMapsRouteView(location: $location, stops: $stops)
-                //.edgesIgnoringSafeArea(.top)
                 VStack {
-                    HStack {
-                        
-                        Image(systemName: "xmark.circle.fill")
-                            .resizable()
-                            .scaledToFit()
-                            .frame(width: 30)
-                            .onTapGesture {
-                                print("close Test")
-                                push = false
-                            }
-                        Spacer()
-                        
-                        
-                        
-                    }
-                    .padding(.top, 50)
-                    .frame(height: 80)
                     Spacer()
-                    
-                    
-                    
                     VStack {
-                        ZStack {
-                            Rectangle()
-                                .frame(width: 50, height: 5, alignment: .center)
-                                .foregroundColor(.gray)
-                                .padding(.bottom)
-                            
-                            
+                        ZStack{
+                            DragBar()
                             HStack {
                                 Spacer()
-                                
-                            }
-                        }
-                        
-                        
-                        Text("\(title)")
-                        NavigationView {
-                            GeometryReader { geo in
-                                VStack(spacing: 0) {
-                                    // Tabs
-                                    Tabs(tabs: tabs, geoWidth: geo.size.width, selectedTab: $selectedTab)
-                                    if mapViewModel.isLoading {
-                                        HStack {
-                                            ProgressView()
-                                                .scaleEffect(2)
-                                                .progressViewStyle(.circular)
-                                                .offset(y: -30)
-                                        }
+                                Image(systemName: "xmark.circle.fill")
+                                    .resizable()
+                                    .scaledToFit()
+                                    .frame(width: 30)
+                                    .onTapGesture {
+                                        print("close Test")
+                                        push = false
                                     }
-                                    if !mapViewModel.isLoading {
-                                        // Views
-                                        TabView(selection: $selectedTab) {
-                                            
-                                            ForEach(arrivalTimes.keys.sorted(), id: \.self) { key in
-                                                TabContent(arrivalTimes: arrivalTimes[key] ?? [],
-                                                           push: $push,
-                                                           clickOnRouteName: { _ in  },
-                                                           rowContent: .stopName,
-                                                           isLogin: $mapViewModel.isLogin)
-                                            }
-                                        }
-                                        
-                                        .tabViewStyle(PageTabViewStyle(indexDisplayMode: .never))
+                            }
+                            .padding(.trailing)
+                        }
+                        Text("\(title)")
+                        VStack(spacing: 0) {
+                            directionRow
+                            if mapViewModel.isLoading {
+                                VStack{
+                                    HStack {
+                                        ProgressView()
+                                            .scaleEffect(2)
+                                            .progressViewStyle(.circular)
+                                            .offset(y: -30)
+                                    }
+                                    Spacer()
+                                }
+                            }
+                            if !mapViewModel.isLoading {
+                                // Views
+                                TabView(selection: $selectedTab) {
+                                    
+                                    ForEach(arrivalTimes.keys.sorted(), id: \.self) { key in
+                                        TimeListView(arrivalTimes: arrivalTimes[key] ?? [],
+                                                   push: $push,
+                                                   clickOnRouteName: { _ in  },
+                                                   rowContent: .stopName,
+                                                   isLogin: $mapViewModel.isLogin)
                                     }
                                 }
-                                //.navigationBarTitleDisplayMode(.inline)
-                                //.navigationTitle("TabsSwiftUIExample")
-                                //.ignoresSafeArea()
-                                
-                                
+                                .tabViewStyle(PageTabViewStyle(indexDisplayMode: .never))
                             }
                         }
                     }
-                    
                     .frame(height: frameH)
-                    .padding(.top)
-                    .background(Color.white)
-                    .cornerRadius(10, corners: [.topLeft, .topRight])
-                    .ignoresSafeArea(edges: [.bottom])
-                    .compositingGroup()
-                    .shadow(color: .gray, radius: 1, x: 0, y: -1)
-                    .mask(Rectangle()
-                        .padding(.top, -20))
+                    .bottomSheetStyle()
                     .gesture(DragGesture()
-                        .onChanged{ value in
-                            
-                            print("draggedOffset \(value.translation)")
-                            self.frameH = MyBusMapSwiftUI.onDrag(yTranslation: value.translation.height, frameH: self.frameH, maxViewH: self.maxViewH)
-                        }
-                        .onEnded{ value in
-                            
+                        .onChanged { value in
+                            self.frameH = onDrag(
+                                yTranslation: value.translation.height,
+                                frameH: self.frameH,
+                                maxViewH: self.maxViewH
+                            )
                         }
                     )
-                    .onAppear{
+                    .onAppear {
                         self.frameH=geometry.size.height*heightFraction
                         self.maxViewH=geometry.size.height-50
                         print("RouteSheet初始高度 \(frameH) 最高\(maxViewH)")
@@ -142,9 +111,6 @@ struct RouteSheet: View {
             }
         }
     }
-    
-    
-    
 }
 
 struct Route_Previews: PreviewProvider {

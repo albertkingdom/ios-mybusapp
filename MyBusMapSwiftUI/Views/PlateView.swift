@@ -19,9 +19,7 @@ struct PlateView: View {
                     .frame(width: 80)
                     .foregroundColor(Color.white)
                     .background(Color.gray)
-            }
-            
-            
+            }       
             VStack {
                 Rectangle()
                     .frame(width: 2)

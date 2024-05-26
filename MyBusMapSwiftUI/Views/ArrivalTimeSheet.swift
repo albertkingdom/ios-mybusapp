@@ -7,14 +7,38 @@
 
 import SwiftUI
 
+struct DraggableModifier: ViewModifier {
+    @Binding var frameH: CGFloat
+    @State private var maxViewH: CGFloat = 0.0
+    let heightFraction: CGFloat
+    let onDrag: (CGFloat, CGFloat, CGFloat) -> CGFloat
+    
+    func body(content: Content) -> some View {
+        GeometryReader { geometry in
+            content
+                .frame(height: frameH)
+                .gesture(
+                    DragGesture()
+                        .onChanged { value in
+                            frameH = onDrag(value.translation.height, frameH, maxViewH)
+                        }
+                )
+                .onAppear {
+                    frameH = geometry.size.height * heightFraction
+                    maxViewH = geometry.size.height
+                    print("初始高度 \(frameH) 最高 \(maxViewH)")
+                }
+        }
+    }
+}
+
 struct ArrivalTimeSheet: View {
-    @StateObject var viewModel = ArrivalTimeSheetViewModel.shared
     @ObservedObject var mapViewModel = MapViewModel.shared
 
     var heightFraction=0.4
     @State var frameH: Double=0.0 // 目前bottom sheet高度
     @State var maxViewH: Double=0.0 // bottom sheet高度上限
-    @Binding var arrivalTimes: [Int:[ArrivalTime]]
+    @Binding var arrivalTimes: [Int: [ArrivalTime]]
     @State private var selectedTab: Int = 0
     @Binding var push: Bool
     @Binding var showNearByStationSheet: Bool
@@ -22,9 +46,8 @@ struct ArrivalTimeSheet: View {
     let unHighlightMarkers: () -> Void
     let clearData: () -> Void
     
-    
-    var tabs: [Tab] {
-        var tabs:[Tab] = []
+    var directionTabs: [Tab] {
+        var tabs: [Tab] = []
         for time in arrivalTimes.keys {
             let tab = Tab(icon: Image(systemName: "music.note"), title: time == 0 ? "去" : "回")
             tabs.append(tab)
@@ -37,104 +60,83 @@ struct ArrivalTimeSheet: View {
         }
         return arrivalTimeList[0].stopName.zhTw
     }
-    
-    
-    
-    
-    
+    // 切換"去程", "回程"
+    var directionRow: some View {
+        NavigationView {
+            GeometryReader { geo in
+                Tabs(tabs: directionTabs, geoWidth: geo.size.width, selectedTab: $selectedTab)
+                    .background(Color.blue)
+            }
+        }
+        .frame(height: 50)
+
+    }
+    var closeButton: some View {
+        Image(systemName: "xmark.circle.fill")
+            .resizable()
+            .scaledToFit()
+            .frame(width:20)
+            .onTapGesture {
+                print("On tap button")
+                showNearByStationSheet = true
+                unHighlightMarkers()
+                // clean the arrivaltime data
+                clearData()
+            }
+    }
     var body: some View {
         GeometryReader { geometry in
             VStack {
                 Spacer()
-                
                 VStack {
                     ZStack {
-                        Rectangle()
-                            .frame(width: 50, height: 5, alignment: .center)
-                            .foregroundColor(.gray)
-                            .padding(.bottom)
-                        
-                        
+                        DragBar()
                         HStack {
                             Spacer()
-                            Image(systemName: "xmark.circle.fill")
-                                .resizable()
-                                .scaledToFit()
-                                .frame(width:20)
-                                .onTapGesture {
-                                    print("On tap button")
-                                    showNearByStationSheet = true
-                                    // unhighlight markers
-                                    unHighlightMarkers()
-                                    
-                                    // clean the arrivaltime data
-                                    clearData()
-                                }
+                            closeButton
                         }
                         .padding(.trailing)
                     }
-                    
-                    
                     Text("\(title) 到站時間")
-                    NavigationView {
-                        GeometryReader { geo in
-                            VStack(spacing: 0) {
-                                // Tabs
-                                Tabs(tabs: tabs, geoWidth: geo.size.width, selectedTab: $selectedTab)
-                                if mapViewModel.isLoading {
-                                    HStack {
-                                        ProgressView()
-                                            .scaleEffect(2)
-                                            .progressViewStyle(.circular)
-                                            .offset(y: -30)
-                                    }
+                    VStack(spacing: 0) {
+                        directionRow
+                        if mapViewModel.isLoading {
+                            VStack{
+                                HStack {
+                                    ProgressView()
+                                        .scaleEffect(2)
+                                        .progressViewStyle(.circular)
+                                        .offset(y: -30)
                                 }
-                                if !mapViewModel.isLoading {
-                                    // Views
-                                    TabView(selection: $selectedTab) {
-                                        
-                                        ForEach(arrivalTimes.keys.sorted(), id: \.self) { key in
-                                            
-                                            
-                                            TabContent(arrivalTimes: arrivalTimes[key] ?? [],
-                                                       push: $push,
-                                                       clickOnRouteName: clickOnRouteName,
-                                                       rowContent: .routeName,
-                                                       isLogin: $mapViewModel.isLogin
-                                            )
-                                        }
-                                    }
-                                    .tabViewStyle(PageTabViewStyle(indexDisplayMode: .never))
-                                }
-                                
-                                
+                                Spacer()
                             }
-                            //.navigationBarTitleDisplayMode(.inline)
-                            //.navigationTitle("TabsSwiftUIExample")
-                            //.ignoresSafeArea()
-                            
-                            
+                        }
+                        if !mapViewModel.isLoading {
+                            // Views
+                            TabView(selection: $selectedTab) {
+                                ForEach(arrivalTimes.keys.sorted(), id: \.self) { key in
+                                    TimeListView(arrivalTimes: arrivalTimes[key] ?? [],
+                                               push: $push,
+                                               clickOnRouteName: clickOnRouteName,
+                                               rowContent: .routeName,
+                                               isLogin: $mapViewModel.isLogin
+                                    )
+                                }
+                            }
+                            .tabViewStyle(PageTabViewStyle(indexDisplayMode: .never))
                         }
                     }
                 }
-                
                 .frame(height: frameH)
-                .padding(.top)
-                .background(Color.white)
-                .cornerRadius(10, corners: [.topLeft, .topRight])
-                .ignoresSafeArea(edges: [.bottom])
-                .compositingGroup()
-                .shadow(color: .gray, radius: 1, x: 0, y: -1)
-                .mask(Rectangle()
-                    .padding(.top, -20))
+                .bottomSheetStyle()
                 .gesture(
                     DragGesture()
-                        .onChanged{ value in
-                            
-                            self.frameH = MyBusMapSwiftUI.onDrag(yTranslation: value.translation.height, frameH: self.frameH, maxViewH: self.maxViewH)
-                        }
-                        .onEnded{ value in
-                            
+                        .onChanged { value in
+                            self.frameH = onDrag(
+                                yTranslation: value.translation.height, 
+                                frameH: self.frameH,
+                                maxViewH: self.maxViewH
+                            )
                         }
                 )
                 .onAppear {
@@ -171,8 +173,5 @@ struct ArrivalTimeSheet_Previews: PreviewProvider {
             unHighlightMarkers: {  },
             clearData: {}
         )
-        
-        
     }
 }
-

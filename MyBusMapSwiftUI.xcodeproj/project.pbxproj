@@ -33,7 +33,7 @@
 		A1821A2128929762003CB0EB /* RouteSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1821A2028929762003CB0EB /* RouteSheet.swift */; };
 		A1821A232892DCE2003CB0EB /* GoogleMapsRouteView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1821A222892DCE2003CB0EB /* GoogleMapsRouteView.swift */; };
 		A1821A2528937E73003CB0EB /* District.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1821A2428937E73003CB0EB /* District.swift */; };
-		A1821A2A2893A4A8003CB0EB /* TabContent.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1821A292893A4A8003CB0EB /* TabContent.swift */; };
+		A1821A2A2893A4A8003CB0EB /* TimeListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1821A292893A4A8003CB0EB /* TimeListView.swift */; };
 		A1821A462893D2BB003CB0EB /* StopOfRoute.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1821A452893D2BB003CB0EB /* StopOfRoute.swift */; };
 		A1A7B7502895010500893EF3 /* PlateView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1A7B74F2895010500893EF3 /* PlateView.swift */; };
 		A1A7B7522896372500893EF3 /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1A7B7512896372500893EF3 /* HomeView.swift */; };
@@ -107,7 +107,7 @@
 		A1821A2028929762003CB0EB /* RouteSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RouteSheet.swift; sourceTree = "<group>"; };
 		A1821A222892DCE2003CB0EB /* GoogleMapsRouteView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoogleMapsRouteView.swift; sourceTree = "<group>"; };
 		A1821A2428937E73003CB0EB /* District.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = District.swift; sourceTree = "<group>"; };
-		A1821A292893A4A8003CB0EB /* TabContent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabContent.swift; sourceTree = "<group>"; };
+		A1821A292893A4A8003CB0EB /* TimeListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeListView.swift; sourceTree = "<group>"; };
 		A1821A452893D2BB003CB0EB /* StopOfRoute.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StopOfRoute.swift; sourceTree = "<group>"; };
 		A1A7B74F2895010500893EF3 /* PlateView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlateView.swift; sourceTree = "<group>"; };
 		A1A7B7512896372500893EF3 /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
@@ -215,7 +215,7 @@
 				A1821A1D28924C9A003CB0EB /* Tabs.swift */,
 				A10503A8288FAAB100EF461D /* GoogleMapsView.swift */,
 				A1821A222892DCE2003CB0EB /* GoogleMapsRouteView.swift */,
-				A1821A292893A4A8003CB0EB /* TabContent.swift */,
+				A1821A292893A4A8003CB0EB /* TimeListView.swift */,
 				A1A7B74F2895010500893EF3 /* PlateView.swift */,
 				A1A7B7532896395800893EF3 /* ListView.swift */,
 				A1A7B7552896462300893EF3 /* TestView.swift */,
@@ -453,7 +453,7 @@
 				A1A7B7522896372500893EF3 /* HomeView.swift in Sources */,
 				A112952528911A9C0093D936 /* NearByStationSheet.swift in Sources */,
 				A162B8CD28A4FB6A00FF82FE /* GoogleSignInButton.swift in Sources */,
-				A1821A2A2893A4A8003CB0EB /* TabContent.swift in Sources */,
+				A1821A2A2893A4A8003CB0EB /* TimeListView.swift in Sources */,
 				A112952A28918E4E0093D936 /* ArrivalTime.swift in Sources */,
 				A1A7B7562896462300893EF3 /* TestView.swift in Sources */,
 				A112951F289037110093D936 /* Station.swift in Sources */,
