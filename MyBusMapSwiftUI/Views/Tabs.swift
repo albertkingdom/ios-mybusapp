@@ -6,7 +6,9 @@
 //
 
 import SwiftUI
+import os
 
+let logger = Logger(subsystem: "com.a2006mike.MyBusMapSwiftUI", category: "yourcategory")
 struct Tab {
     var icon: Image?
     var title: String
@@ -25,6 +27,9 @@ struct Tabs: View {
                             Button(action: {
                                 withAnimation {
                                     selectedTab = row
+                                    logger.debug("selectedTab=\(selectedTab)")
+                                    logger.debug("selectedTab == row \(selectedTab == row)")
+
                                 }
                             }, label: {
                                 VStack(spacing: 0) {
@@ -39,11 +44,11 @@ struct Tabs: View {
                                             .foregroundColor(Color.primary)
                                             .padding(EdgeInsets(top: 10, leading: 3, bottom: 10, trailing: 15))
                                     }
-                                    .frame(width: fixed ? (geoWidth / CGFloat(tabs.count)) : .none, height: 52)
+                                    .frame(width: fixed ? (geoWidth / CGFloat(tabs.count)) : .none, height: 40)
                                     // Bar Indicator
-                                    Rectangle().fill(selectedTab == row ? Color.primary : Color.clear)
-                                        .frame(height: 3)
-                                }.fixedSize()
+                                    Rectangle().fill(selectedTab == row ? Color.blue : Color.clear)
+                                        .frame(height: 5)
+                                }
                             })
                                 .accentColor(Color.white)
                                 .buttonStyle(PlainButtonStyle())

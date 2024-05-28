@@ -65,7 +65,6 @@ struct ArrivalTimeSheet: View {
         NavigationView {
             GeometryReader { geo in
                 Tabs(tabs: directionTabs, geoWidth: geo.size.width, selectedTab: $selectedTab)
-                    .background(Color.blue)
             }
         }
         .frame(height: 50)
@@ -75,7 +74,7 @@ struct ArrivalTimeSheet: View {
         Image(systemName: "xmark.circle.fill")
             .resizable()
             .scaledToFit()
-            .frame(width:20)
+            .frame(width: 20)
             .onTapGesture {
                 print("On tap button")
                 showNearByStationSheet = true
@@ -101,7 +100,7 @@ struct ArrivalTimeSheet: View {
                     VStack(spacing: 0) {
                         directionRow
                         if mapViewModel.isLoading {
-                            VStack{
+                            VStack {
                                 HStack {
                                     ProgressView()
                                         .scaleEffect(2)
