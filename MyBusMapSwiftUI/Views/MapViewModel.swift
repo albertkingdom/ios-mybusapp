@@ -76,10 +76,8 @@ class MapViewModel: NSObject, ObservableObject, CLLocationManagerDelegate {
         }
     }
     
-    
-    
+
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-        
         self.location = locations.last
         print("location \(locations)")
         locationManager?.stopUpdatingLocation()
@@ -99,9 +97,8 @@ class MapViewModel: NSObject, ObservableObject, CLLocationManagerDelegate {
         
         let coordinate = (location?.coordinate.latitude ?? 0, location?.coordinate.longitude ?? 0)
         do {
-            let token = try await NetworkManager.shared.fetchToken()
             
-            let stations = try await NetworkManager.shared.fetchNearByStops(coordinate: coordinate, token: token)
+            let stations = try await NetworkManager.shared.fetchNearByStops(coordinate: coordinate)
             print("fetchNearByStations stations \(stations)")
             handleNearByStationsResponse(stations: stations)
         } catch {
@@ -110,7 +107,6 @@ class MapViewModel: NSObject, ObservableObject, CLLocationManagerDelegate {
     }
     func handleNearByStationsResponse(stations: [Station]) {
         var nearbyStations: [NearByStation] = []
-        var coordinates: [CLLocationCoordinate2D] = []
         
         for station in stations {
             if let index = nearbyStations.firstIndex(where: { $0.stationName == station.stationName.zhTw}) {
@@ -153,15 +149,13 @@ class MapViewModel: NSObject, ObservableObject, CLLocationManagerDelegate {
         let stationID = subStations[0].stationID
         let coordinate = (location?.coordinate.latitude ?? 0, location?.coordinate.longitude ?? 0)
         do {
-            let token = try await NetworkManager.shared.fetchToken()
-            let city = try await NetworkManager.shared.getDistrictAsync(coordinate: coordinate, token: token)
-            let arrivalTimes = try await NetworkManager.shared.fetchArrivalTimeAsync(city: city.city, stationID: stationID, token: token)
+            let city = try await NetworkManager.shared.getDistrictAsync(from: coordinate)
+            print("station_id: \(stationID)")
+            let arrivalTimes = try await NetworkManager.shared.fetchArrivalTimeAsync(city: city, stationID: stationID)
             print("fetchArrivalTime  \(arrivalTimes)")
             let sorted = handleArrivalTime(arrivalTimes: arrivalTimes)
             DispatchQueue.main.async {
-                
                 self.sortedArrivalTimes = sorted
-                
                 self.isLoading = false
             }
         } catch let DecodingError.typeMismatch(type, context) {
@@ -183,7 +177,7 @@ class MapViewModel: NSObject, ObservableObject, CLLocationManagerDelegate {
                 sorted[1]?.append(time)
             }
         }
-        //self.sortedArrivalTimes = sorted
+        // self.sortedArrivalTimes = sorted
         return sorted
     }
     
@@ -194,14 +188,12 @@ class MapViewModel: NSObject, ObservableObject, CLLocationManagerDelegate {
         }
         let coordinate = (location?.coordinate.latitude ?? 0, location?.coordinate.longitude ?? 0)
         do {
-            let token = try await NetworkManager.shared.fetchToken()
-            let city = try await NetworkManager.shared.getDistrictAsync(coordinate: coordinate, token: token)
-            let arrivalTimes = try await NetworkManager.shared.fetchArrivalTimeForRouteNameAsync(cityName: city.city, routeName: routeName, token: token)
+            let city = try await NetworkManager.shared.getDistrictAsync(from: coordinate)
+            let arrivalTimes = try await NetworkManager.shared.fetchArrivalTimeForRouteNameAsync(cityName: city, routeName: routeName)
             print("fetchArrivalTimeForRouteNameAsync  \(arrivalTimes)")
             
             let sorted = handleArrivalTime(arrivalTimes: arrivalTimes)
             DispatchQueue.main.async {
-                
                 self.sortedArrivalTimesForRouteName = sorted
                 self.isLoading = false
             }
@@ -213,9 +205,8 @@ class MapViewModel: NSObject, ObservableObject, CLLocationManagerDelegate {
     func fetchStopsAsync(routeName: String) async {
         let coordinate = (location?.coordinate.latitude ?? 0, location?.coordinate.longitude ?? 0)
         do {
-            let token = try await NetworkManager.shared.fetchToken()
-            let city = try await NetworkManager.shared.getDistrictAsync(coordinate: coordinate, token: token)
-            let routes = try await NetworkManager.shared.fetchStopsAsync(cityName: city.city, routeName: routeName, token: token)
+            let city = try await NetworkManager.shared.getDistrictAsync(from: coordinate)
+            let routes = try await NetworkManager.shared.fetchStopsAsync(cityName: city, routeName: routeName)
             print("fetchStopsAsync  \(routes)")
             let dict = handleStops(routes: routes)
             DispatchQueue.main.async {
@@ -226,7 +217,7 @@ class MapViewModel: NSObject, ObservableObject, CLLocationManagerDelegate {
         }
     }
     
-    private func handleStops(routes: [StopOfRoute]) -> [Int: [StopForRouteName]]{
+    private func handleStops(routes: [StopOfRoute]) -> [Int: [StopForRouteName]] {
         var sorted: [Int: [StopForRouteName]] = [0: [], 1: []] // 0:'去程',1:'返程'
         for route in routes {
             if route.direction == 0 {
