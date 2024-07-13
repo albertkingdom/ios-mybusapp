@@ -24,13 +24,23 @@ struct UserView: View {
                     .resizable()
                     //.border(.black, width: 1)
                     .frame(width: 100, height: 100, alignment: .center)
-                    .cornerRadius(50)
+                    .clipShape(.circle)
+                    .shadow(radius: 3)
+                    .overlay {
+                        Circle().stroke(.gray, lineWidth: 3)
+                    }
+                
             } else {
                 KFImage(imageUri)
                     .resizable()
                     //.border(.black, width: 1)
                     .frame(width: 100, height: 100, alignment: .center)
-                    .cornerRadius(50)
+                    .clipShape(.circle)
+                    .shadow(radius: 3)
+                    .overlay {
+                        Circle().stroke(.green, lineWidth: 3)
+                    }
+
             }
             Text(userEmail)
             if !isLogin {
