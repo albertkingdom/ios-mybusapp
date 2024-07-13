@@ -35,14 +35,13 @@ let cities = [
               "LienchiangCounty"]
 
 class NetworkManager {
-//    static let shared = NetworkManager()
     var getData: (URLRequest) async throws -> Data
     static let shared = {
         let session = URLSession(configuration: .default)
-
-        return NetworkManager { request in
+        // 調用init()賦值getData
+        return NetworkManager(getData: {request in
             try await session.data(for: request)
-        }
+        })
     }()
     var token: Token?
     private let session = URLSession(configuration: .default)
@@ -55,17 +54,19 @@ class NetworkManager {
          self.getData = getData
          if let savedToken = retrieveTokenFromKeychain() {
              self.token = savedToken
+         } else {
+             print("no saved token in keychain")
          }
      }
 
-    static let stub = NetworkManager { request in
-        if request.url?.absoluteString.contains("token") == true {
-                        return NetworkManager.Endpoint.token.stub
-                    } else if request.url?.absoluteString.contains("NearBy") == true {
-                        return NetworkManager.Endpoint.nearByStops(coordinate: (0, 0)).stub
-                    }
-                    return Data()
-    }
+//    static let stub = NetworkManager { request in
+//        if request.url?.absoluteString.contains("token") == true {
+//                        return NetworkManager.Endpoint.token.stub
+//                    } else if request.url?.absoluteString.contains("NearBy") == true {
+//                        return NetworkManager.Endpoint.nearByStops(coordinate: (0, 0)).stub
+//                    }
+//                    return Data()
+//    }
     let clientID = Bundle.main.infoDictionary?["API_CLIENT_ID"] as? String
     let clientKey = Bundle.main.infoDictionary?["API_CLIENT_KEY"] as? String
     let SOURCE_URL = "https://tdx.transportdata.tw"
@@ -82,15 +83,19 @@ class NetworkManager {
     func fetchNearByStops(coordinate: (Double, Double)) async throws -> [Station] {
 
         var request = NetworkManager.Endpoint.nearByStops(coordinate: coordinate).request
-        let token = await checkToken()
-        print("token \(token), \(coordinate)")
-        request.setValue("Bearer \(token)", forHTTPHeaderField: "Authorization")
+   
+        let newToken = try await fetchToken()
+  
+    
+        print("token \(newToken), \(coordinate)")
+        request.setValue("Bearer \(newToken)", forHTTPHeaderField: "Authorization")
         do {
             let data = try await getData(request)
             let decoder = JSONDecoder()
             let stationsResponse = try decoder.decode([Station].self, from: data)
             return stationsResponse
         } catch {
+            print(error)
             throw NetworkError.invalidData
         }
     }
@@ -114,6 +119,10 @@ class NetworkManager {
         
         return try await withCheckedThrowingContinuation { continuation in
             URLSession.shared.dataTask(with: request) { data, response, error in
+                guard let resp = response as? HTTPURLResponse else {
+                    return
+                }
+                print(resp.statusCode)
                 if let data = data {
                     do {
                         let decoder = JSONDecoder()
@@ -177,6 +186,7 @@ class NetworkManager {
         ]
 
         guard let url = urlComponent?.url else {
+            print("fetchStopsAsync invalid URL")
             throw NetworkError.invalidURL
         }
         var request = URLRequest(url: url)
@@ -243,9 +253,15 @@ extension NetworkManager {
         var item: CFTypeRef?
         let status = SecItemCopyMatching(query as CFDictionary, &item)
         guard status == errSecSuccess else {
-            print("Error retrieving token: \(status)")
+            
+            if status == errSecItemNotFound {
+                print("Token not found in Keychain")
+            } else {
+                print("Error retrieving token: \(status)")
+            }
             return nil
         }
+        
         
         guard let tokenData = item as? Data,
               let token = try? JSONDecoder().decode(Token.self, from: tokenData) else {
@@ -256,13 +272,14 @@ extension NetworkManager {
     }
     private func isTokenExpired(token: Token) -> Bool {
         let expirationDate = Date(timeIntervalSinceNow: TimeInterval(token.expiresIn))
+        print("expirationDate \(expirationDate)")
         return Date() > expirationDate
     }
     func checkToken() async -> String {
         if token==nil || isTokenExpired(token: token!) {
             do {
                 let newToken = try await fetchToken()
-                
+                print("got new token \(newToken)")
                 return newToken
             } catch {
                 print("\(error)")
@@ -282,14 +299,15 @@ extension NetworkManager {
         let request = NetworkManager.Endpoint.token.request
         do {
             let data = try await getData(request)
-
+            print("data \(data)")
             let decoder = JSONDecoder()
             let token = try decoder.decode(Token.self, from: data)
             saveTokenToKeychain(token: token)
             self.token = token
+            print("saved token is \(token)")
             return token.accessToken
         } catch {
-            print("\(error)")
+            print("fetchToken error \(error)")
         }
         return ""
     }
@@ -315,13 +333,16 @@ extension NetworkManager {
         var request: URLRequest {
             switch self {
             case .token:
-                let clientID = Bundle.main.infoDictionary?["API_CLIENT_ID"] as? String
-                let clientKey = Bundle.main.infoDictionary?["API_CLIENT_KEY"] as? String
+                guard let clientID = Bundle.main.infoDictionary?["API_CLIENT_ID"] as? String,
+                      let clientKey = Bundle.main.infoDictionary?["API_CLIENT_KEY"] as? String
+                else {
+                    fatalError()
+                }
                 let url = URL(string: TOKEN_URL)!
                 var request = URLRequest(url: url)
                 request.httpMethod = "post"
                 request.setValue("application/x-www-form-urlencoded", forHTTPHeaderField: "Content-Type")
-                let parameters = "grant_type=client_credentials&client_id=\(String(describing: clientID))&client_secret=\(String(describing: clientKey))"
+                let parameters = "grant_type=client_credentials&client_id=\( clientID)&client_secret=\(clientKey)"
                 let postData =  parameters.data(using: .utf8)
                 request.httpBody = postData
                 return request
@@ -333,6 +354,7 @@ extension NetworkManager {
                 ]
                 
                 let url = urlComponet!.url
+                print("nearByStops url: \(url)")
                 
                 //                let token = await checkToken()
                 //                request.setValue("Bearer \(token)", forHTTPHeaderField: "Authorization")
@@ -559,18 +581,18 @@ extension NetworkManager {
         let location = CLLocation(latitude: coordinate.latitude, longitude: coordinate.longitude)
         
         do {
-            let placemarks = try await geocoder.reverseGeocodeLocation(location)
+            let placemarks = try await geocoder.reverseGeocodeLocation(location, preferredLocale: Locale(identifier: "en-US"))
             if let placemark = placemarks.first {
                 var cityName = placemark.subAdministrativeArea!
                 print("cityName \(cityName)")
-                let targetCityName = cities.first { city in
+                if let targetCityName = cities.first(where: { city in
                     return cityName.replacingOccurrences(of: " ",with: "").contains(city)
+                }) {
+                    print("targetCityName \(String(describing: targetCityName))")
+                    return targetCityName
                 }
-                print("targetCityName \(String(describing: targetCityName))")
-                return targetCityName!
-            } else {
-                throw NetworkError.invalidCity
             }
+            return ""
         } catch {
             print("Failed to reverse geocode location: \(error.localizedDescription)")
             throw NetworkError.invalidCity

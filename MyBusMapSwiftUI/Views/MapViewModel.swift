@@ -50,7 +50,6 @@ class MapViewModel: NSObject, ObservableObject, CLLocationManagerDelegate {
     
     
     
-    
     func checkLocationAuthorization() {
         locationManager = CLLocationManager() // will call locationManagerDidChangeAuthorization method
         locationManager?.desiredAccuracy = kCLLocationAccuracyBest
