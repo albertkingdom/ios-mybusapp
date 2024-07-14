@@ -35,30 +35,43 @@ let cities = [
               "LienchiangCounty"]
 
 class NetworkManager {
-    var getData: (URLRequest) async throws -> Data
-    static let shared = {
-        let session = URLSession(configuration: .default)
-        // 調用init()賦值getData
-        return NetworkManager(getData: {request in
-            try await session.data(for: request)
-        })
-    }()
-    var token: Token?
-    private let session = URLSession(configuration: .default)
-//    private init() {
-//            if let savedToken = retrieveTokenFromKeychain() {
-//                self.token = savedToken
-//            }
+    static let shared = NetworkManager()
+    private let session: URLSession
+    private let tokenManager: TokenManager
+    //    var getData: (URLRequest) async throws -> Data
+    func getData(_ request: URLRequest) async throws -> Data {
+        let token = try await tokenManager.getValidToken()
+        var authenticatedRequest = request
+        authenticatedRequest.setValue("Bearer \(token)", forHTTPHeaderField: "Authorization")
+        let data = try await session.data(for: authenticatedRequest)
+        return data
+    }
+//    static let shared = {
+//        let session = URLSession(configuration: .default)
+//        // 調用init()賦值getData
+//        return NetworkManager(getData: {request in
+//            try await session.data(for: request)
+//        })
+//    }()
+//    var token: Token?
+//    private let session = URLSession(configuration: .default)
+    //    private init() {
+    //            if let savedToken = retrieveTokenFromKeychain() {
+    //                self.token = savedToken
+    //            }
+    //    }
+//    private init(getData: @escaping (URLRequest) async throws -> Data) {
+//        self.getData = getData
+//        if let savedToken = retrieveTokenFromKeychain() {
+//            self.token = savedToken
+//        } else {
+//            print("no saved token in keychain")
+//        }
 //    }
-     private init(getData: @escaping (URLRequest) async throws -> Data) {
-         self.getData = getData
-         if let savedToken = retrieveTokenFromKeychain() {
-             self.token = savedToken
-         } else {
-             print("no saved token in keychain")
-         }
-     }
-
+    private init() {
+        self.session = URLSession(configuration: .default)
+        self.tokenManager = TokenManager(clientID: clientID, clientKey: clientKey)
+    }
 //    static let stub = NetworkManager { request in
 //        if request.url?.absoluteString.contains("token") == true {
 //                        return NetworkManager.Endpoint.token.stub
@@ -84,11 +97,6 @@ class NetworkManager {
 
         var request = NetworkManager.Endpoint.nearByStops(coordinate: coordinate).request
    
-        let newToken = try await fetchToken()
-  
-    
-        print("token \(newToken), \(coordinate)")
-        request.setValue("Bearer \(newToken)", forHTTPHeaderField: "Authorization")
         do {
             let data = try await getData(request)
             let decoder = JSONDecoder()
@@ -101,111 +109,46 @@ class NetworkManager {
     }
     func fetchArrivalTimeAsync(city: String, stationID: String) async throws -> [ArrivalTime] {
         
-        print("station_id: \(stationID)")
+        var request = NetworkManager.Endpoint.arrivalTime(city: city, stationID: stationID).request
 
-        var urlComponent = URLComponents(string: "\(SOURCE_URL)/api/advanced/v2/Bus/EstimatedTimeOfArrival/City/\(city)/PassThrough/Station/\(stationID)")!
-        urlComponent.queryItems = [
-            URLQueryItem(name: "$top", value: "30"),
-            URLQueryItem(name: "$format", value: "JSON")
-        ]
-        
-        guard let url = urlComponent.url else {
-            throw NetworkError.invalidURL
+        do {
+            let data = try await getData(request)
+            let decoder = JSONDecoder()
+            let arrivalTimeResponse = try decoder.decode([ArrivalTime].self, from: data)
+            return arrivalTimeResponse
+        } catch {
+            print(error)
+            throw NetworkError.invalidData
         }
-
-        var request = URLRequest(url: url)
-        let token = await checkToken()
-        request.setValue("Bearer \(token)", forHTTPHeaderField: "Authorization")
         
-        return try await withCheckedThrowingContinuation { continuation in
-            URLSession.shared.dataTask(with: request) { data, response, error in
-                guard let resp = response as? HTTPURLResponse else {
-                    return
-                }
-                print(resp.statusCode)
-                if let data = data {
-                    do {
-                        let decoder = JSONDecoder()
-                        
-                        let arrivalTimeResponse = try decoder.decode([ArrivalTime].self, from: data)
-                        continuation.resume(with: .success(arrivalTimeResponse))
-                    } catch {
-                        continuation.resume(with: .failure(error))
-                    }
-                } else if let error = error {
-                    continuation.resume(with: .failure(error))
-                }
-            }.resume()
-        }
     }
     
     func fetchArrivalTimeForRouteNameAsync(cityName: String, routeName: String) async throws -> [ArrivalTime] {
         //https://tdx.transportdata.tw/api/basic/v2/Bus/EstimatedTimeOfArrival/City/NewTaipei/99?%24filter=RouteName%2FZh_tw%20eq%20%2799%27&%24orderby=StopID&%24format=JSON
         
-        var urlComponent = URLComponents(string: "\(SOURCE_URL)/api/basic/v2/Bus/EstimatedTimeOfArrival/City/\(cityName)/\(routeName)")
-
-        urlComponent?.queryItems = [
-            URLQueryItem(name: "$filter", value: "RouteName/Zh_tw eq '\(routeName)'"),
-            URLQueryItem(name: "$orderby", value: "StopID"),
-            URLQueryItem(name: "$format", value: "JSON")
-        ]
-        
-        guard let url = urlComponent?.url else {
-            throw NetworkError.invalidURL
-        }
-        
-        var request = URLRequest(url: url)
-        let token = await checkToken()
-        request.setValue("Bearer \(token)", forHTTPHeaderField: "Authorization")
-        
-        return try await withCheckedThrowingContinuation { continuation in
-            URLSession.shared.dataTask(with: request) { data, response, error in
-                if let data = data {
-                    do {
-                        let decoder = JSONDecoder()
-                        
-                        let arrivalTimeResponse = try decoder.decode([ArrivalTime].self, from: data)
-                        continuation.resume(with: .success(arrivalTimeResponse))
-                    } catch {
-                        continuation.resume(with: .failure(error))
-                    }
-                } else if let error = error {
-                    continuation.resume(with: .failure(error))
-                }
-            }.resume()
+        var request = NetworkManager.Endpoint.arrivalTimeForRouteName(cityName: cityName, routeName: routeName).request
+        do {
+            let data = try await getData(request)
+            let decoder = JSONDecoder()
+            let arrivalTimeResponse = try decoder.decode([ArrivalTime].self, from: data)
+            return arrivalTimeResponse
+        } catch {
+            print(error)
+            throw NetworkError.invalidData
         }
     }
     
     func fetchStopsAsync(cityName: String, routeName: String) async throws -> [StopOfRoute] {
         // https://tdx.transportdata.tw/api/basic/v2/Bus/StopOfRoute/City/NewTaipei/99?%24filter=RouteName%2FZh_tw%20eq%20%2799%27&%24format=JSON
-        var urlComponent = URLComponents(string: "\(SOURCE_URL)/api/basic/v2/Bus/StopOfRoute/City/\(cityName)/\(routeName)")
-        
-        urlComponent?.queryItems = [
-            URLQueryItem(name: "$filter", value: "RouteName/Zh_tw eq '\(routeName)'"),
-            URLQueryItem(name: "$format", value: "JSON")
-        ]
-
-        guard let url = urlComponent?.url else {
-            print("fetchStopsAsync invalid URL")
-            throw NetworkError.invalidURL
-        }
-        var request = URLRequest(url: url)
-        let token = await checkToken()
-        request.setValue("Bearer \(token)", forHTTPHeaderField: "Authorization")
-        return try await withCheckedThrowingContinuation { continuation in
-            URLSession.shared.dataTask(with: request) { data, _, error in
-                if let data = data {
-                    do {
-                        let decoder = JSONDecoder()
-                        let stopsResponse = try decoder.decode([StopOfRoute].self, from: data)
-                        continuation.resume(with: .success(stopsResponse))
-                    } catch {
-                        continuation.resume(with: .failure(error))
-                    }
-                } else if let error = error {
-                    continuation.resume(with: .failure(error))
-                }
-            }.resume()
+        var request = NetworkManager.Endpoint.stops(cityName: cityName, routeName: routeName).request
+        do {
+            let data = try await getData(request)
+            let decoder = JSONDecoder()
+            let stopsResponse = try decoder.decode([StopOfRoute].self, from: data)
+            return stopsResponse
+        } catch {
+            print(error)
+            throw NetworkError.invalidData
         }
     }
    
@@ -216,101 +159,6 @@ enum NetworkError: Error {
     case invalidCode(Int)
     case invalidData
     case invalidCity
-}
-
-extension NetworkManager {
-    private func saveTokenToKeychain(token: Token) {
-        do {
-            let tokenData = try JSONEncoder().encode(token)
-            
-            let query: [String: Any] = [
-                kSecClass as String: kSecClassGenericPassword,
-                kSecAttrAccount as String: "authToken",
-                kSecValueData as String: tokenData
-            ]
-            
-            // Delete any existing items
-            SecItemDelete(query as CFDictionary)
-            
-            // Add the new token
-            let status = SecItemAdd(query as CFDictionary, nil)
-            if status != errSecSuccess {
-                print("Error saving token: \(status)")
-            }
-        } catch {
-            print("\(error)")
-        }
-        
-    }
-    private func retrieveTokenFromKeychain() -> Token? {
-        let query: [String: Any] = [
-            kSecClass as String: kSecClassGenericPassword,
-            kSecAttrAccount as String: "authToken",
-            kSecReturnData as String: true,
-            kSecMatchLimit as String: kSecMatchLimitOne
-        ]
-        
-        var item: CFTypeRef?
-        let status = SecItemCopyMatching(query as CFDictionary, &item)
-        guard status == errSecSuccess else {
-            
-            if status == errSecItemNotFound {
-                print("Token not found in Keychain")
-            } else {
-                print("Error retrieving token: \(status)")
-            }
-            return nil
-        }
-        
-        
-        guard let tokenData = item as? Data,
-              let token = try? JSONDecoder().decode(Token.self, from: tokenData) else {
-            return nil
-        }
-        
-        return token
-    }
-    private func isTokenExpired(token: Token) -> Bool {
-        let expirationDate = Date(timeIntervalSinceNow: TimeInterval(token.expiresIn))
-        print("expirationDate \(expirationDate)")
-        return Date() > expirationDate
-    }
-    func checkToken() async -> String {
-        if token==nil || isTokenExpired(token: token!) {
-            do {
-                let newToken = try await fetchToken()
-                print("got new token \(newToken)")
-                return newToken
-            } catch {
-                print("\(error)")
-            }
-        }
-        guard let token else {return ""}
-        return token.accessToken
-    }
-    func fetchToken() async throws -> String {
-        guard let url = URL(string: TOKEN_URL) else {
-            throw NetworkError.invalidURL
-        }
-        guard let clientID = clientID,
-              let clientKey = clientKey
-        else { throw NetworkError.missingApiKey}
-
-        let request = NetworkManager.Endpoint.token.request
-        do {
-            let data = try await getData(request)
-            print("data \(data)")
-            let decoder = JSONDecoder()
-            let token = try decoder.decode(Token.self, from: data)
-            saveTokenToKeychain(token: token)
-            self.token = token
-            print("saved token is \(token)")
-            return token.accessToken
-        } catch {
-            print("fetchToken error \(error)")
-        }
-        return ""
-    }
 }
 
 extension NetworkManager {
