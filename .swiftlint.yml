@@ -1,2 +1,6 @@
 identifier_name:
   allowed_symbols: "_"
+disabled_rules:
+  - trailing_whitespace
+
+    

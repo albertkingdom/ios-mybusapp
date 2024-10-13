@@ -8,7 +8,7 @@
 import Foundation
 
 class TokenManager {
-    private var currentToken: Token?
+    private var currentToken: String?
     private let clientID: String?
     private let clientKey: String?
     private let session: URLSessionProtocol
@@ -24,23 +24,29 @@ class TokenManager {
         self.TOKEN_URL = "https://tdx.transportdata.tw/auth/realms/TDXConnect/protocol/openid-connect/token"
         self.currentToken = retrieveTokenFromKeychain()
     }
+    func saveTokenExpiration(expiresIn: Int) {
+        let expirationDate = Date().addingTimeInterval(TimeInterval(expiresIn)) // 當前時間加上 expires_in 秒
+        UserDefaults.standard.set(expirationDate, forKey: "tokenExpirationDate")
+    }
     
     func getValidToken() async throws -> String {
-        if let token = currentToken, !isTokenExpired(token) {
+        if let token = currentToken, !isTokenExpired() {
             print("token還沒過期")
-            return token.accessToken
+            return token
         }
         return try await fetchNewToken()
     }
     
-    private func isTokenExpired(_ token: Token) -> Bool {
+    private func isTokenExpired() -> Bool {
         // 實現過期檢查邏輯
-        let expirationDate = Date(timeIntervalSinceNow: TimeInterval(token.expiresIn))
-        print("過期時間 \(expirationDate)")
-        return Date() > expirationDate
+        guard let expirationDate = UserDefaults.standard.object(forKey: "tokenExpirationDate") as? Date else {
+               return true // 如果沒有儲存過期時間，視為過期
+           }
+           
+        return Date() >= expirationDate
     }
     
-    internal func saveTokenToKeychain(token: Token) {
+    internal func saveTokenToKeychain(token: String) {
         do {
             let tokenData = try JSONEncoder().encode(token)
             
@@ -64,7 +70,7 @@ class TokenManager {
         }
         
     }
-    internal func retrieveTokenFromKeychain() -> Token? {
+    internal func retrieveTokenFromKeychain() -> String? {
         let query: [String: Any] = [
             kSecClass as String: kSecClassGenericPassword,
             kSecAttrAccount as String: "authToken",
@@ -86,7 +92,7 @@ class TokenManager {
         
         
         guard let tokenData = item as? Data,
-              let token = try? JSONDecoder().decode(Token.self, from: tokenData) else {
+              let token = try? JSONDecoder().decode(String.self, from: tokenData) else {
             return nil
         }
         
@@ -104,12 +110,8 @@ class TokenManager {
         }
         print("success 刪除token")
     }
-    private func isTokenExpired(token: Token) -> Bool {
-        let expirationDate = Date(timeIntervalSinceNow: TimeInterval(token.expiresIn))
-        print("expirationDate \(expirationDate)")
-        return Date() > expirationDate
-    }
 
+    
     func fetchNewToken() async throws -> String {
         guard let url = URL(string: TOKEN_URL) else {
             throw NetworkError.invalidURL
@@ -125,9 +127,11 @@ class TokenManager {
             print("data \(data)")
             let decoder = JSONDecoder()
             let token = try decoder.decode(Token.self, from: data)
-            saveTokenToKeychain(token: token)
-            self.currentToken = token
-            print("saved token is \(token)")
+            let accessToken = token.accessToken
+            saveTokenToKeychain(token: accessToken)
+            saveTokenExpiration(expiresIn: token.expiresIn)
+            self.currentToken = accessToken
+            print("saved token is \(accessToken)")
             return token.accessToken
         } catch {
             print("fetchToken error \(error)")
