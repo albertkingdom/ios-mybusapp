@@ -83,6 +83,13 @@ struct ArrivalTimeSheet: View {
                 clearData()
             }
     }
+    
+    @State private var timeRemaining = 30
+    @Environment(\.scenePhase) var scenePhase
+    @State private var isActive = true
+    
+    let timer = Timer.publish(every: 1, on: .main, in: .common).autoconnect()
+    
     var body: some View {
         GeometryReader { geometry in
             VStack {
@@ -97,6 +104,8 @@ struct ArrivalTimeSheet: View {
                         .padding(.trailing)
                     }
                     Text("\(title) 到站時間")
+                    Text("\(timeRemaining)秒後更新")
+                        .font(.system(size: 12))
                     VStack(spacing: 0) {
                         directionRow
                         if mapViewModel.isLoading {
@@ -142,6 +151,30 @@ struct ArrivalTimeSheet: View {
                     self.frameH=geometry.size.height*heightFraction
                     self.maxViewH=geometry.size.height
                     print("初始高度 \(frameH) 最高\(maxViewH)")
+                }
+                .onReceive(timer) { time in
+                    guard isActive, !mapViewModel.isLoading else { return }
+
+                    if timeRemaining > 0 {
+                        timeRemaining -= 1
+                    } else {
+                        Task {
+                            await mapViewModel.fetchArrivalTime()
+                            timeRemaining = 30
+                        }
+                    }
+                }
+                .onChange(of: scenePhase) { newPhase in
+                    print("newPhase", newPhase)
+                    if newPhase == .active {
+                        isActive = true
+                    } else {
+                        isActive = false
+                    }
+                }
+                .onDisappear {
+                    print("onDisappear")
+//                    mapViewModel.stopfetchArrivalTimeRepeatedly()
                 }
             }
         }

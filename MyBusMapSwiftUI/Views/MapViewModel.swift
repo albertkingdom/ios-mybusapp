@@ -16,6 +16,8 @@ import FirebaseFirestore
 
 class MapViewModel: NSObject, ObservableObject, CLLocationManagerDelegate {
     static let shared = MapViewModel()
+    var timer: Timer?
+    var subStations: [SubStation]?
     private var locationManager: CLLocationManager?
     @Published var location: CLLocation? {
         didSet {
@@ -87,7 +89,7 @@ class MapViewModel: NSObject, ObservableObject, CLLocationManagerDelegate {
     func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
         print("Failed to get location: \(error)")
     }
-    func fetchNearByStationsWrapper()  {
+    func fetchNearByStationsWrapper() {
         Task {
             await fetchNearByStations()
         }
@@ -139,11 +141,26 @@ class MapViewModel: NSObject, ObservableObject, CLLocationManagerDelegate {
         }
         
     }
-    
-    func fetchArrivalTime(subStations: [SubStation]) async {
+//    func fetchArrivalTimeRepeatedly(subStations: [SubStation]) {
+//        Task {
+//            await self.fetchArrivalTime(subStations: subStations)
+//        }
+//        timer = Timer.scheduledTimer(withTimeInterval: 30, repeats: true){ _ in
+//            Task {
+//                await self.fetchArrivalTime(subStations: subStations)
+//            }
+//        }
+//    }
+//    func stopfetchArrivalTimeRepeatedly() {
+//            // 停止定時器
+//            timer?.invalidate()
+//            timer = nil
+//    }
+    func fetchArrivalTime() async {
         DispatchQueue.main.async {
             self.isLoading = true
         }
+        guard let subStations else { return }
         //let city = "NewTaipei"
         let stationID = subStations[0].stationID
         let coordinate = (location?.coordinate.latitude ?? 0, location?.coordinate.longitude ?? 0)
@@ -248,7 +265,7 @@ class MapViewModel: NSObject, ObservableObject, CLLocationManagerDelegate {
             station.stationName == stationName
         }) {
             Task {
-                await fetchArrivalTime(subStations: selectStation.subStations)
+                await fetchArrivalTime()
             }
             highlightMarker(subStations: selectStation.subStations)
             currentStationID = selectStation.subStations.first?.stationID ?? ""

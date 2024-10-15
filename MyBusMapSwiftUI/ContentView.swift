@@ -16,7 +16,6 @@ struct ContentView: View {
         }
     }
     @State var push: Bool = false
-    @State var showText = true
     @State var showHighlightMarker: Bool = false
     @State var showLocationSearch = false
     @State var query: String = "Tap to search"
@@ -80,7 +79,9 @@ struct ContentView: View {
     }
     func onClickStationName(subStations: [SubStation]) {
         Task {
-            await viewModel.fetchArrivalTime(subStations: subStations)
+            viewModel.subStations = subStations
+            await viewModel.fetchArrivalTime()
+//            viewModel.fetchArrivalTimeRepeatedly(subStations: subStations)
         }
         // highlight marker
         viewModel.highlightMarker(subStations: subStations)

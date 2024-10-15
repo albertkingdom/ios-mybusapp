@@ -71,6 +71,9 @@ struct NearByStationSheet: View {
     @Binding var dynamicHeight: Double
     @State var frameH: Double=0.0 // 目前bottom sheet高度
     @State var maxViewH: Double=0.0 // bottom sheet高度上限
+
+    
+    
     var stationList: some View {
         List(nearByStations, id: \.id) { station in
             ListItem(
