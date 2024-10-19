@@ -11,7 +11,7 @@ import GooglePlaces
 
 struct PlacesSearch: UIViewControllerRepresentable {
     @Binding var showLocationSearch: Bool
-    @Binding var location: CLLocation?
+    var location: CLLocation?
     @Binding var query: String
     
     func makeUIViewController(context: Context) -> GMSAutocompleteViewController {
@@ -35,19 +35,19 @@ struct PlacesSearch: UIViewControllerRepresentable {
     }
     
     func makeCoordinator() -> PlacesSearchCoordinator {
-        return PlacesSearchCoordinator(parent: self, showLocationSearch: $showLocationSearch, location: $location, query: $query)
+        return PlacesSearchCoordinator(parent: self, showLocationSearch: $showLocationSearch, location: location, query: $query)
     }
     
     class PlacesSearchCoordinator: NSObject, GMSAutocompleteViewControllerDelegate {
         let parent: PlacesSearch
         @Binding var showLocationSearch: Bool
-        @Binding var location: CLLocation?
+        var location: CLLocation?
         @Binding var query: String
         
-        init(parent: PlacesSearch, showLocationSearch: Binding<Bool>, location: Binding<CLLocation?>, query: Binding<String>) {
+        init(parent: PlacesSearch, showLocationSearch: Binding<Bool>, location: CLLocation?, query: Binding<String>) {
             self.parent = parent
             _showLocationSearch = showLocationSearch
-            _location = location
+            self.location = location
             _query = query
         }
         

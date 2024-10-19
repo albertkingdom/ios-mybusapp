@@ -11,7 +11,7 @@ import SwiftUI
 
 struct GoogleMapsView: UIViewRepresentable {
     // when binding property changes, will call updateUIView method
-    @Binding var location: CLLocation?
+    var location: CLLocation?
     @Binding var nearByStations: [NearByStation]
     @Binding var highlightMarkersCoordinates: [[String:Double]]
     @Binding var existedHighLightMarkers: [GMSMarker]
@@ -107,7 +107,7 @@ struct GoogleMapsView: UIViewRepresentable {
         return MapViewCoordinator(parent: self,
                                   showNearByStationSheet: $showNearByStationSheet,
                                   onSelectMarker: onSelectMarker,
-                                  location: $location,
+                                  location: location,
                                   onTapMyLocationBtn: onTapMyLocationBtn
         )
     }
@@ -116,19 +116,19 @@ struct GoogleMapsView: UIViewRepresentable {
         let parent: GoogleMapsView
         @Binding var showNearByStationSheet: Bool
         var onSelectMarker: (GMSMarker) -> Void
-        @Binding var locationSource: CLLocation?
+        var locationSource: CLLocation?
         var onTapMyLocationBtn: () -> Void
         
         init(parent: GoogleMapsView,
              showNearByStationSheet: Binding<Bool>,
              onSelectMarker: @escaping (GMSMarker) -> Void,
-             location: Binding<CLLocation?>,
+             location: CLLocation?,
              onTapMyLocationBtn: @escaping () -> Void
         ) {
             self.parent = parent
             _showNearByStationSheet = showNearByStationSheet
             self.onSelectMarker = onSelectMarker
-            _locationSource = location
+            self.locationSource = location
             self.onTapMyLocationBtn = onTapMyLocationBtn
         }
         func mapView(_ mapView: GMSMapView, didTap marker: GMSMarker) -> Bool {

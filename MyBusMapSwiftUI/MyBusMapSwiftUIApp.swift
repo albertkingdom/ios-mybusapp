@@ -11,10 +11,15 @@ import GoogleSignIn
 @main
 struct MyBusMapSwiftUIApp: App {
     @UIApplicationDelegateAdaptor(AppDelegate.self) var appDelegate
+    @StateObject var locationManager = LocationManager() // 全局單例
+    @StateObject var authManager = AuthManager()
+    
     var body: some Scene {
         WindowGroup {
 //            ContentView()
             HomeView()
+                .environmentObject(locationManager)
+                .environmentObject(authManager)
                 .onOpenURL { url in
                     GIDSignIn.sharedInstance.handle(url)
                 }

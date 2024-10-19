@@ -10,20 +10,17 @@ import CoreLocation
 import GoogleMaps
 import FirebaseCore
 import FirebaseFirestoreSwift
+
 import FirebaseAuth
 import FirebaseFirestore
+import SwiftUI
 
 
-class MapViewModel: NSObject, ObservableObject, CLLocationManagerDelegate {
-    static let shared = MapViewModel()
+class MapViewModel: ObservableObject {
+//    @ObservedObject var locationManager: LocationManager
     var timer: Timer?
     var subStations: [SubStation]?
-    private var locationManager: CLLocationManager?
-    @Published var location: CLLocation? {
-        didSet {
-            fetchNearByStationsWrapper()
-        }
-    }
+    
     @Published var nearByStations: [NearByStation] = []
     @Published var arrivalTimes: [ArrivalTime] = []
     @Published var sortedArrivalTimes: [Int: [ArrivalTime]] = [:]
@@ -36,67 +33,32 @@ class MapViewModel: NSObject, ObservableObject, CLLocationManagerDelegate {
     var existedMarkers: [GMSMarker] = []
     @Published var isLoading: Bool = true
     let db = Firestore.firestore()
-    @Published var isLogin: Bool = false
     @Published var favoriteList: [Favorite] = []
     var remotwFavoriteRouteNames: [String] = []
-    
-    func checkIfLogin() {
-        if let _ = Auth.auth().currentUser {
-            isLogin = true
-            print("isLogin")
-        } else {
-            print("isNotLogin")
-        }
-    }
-    
-    
-    
-    
-    func checkLocationAuthorization() {
-        locationManager = CLLocationManager() // will call locationManagerDidChangeAuthorization method
-        locationManager?.desiredAccuracy = kCLLocationAccuracyBest
-        locationManager!.delegate = self
-        guard let locationManager = locationManager else {
-            return
-        }
+//    var location: CLLocation? {
+//            return locationManager.location // 獲取最新的位置
+//        }
+//    
+//    init(locationManager: LocationManager) {
+//        self.locationManager = locationManager
+//    }
+    init() {
         
-        switch locationManager.authorizationStatus {
-        case .notDetermined:
-            locationManager.requestWhenInUseAuthorization()
-            print("notDetermined")
-        case .restricted:
-            print("location service is restricted")
-        case .denied:
-            print("location service is denied")
-        case .authorizedAlways, .authorizedWhenInUse:
-            locationManager.startUpdatingLocation()
-            print("startUpdatingLocation")
-            break
-        @unknown default:
-            break
-        }
     }
+   
     
-
-    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-        self.location = locations.last
-        print("location \(locations)")
-        locationManager?.stopUpdatingLocation()
+    
+    
+    
+    
+    func fetchNearByStationsWrapper(location: CLLocation) {
         Task {
-            await fetchNearByStations()
+            await fetchNearByStations(location: location)
         }
     }
-    func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
-        print("Failed to get location: \(error)")
-    }
-    func fetchNearByStationsWrapper() {
-        Task {
-            await fetchNearByStations()
-        }
-    }
-    private func fetchNearByStations() async {
+    private func fetchNearByStations(location: CLLocation) async {
         
-        let coordinate = (location?.coordinate.latitude ?? 0, location?.coordinate.longitude ?? 0)
+        let coordinate = (location.coordinate.latitude ?? 0, location.coordinate.longitude ?? 0)
         do {
             
             let stations = try await NetworkManager.shared.fetchNearByStops(coordinate: coordinate)
@@ -156,33 +118,33 @@ class MapViewModel: NSObject, ObservableObject, CLLocationManagerDelegate {
 //            timer?.invalidate()
 //            timer = nil
 //    }
-    func fetchArrivalTime() async {
-        DispatchQueue.main.async {
-            self.isLoading = true
-        }
-        guard let subStations else { return }
-        //let city = "NewTaipei"
-        let stationID = subStations[0].stationID
-        let coordinate = (location?.coordinate.latitude ?? 0, location?.coordinate.longitude ?? 0)
-        do {
-            let city = try await NetworkManager.shared.getDistrictAsync(from: coordinate)
-            print("station_id: \(stationID)")
-            let arrivalTimes = try await NetworkManager.shared.fetchArrivalTimeAsync(city: city, stationID: stationID)
-            print("fetchArrivalTime  \(arrivalTimes)")
-            let sorted = handleArrivalTime(arrivalTimes: arrivalTimes)
-            DispatchQueue.main.async {
-                self.sortedArrivalTimes = sorted
-                self.isLoading = false
-            }
-        } catch let DecodingError.typeMismatch(type, context) {
-            print("Type '\(type)' mismatch:", context.debugDescription)
-            print("codingPath:", context.codingPath)
-        
-        } catch {
-            print("fetchArrivalTime error \(error)")
-        }
-    }
-    
+//    func fetchArrivalTime() async {
+//        DispatchQueue.main.async {
+//            self.isLoading = true
+//        }
+//        guard let subStations else { return }
+//        //let city = "NewTaipei"
+//        let stationID = subStations[0].stationID
+//        let coordinate = (location?.coordinate.latitude ?? 0, location?.coordinate.longitude ?? 0)
+//        do {
+//            let city = try await NetworkManager.shared.getDistrictAsync(from: coordinate)
+//            print("station_id: \(stationID)")
+//            let arrivalTimes = try await NetworkManager.shared.fetchArrivalTimeAsync(city: city, stationID: stationID)
+//            print("fetchArrivalTime  \(arrivalTimes)")
+//            let sorted = handleArrivalTime(arrivalTimes: arrivalTimes)
+//            DispatchQueue.main.async {
+//                self.sortedArrivalTimes = sorted
+//                self.isLoading = false
+//            }
+//        } catch let DecodingError.typeMismatch(type, context) {
+//            print("Type '\(type)' mismatch:", context.debugDescription)
+//            print("codingPath:", context.codingPath)
+//        
+//        } catch {
+//            print("fetchArrivalTime error \(error)")
+//        }
+//    }
+//    
     private func handleArrivalTime(arrivalTimes: [ArrivalTime]) -> [Int:[ArrivalTime]] {
         var sorted: [Int: [ArrivalTime]] = [0: [], 1: []] // 0:'去程',1:'返程'
         for time in arrivalTimes {
@@ -197,41 +159,41 @@ class MapViewModel: NSObject, ObservableObject, CLLocationManagerDelegate {
         return sorted
     }
     
-    func fetchArrivalTimeForRouteNameAsync(routeName: String) async {
-        DispatchQueue.main.async {
-            
-            self.isLoading = true
-        }
-        let coordinate = (location?.coordinate.latitude ?? 0, location?.coordinate.longitude ?? 0)
-        do {
-            let city = try await NetworkManager.shared.getDistrictAsync(from: coordinate)
-            let arrivalTimes = try await NetworkManager.shared.fetchArrivalTimeForRouteNameAsync(cityName: city, routeName: routeName)
-            print("fetchArrivalTimeForRouteNameAsync  \(arrivalTimes)")
-            
-            let sorted = handleArrivalTime(arrivalTimes: arrivalTimes)
-            DispatchQueue.main.async {
-                self.sortedArrivalTimesForRouteName = sorted
-                self.isLoading = false
-            }
-        } catch {
-            print("fetchArrivalTimeForRouteNameAsync error \(error)")
-        }
-    }
-    
-    func fetchStopsAsync(routeName: String) async {
-        let coordinate = (location?.coordinate.latitude ?? 0, location?.coordinate.longitude ?? 0)
-        do {
-            let city = try await NetworkManager.shared.getDistrictAsync(from: coordinate)
-            let routes = try await NetworkManager.shared.fetchStopsAsync(cityName: city, routeName: routeName)
-            print("fetchStopsAsync  \(routes)")
-            let dict = handleStops(routes: routes)
-            DispatchQueue.main.async {
-                self.sortedStopsForRouteName = dict
-            }
-        } catch {
-            print("fetchStopsAsync error \(error)")
-        }
-    }
+//    func fetchArrivalTimeForRouteNameAsync(routeName: String) async {
+//        DispatchQueue.main.async {
+//            
+//            self.isLoading = true
+//        }
+//        let coordinate = (location?.coordinate.latitude ?? 0, location?.coordinate.longitude ?? 0)
+//        do {
+//            let city = try await NetworkManager.shared.getDistrictAsync(from: coordinate)
+//            let arrivalTimes = try await NetworkManager.shared.fetchArrivalTimeForRouteNameAsync(cityName: city, routeName: routeName)
+//            print("fetchArrivalTimeForRouteNameAsync  \(arrivalTimes)")
+//            
+//            let sorted = handleArrivalTime(arrivalTimes: arrivalTimes)
+//            DispatchQueue.main.async {
+//                self.sortedArrivalTimesForRouteName = sorted
+//                self.isLoading = false
+//            }
+//        } catch {
+//            print("fetchArrivalTimeForRouteNameAsync error \(error)")
+//        }
+//    }
+//    
+//    func fetchStopsAsync(routeName: String) async {
+//        let coordinate = (location?.coordinate.latitude ?? 0, location?.coordinate.longitude ?? 0)
+//        do {
+//            let city = try await NetworkManager.shared.getDistrictAsync(from: coordinate)
+//            let routes = try await NetworkManager.shared.fetchStopsAsync(cityName: city, routeName: routeName)
+//            print("fetchStopsAsync  \(routes)")
+//            let dict = handleStops(routes: routes)
+//            DispatchQueue.main.async {
+//                self.sortedStopsForRouteName = dict
+//            }
+//        } catch {
+//            print("fetchStopsAsync error \(error)")
+//        }
+//    }
     
     private func handleStops(routes: [StopOfRoute]) -> [Int: [StopForRouteName]] {
         var sorted: [Int: [StopForRouteName]] = [0: [], 1: []] // 0:'去程',1:'返程'
@@ -265,7 +227,7 @@ class MapViewModel: NSObject, ObservableObject, CLLocationManagerDelegate {
             station.stationName == stationName
         }) {
             Task {
-                await fetchArrivalTime()
+//                await fetchArrivalTime()
             }
             highlightMarker(subStations: selectStation.subStations)
             currentStationID = selectStation.subStations.first?.stationID ?? ""

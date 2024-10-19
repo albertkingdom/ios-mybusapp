@@ -6,6 +6,8 @@
 //
 
 import SwiftUI
+import CoreLocation
+
 
 struct DraggableModifier: ViewModifier {
     @Binding var frameH: CGFloat
@@ -33,8 +35,10 @@ struct DraggableModifier: ViewModifier {
 }
 
 struct ArrivalTimeSheet: View {
-    @ObservedObject var mapViewModel = MapViewModel.shared
-
+    @EnvironmentObject var locationManager: LocationManager
+    @EnvironmentObject var authManager: AuthManager
+    @ObservedObject var mapViewModel: MapViewModel
+    @StateObject var viewModel: ArrivalTimeSheetViewModel 
     var heightFraction=0.4
     @State var frameH: Double=0.0 // 目前bottom sheet高度
     @State var maxViewH: Double=0.0 // bottom sheet高度上限
@@ -42,13 +46,13 @@ struct ArrivalTimeSheet: View {
     @State private var selectedTab: Int = 0
     @Binding var push: Bool
     @Binding var showNearByStationSheet: Bool
-    let clickOnRouteName: (String) -> Void
+//    let clickOnRouteName: (String) -> Void
     let unHighlightMarkers: () -> Void
     let clearData: () -> Void
     
     var directionTabs: [Tab] {
         var tabs: [Tab] = []
-        for time in arrivalTimes.keys {
+        for time in viewModel.sortedArrivalTimes.keys {
             let tab = Tab(icon: Image(systemName: "music.note"), title: time == 0 ? "去" : "回")
             tabs.append(tab)
         }
@@ -84,7 +88,7 @@ struct ArrivalTimeSheet: View {
             }
     }
     
-    @State private var timeRemaining = 30
+    @State private var timeRemaining = 0 //倒數計時30sec 下次更新到站時間
     @Environment(\.scenePhase) var scenePhase
     @State private var isActive = true
     
@@ -108,7 +112,7 @@ struct ArrivalTimeSheet: View {
                         .font(.system(size: 12))
                     VStack(spacing: 0) {
                         directionRow
-                        if mapViewModel.isLoading {
+                        if viewModel.isLoading {
                             VStack {
                                 HStack {
                                     ProgressView()
@@ -119,15 +123,17 @@ struct ArrivalTimeSheet: View {
                                 Spacer()
                             }
                         }
-                        if !mapViewModel.isLoading {
+                        if !viewModel.isLoading {
                             // Views
                             TabView(selection: $selectedTab) {
-                                ForEach(arrivalTimes.keys.sorted(), id: \.self) { key in
-                                    TimeListView(arrivalTimes: arrivalTimes[key] ?? [],
+                                ForEach(viewModel.sortedArrivalTimes.keys.sorted(), id: \.self) { key in
+                                    TimeListView(
+                                        remoteFavoriteRouteNames: viewModel.remoteFavoriteRouteNames,
+                                        arrivalTimes: viewModel.sortedArrivalTimes[key] ?? [],
                                                push: $push,
-                                               clickOnRouteName: clickOnRouteName,
+//                                               clickOnRouteName: clickOnRouteName,
                                                rowContent: .routeName,
-                                               isLogin: $mapViewModel.isLogin
+                                               isLogin: authManager.isLogin
                                     )
                                 }
                             }
@@ -148,18 +154,20 @@ struct ArrivalTimeSheet: View {
                         }
                 )
                 .onAppear {
+                    
+                    viewModel.getRemoteData()
                     self.frameH=geometry.size.height*heightFraction
                     self.maxViewH=geometry.size.height
                     print("初始高度 \(frameH) 最高\(maxViewH)")
                 }
                 .onReceive(timer) { time in
-                    guard isActive, !mapViewModel.isLoading else { return }
+                    guard isActive, !viewModel.isLoading else { return }
 
                     if timeRemaining > 0 {
                         timeRemaining -= 1
                     } else {
                         Task {
-                            await mapViewModel.fetchArrivalTime()
+                            await viewModel.fetchArrivalTime()
                             timeRemaining = 30
                         }
                     }
@@ -185,25 +193,53 @@ enum RowContent {
     case stopName
 }
 
-struct ArrivalTimeSheet_Previews: PreviewProvider {
-    static var previews: some View {
-        ArrivalTimeSheet(
-            //sheetMode: .constant(.half),
-            arrivalTimes: .constant([0:[
-                ArrivalTime(stopID: "100",
-                            stopName: Name(zhTw: "材試所", en: "材試所"),
-                            routeName: Name(zhTw: "99", en: "99"),
-                            direction: 0,
-                            stopStatus: 3,
-                            estimateTime: 1111,
-                            srcUpdateTime: "00000",
-                            updateTime: "000000")
-            ]]),
-            push: .constant(false),
-            showNearByStationSheet: .constant(false),
-            clickOnRouteName: { _ in },
-            unHighlightMarkers: {  },
-            clearData: {}
-        )
-    }
+//struct ArrivalTimeSheet_Previews: PreviewProvider {
+//    static var previews: some View {
+//        ArrivalTimeSheet(
+//            //sheetMode: .constant(.half),
+//            arrivalTimes: .constant([0:[
+//                ArrivalTime(stopID: "100",
+//                            stopName: Name(zhTw: "材試所", en: "材試所"),
+//                            routeName: Name(zhTw: "99", en: "99"),
+//                            direction: 0,
+//                            stopStatus: 3,
+//                            estimateTime: 1111,
+//                            srcUpdateTime: "00000",
+//                            updateTime: "000000")
+//            ]]),
+//            push: .constant(false),
+//            showNearByStationSheet: .constant(false),
+//            clickOnRouteName: { _ in },
+//            unHighlightMarkers: {  },
+//            clearData: {}
+//        )
+//    }
+//}
+
+#Preview {
+    
+
+    ArrivalTimeSheet(
+        //sheetMode: .constant(.half),
+        mapViewModel:MapViewModel(),
+        viewModel: ArrivalTimeSheetViewModel(
+            location: CLLocation(latitude: 100, longitude: 90),
+            stationID: ""
+        ),
+        arrivalTimes: .constant([0:[
+            ArrivalTime(stopID: "100",
+                        stopName: Name(zhTw: "材試所", en: "材試所"),
+                        routeName: Name(zhTw: "99", en: "99"),
+                        direction: 0,
+                        stopStatus: 3,
+                        estimateTime: 1111,
+                        srcUpdateTime: "00000",
+                        updateTime: "000000")
+        ]]),
+        push: .constant(false),
+        showNearByStationSheet: .constant(false),
+//        clickOnRouteName: { _ in },
+        unHighlightMarkers: {  },
+        clearData: {}
+    )
 }

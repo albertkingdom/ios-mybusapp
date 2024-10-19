@@ -9,15 +9,12 @@ import SwiftUI
 import GoogleMaps
 
 struct ContentView: View {
-    @StateObject var viewModel = MapViewModel.shared
-    @State var showNearByStationSheet = true {
-        didSet {
-            print("showNearByStationSheet \(showNearByStationSheet)")
-        }
-    }
+    @EnvironmentObject var locationManager: LocationManager
+    @StateObject var viewModel: MapViewModel
+    @State var showNearByStationSheet = true
     @State var push: Bool = false
-    @State var showHighlightMarker: Bool = false
-    @State var showLocationSearch = false
+    @State private var showHighlightMarker: Bool = false
+    @State private var showLocationSearch = false
     @State var query: String = "Tap to search"
     @State var bottomPadding: Double = 0.0 {
         didSet {
@@ -29,7 +26,7 @@ struct ContentView: View {
                 googleMapsView
                 if showLocationSearch {
                     PlacesSearch(showLocationSearch: $showLocationSearch,
-                                 location: $viewModel.location,
+                                 location: locationManager.location,
                                  query: $query
                     )
                     .ignoresSafeArea()
@@ -44,13 +41,14 @@ struct ContentView: View {
                             clickOnStationName: onClickStationName(subStations: ),
                             dynamicHeight: $bottomPadding
                         )
-                    }
-                    if !showNearByStationSheet {
+                    } else {
                         ArrivalTimeSheet(
+                            mapViewModel: viewModel,
+                            viewModel: ArrivalTimeSheetViewModel(location: locationManager.location, stationID: viewModel.currentStationID),
                             arrivalTimes: $viewModel.sortedArrivalTimes,
                             push: $push,
                             showNearByStationSheet: $showNearByStationSheet,
-                            clickOnRouteName: onClickRouteName(routeName:),
+//                            clickOnRouteName: onClickRouteName(routeName:),
                             unHighlightMarkers: unHighlightMarker,
                             clearData: clearData
                         )
@@ -61,26 +59,28 @@ struct ContentView: View {
                         }
                     }
                 }
-                if push {
-                    RouteSheet(
-                        push: $push,
-                        location: $viewModel.location,
-                        title: viewModel.clickedRouteName,
-                        arrivalTimes: $viewModel.sortedArrivalTimesForRouteName,
-                        stops: $viewModel.sortedStopsForRouteName
-                    )
-                    //                    .transition(.asymmetric(insertion: .move(edge: .leading), removal: .move(edge: .leading)))
-                    .edgesIgnoringSafeArea(.top)
-                    .transition(.slide)
-                    .zIndex(1)
-                }
+//                if push {
+//                    RouteSheet(
+//                        mapViewModel: viewModel,
+//                        push: $push,
+//                        location: $viewModel.location,
+//                        title: viewModel.clickedRouteName,
+//                        arrivalTimes: $viewModel.sortedArrivalTimesForRouteName,
+//                        stops: $viewModel.sortedStopsForRouteName
+//                    )
+//                    //                    .transition(.asymmetric(insertion: .move(edge: .leading), removal: .move(edge: .leading)))
+//                    .edgesIgnoringSafeArea(.top)
+//                    .transition(.slide)
+//                    .zIndex(1)
+//                }
             }
             .zIndex(2)
     }
     func onClickStationName(subStations: [SubStation]) {
         Task {
+            showNearByStationSheet = false
             viewModel.subStations = subStations
-            await viewModel.fetchArrivalTime()
+//            await viewModel.fetchArrivalTime()
 //            viewModel.fetchArrivalTimeRepeatedly(subStations: subStations)
         }
         // highlight marker
@@ -88,14 +88,14 @@ struct ContentView: View {
         showHighlightMarker = true
         viewModel.currentStationID = subStations.first?.stationID ?? ""
     }
-    func onClickRouteName(routeName: String) {
-        print("onClickRouteName \(routeName)")
-        viewModel.clickedRouteName = routeName
-        Task {
-            await viewModel.fetchArrivalTimeForRouteNameAsync(routeName: routeName)
-            await viewModel.fetchStopsAsync(routeName: routeName)
-        }
-    }
+//    func onClickRouteName(routeName: String) {
+//        print("onClickRouteName \(routeName)")
+//        viewModel.clickedRouteName = routeName
+//        Task {
+//            await viewModel.fetchArrivalTimeForRouteNameAsync(routeName: routeName)
+//            await viewModel.fetchStopsAsync(routeName: routeName)
+//        }
+//    }
     func unHighlightMarker() {
         viewModel.unHighlightMarker()
         showHighlightMarker = false
@@ -108,13 +108,13 @@ struct ContentView: View {
         showHighlightMarker = true
     }
     func onTapMyLocationButton() {
-        viewModel.checkLocationAuthorization()
+//        viewModel.checkLocationAuthorization()
     }
 }
 
 private extension ContentView {
     var googleMapsView: some View {
-        GoogleMapsView(location: $viewModel.location,
+        GoogleMapsView(location: locationManager.location,
                        nearByStations: $viewModel.nearByStations,
                        highlightMarkersCoordinates: $viewModel.highlightCoordinate,
                        existedHighLightMarkers: $viewModel.existedHighLightMarkers,
@@ -127,49 +127,17 @@ private extension ContentView {
         )
         .edgesIgnoringSafeArea(.top)
         .onAppear {
-            viewModel.checkIfLogin()
-            viewModel.checkLocationAuthorization()
+//            viewModel.checkIfLogin()
+//            viewModel.checkLocationAuthorization()
         }
     }
 }
 
-struct SearchBarView: View {
-    @Binding var query: String
-    @Binding var showLocationSearch: Bool
-    
-    var body: some View {
-        VStack {
-            HStack {
-                Spacer()
-                Button(action: {
-                    showLocationSearch = true
-                }, label: {
-                    HStack {
-                        Image(systemName: "magnifyingglass")
-                            .foregroundColor(Color.primary)
-                        Text(query)
-                            .foregroundColor(Color.gray)
-                        Spacer()
-                        Image(systemName: "xmark")
-                            .foregroundColor(.primary)
-                            .onTapGesture {
-                                query = "Tap to search"
-                            }
-                    }
-                    .padding(.horizontal, 10)
-                })
-                .frame(width: UIScreen.main.bounds.width - 30, height: 50)
-                .background(Color.white)
-                Spacer()
-            }
-            Spacer()
-        }
-        .padding(.top, 30)
-    }
-}
+
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
-        ContentView()
+        ContentView(viewModel: MapViewModel()
+        )
     }
 }

@@ -17,7 +17,7 @@ struct TimeListItem: View {
     var title: String
     var arrivalTime: ArrivalTime
     var rowContent: RowContent
-    @Binding var isLogin: Bool
+    var isLogin: Bool
     var isSaved: Bool
     var deleteFavFromDB: (String) -> Void
     var onTap: () -> Void
@@ -40,7 +40,7 @@ struct TimeListItem: View {
             Aux(rowContent: rowContent,
                 arrivalTime: arrivalTime,
                 isSaved: isSaved,
-                isLogin: $isLogin,
+                isLogin: isLogin,
                 deleteFavFromDB: deleteFavFromDB
                )
         }
@@ -52,13 +52,13 @@ struct TimeListItem: View {
 }
 
 struct TimeListView: View {
-    var viewModel = ArrivalTimeSheetViewModel.shared
-    @ObservedObject var mapViewModel = MapViewModel.shared
+//    @ObservedObject var mapViewModel: MapViewModel
+    @State var remoteFavoriteRouteNames: [String] = []
     @State var arrivalTimes: [ArrivalTime]
     @Binding var push: Bool
-    let clickOnRouteName: (String) -> Void
+//    let clickOnRouteName: (String) -> Void
     let rowContent: RowContent
-    @Binding var isLogin: Bool
+    var isLogin: Bool
     @State var realmFavList: Results<FavoriteRealm> = RealmManager.shared.readAllFromDB()
     var timeList: some View {
         List(arrivalTimes, id: \.id) { arrivalTime in
@@ -83,26 +83,30 @@ struct TimeListView: View {
                          title: title,
                          arrivalTime: arrivalTime,
                          rowContent: rowContent,
-                         isLogin: $isLogin,
+                         isLogin: isLogin,
                          isSaved: isSaved,
                          deleteFavFromDB: deleteFavFromDB(routeName:),
                          onTap: {
-                print("on tap route name")
-                withAnimation(.default) {
-                    push.toggle()
-                }
-                let routeName = arrivalTime.routeName.zhTw
-                clickOnRouteName(routeName)
-            })
+                            print("on tap route name")
+                            withAnimation(.default) {
+                                push.toggle()
+                            }
+                            let routeName = arrivalTime.routeName.zhTw
+//                            clickOnRouteName(routeName)
+                        })
         }
+        .border(.yellow)
         .listStyle(.plain)
         .listRowSeparator(.hidden)
         .navigationBarHidden(true)
+        
     }
+
     var body: some View {
         if #available(iOS 15.0, *) {
             timeList
             .listRowSeparator(.hidden)
+
         } else {
            timeList
         }
@@ -130,7 +134,7 @@ struct TimeListView: View {
 
     private func checkStatus(stopID: String?, routeName: String?, isLogin: Bool) -> Bool {
         if let routeName = routeName {
-            if isLogin && mapViewModel.remotwFavoriteRouteNames.contains(routeName) {
+            if isLogin && remoteFavoriteRouteNames.contains(routeName) {
                 return true
             }
 //            if !isLogin && viewModel.localSavedRouteName.contains(routeName) {
@@ -156,7 +160,7 @@ struct Aux: View {
     let rowContent: RowContent
     let arrivalTime: ArrivalTime
     @State var isSaved: Bool
-    @Binding var isLogin: Bool
+    var isLogin: Bool
     let deleteFavFromDB: (String) -> Void
     
     var body: some View {
@@ -200,30 +204,58 @@ struct Aux: View {
         }
     }
 }
-struct TabContent_Previews: PreviewProvider {
-    static var previews: some View {
-        TimeListView(arrivalTimes: [
-            ArrivalTime(stopID: "100",
-                        stopName: Name(zhTw: "材試所", en: "材試所"),
-                        routeName: Name(zhTw: "99", en: "99"),
-                        direction: 0,
-                        stopStatus: 3,
-                        estimateTime: 59,
-                        srcUpdateTime: "00000",
-                        updateTime: "000000"),
-            ArrivalTime(stopID: "101",
-                        stopName: Name(zhTw: "材試所", en: "材試所"),
-                        routeName: Name(zhTw: "99", en: "99"),
-                        direction: 0,
-                        stopStatus: 3,
-                        estimateTime: 120,
-                        srcUpdateTime: "00000",
-                        updateTime: "000000")
-        ],
-                   push: .constant(true),
-                   clickOnRouteName: {_ in },
-                   rowContent: .routeName,
-                   isLogin: .constant(false)
-        )
-    }
+//struct TabContent_Previews: PreviewProvider {
+//    static var previews: some View {
+//        TimeListView(arrivalTimes: [
+//            ArrivalTime(stopID: "100",
+//                        stopName: Name(zhTw: "材試所", en: "材試所"),
+//                        routeName: Name(zhTw: "99", en: "99"),
+//                        direction: 0,
+//                        stopStatus: 3,
+//                        estimateTime: 59,
+//                        srcUpdateTime: "00000",
+//                        updateTime: "000000"),
+//            ArrivalTime(stopID: "101",
+//                        stopName: Name(zhTw: "材試所", en: "材試所"),
+//                        routeName: Name(zhTw: "99", en: "99"),
+//                        direction: 0,
+//                        stopStatus: 3,
+//                        estimateTime: 120,
+//                        srcUpdateTime: "00000",
+//                        updateTime: "000000")
+//        ],
+//                   push: .constant(true),
+//                   clickOnRouteName: {_ in },
+//                   rowContent: .routeName,
+//                   isLogin: .constant(false)
+//        )
+//    }
+//}
+
+#Preview {
+    TimeListView(
+        
+        arrivalTimes: [
+        ArrivalTime(stopID: "100",
+                    stopName: Name(zhTw: "材試所", en: "材試所"),
+                    routeName: Name(zhTw: "99", en: "99"),
+                    direction: 0,
+                    stopStatus: 3,
+                    estimateTime: 59,
+                    srcUpdateTime: "00000",
+                    updateTime: "000000"),
+        ArrivalTime(stopID: "101",
+                    stopName: Name(zhTw: "材試所", en: "材試所"),
+                    routeName: Name(zhTw: "99", en: "99"),
+                    direction: 0,
+                    stopStatus: 3,
+                    estimateTime: 120,
+                    srcUpdateTime: "00000",
+                    updateTime: "000000")
+    ],
+               push: .constant(true),
+//               clickOnRouteName: {_ in },
+               rowContent: .routeName,
+               isLogin: false
+    )
 }

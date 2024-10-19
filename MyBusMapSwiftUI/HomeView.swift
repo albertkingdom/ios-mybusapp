@@ -6,17 +6,20 @@
 //
 
 import SwiftUI
+import CoreLocation
 
 struct HomeView: View {
+    @EnvironmentObject var locationManager: LocationManager
+    @StateObject var mapViewModel = MapViewModel()
     var body: some View {
       
         TabView {
-            ContentView()
+            ContentView(viewModel: mapViewModel)
                     .tabItem {
                         Image(systemName: "map")
                         Text("Map")
                     }
-            ListView()
+            FavStationsView()
                     .tabItem {
                         Image(systemName: "list.bullet")
                         Text("List")
@@ -27,6 +30,9 @@ struct HomeView: View {
                     Text("User")
                 }
         }
+        .onReceive(locationManager.$location, perform: { newLocation in
+            mapViewModel.fetchNearByStationsWrapper(location: newLocation ?? CLLocation(latitude: 0, longitude: 0))
+        })
         
         
             
