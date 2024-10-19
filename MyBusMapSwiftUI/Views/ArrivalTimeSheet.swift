@@ -9,35 +9,35 @@ import SwiftUI
 import CoreLocation
 
 
-struct DraggableModifier: ViewModifier {
-    @Binding var frameH: CGFloat
-    @State private var maxViewH: CGFloat = 0.0
-    let heightFraction: CGFloat
-    let onDrag: (CGFloat, CGFloat, CGFloat) -> CGFloat
-    
-    func body(content: Content) -> some View {
-        GeometryReader { geometry in
-            content
-                .frame(height: frameH)
-                .gesture(
-                    DragGesture()
-                        .onChanged { value in
-                            frameH = onDrag(value.translation.height, frameH, maxViewH)
-                        }
-                )
-                .onAppear {
-                    frameH = geometry.size.height * heightFraction
-                    maxViewH = geometry.size.height
-                    print("初始高度 \(frameH) 最高 \(maxViewH)")
-                }
-        }
-    }
-}
+//struct DraggableModifier: ViewModifier {
+//    @Binding var frameH: Double
+//    @State private var maxViewH: CGFloat = 0.0
+//    let heightFraction: Double
+////    let onDrag: (CGFloat, CGFloat, CGFloat) -> CGFloat
+//    
+//    func body(content: Content) -> some View {
+//        GeometryReader { geometry in
+//            content
+////                .frame(height: frameH)
+//                .gesture(
+//                    DragGesture()
+//                        .onChanged { value in
+//                            frameH = onDrag(yTranslation: value.translation.height, frameH: frameH, maxViewH: maxViewH)
+//                            print("frameH", frameH)
+//                        }
+//                )
+//                .onAppear {
+//                    frameH = geometry.size.height * heightFraction
+//                    maxViewH = geometry.size.height
+//                    print("初始高度 \(frameH) 最高 \(maxViewH)")
+//                }
+//        }
+//    }
+//}
 
 struct ArrivalTimeSheet: View {
     @EnvironmentObject var locationManager: LocationManager
     @EnvironmentObject var authManager: AuthManager
-    @ObservedObject var mapViewModel: MapViewModel
     @StateObject var viewModel: ArrivalTimeSheetViewModel 
     var heightFraction=0.4
     @State var frameH: Double=0.0 // 目前bottom sheet高度
@@ -88,7 +88,7 @@ struct ArrivalTimeSheet: View {
             }
     }
     
-    @State private var timeRemaining = 0 //倒數計時30sec 下次更新到站時間
+    @State private var timeRemaining = 0 // 倒數計時30sec 下次更新到站時間
     @Environment(\.scenePhase) var scenePhase
     @State private var isActive = true
     
@@ -141,6 +141,7 @@ struct ArrivalTimeSheet: View {
                         }
                     }
                 }
+                
                 .frame(height: frameH)
                 .bottomSheetStyle()
                 .gesture(
@@ -185,6 +186,7 @@ struct ArrivalTimeSheet: View {
 //                    mapViewModel.stopfetchArrivalTimeRepeatedly()
                 }
             }
+            
         }
     }
 }
@@ -221,7 +223,6 @@ enum RowContent {
 
     ArrivalTimeSheet(
         //sheetMode: .constant(.half),
-        mapViewModel:MapViewModel(),
         viewModel: ArrivalTimeSheetViewModel(
             location: CLLocation(latitude: 100, longitude: 90),
             stationID: ""

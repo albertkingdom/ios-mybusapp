@@ -14,6 +14,7 @@ struct FavStationsView: View {
     @StateObject var favStationsViewModel=FavStationsViewModel()
     @State var push: Bool = false
     @State var showAlert: Bool = false
+    @Binding var selectedTab: Int
     
     var body: some View {
         NavigationView(content: {
@@ -41,11 +42,17 @@ struct FavStationsView: View {
 //                                        Image(systemName: "heart.fill")
 //                                    }
 //                                }
-                                HStack {
-                                                                        Text(item.name)
-                                                                        Spacer()
-                                                                        Image(systemName: "heart.fill")
-                                                                    }
+                                Button(action: {
+                                    print("click")
+                                    selectedTab = 0
+                                }, label: {
+                                    HStack {
+                                        Text(item.name)
+                                        Spacer()
+                                        Image(systemName: "heart.fill")
+                                    }
+                                })
+                                
                             }
                             .onDelete(perform: onDeleteLocal(with:))
   
@@ -69,11 +76,16 @@ struct FavStationsView: View {
 //                                        Image(systemName: "heart.fill")
 //                                    }
 //                                }
-                                HStack {
-                                                                        Text(item.name ?? "")
-                                                                        Spacer()
-                                                                        Image(systemName: "heart.fill")
-                                                                    }
+                                Button(action: {
+                                    print("click")
+                                    selectedTab = 0
+                                }, label: {
+                                    HStack {
+                                        Text(item.name ?? "")
+                                        Spacer()
+                                        Image(systemName: "heart.fill")
+                                    }
+                                })
                             }.onDelete(perform: onDeleteRemote)
                         }
                         .onAppear {
@@ -101,7 +113,8 @@ struct FavStationsView: View {
 struct ListView_Previews: PreviewProvider {
     static var previews: some View {
         FavStationsView(
-//            viewModel: MapViewModel(),
-            favStationsViewModel: FavStationsViewModel())
+            favStationsViewModel: FavStationsViewModel(),
+            selectedTab: .constant(0)
+        )
     }
 }

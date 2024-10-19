@@ -28,7 +28,7 @@ extension View {
     func onDrag(yTranslation: CGFloat, frameH: Double, maxViewH: Double) -> Double {
         if yTranslation > 0 {
             let newframeH=frameH-Double(yTranslation)
-            if newframeH > 50 {
+            if newframeH > 110 { // 最低高度
                 return newframeH
             }
         }
@@ -68,7 +68,6 @@ struct NearByStationSheet: View {
     @Binding var showNearByStationSheet: Bool
     let clickOnStationName: ([SubStation]) -> Void
     let heightFraction=0.4
-    @Binding var dynamicHeight: Double
     @State var frameH: Double=0.0 // 目前bottom sheet高度
     @State var maxViewH: Double=0.0 // bottom sheet高度上限
 
@@ -143,8 +142,7 @@ struct NearByStationSheet_Previews: PreviewProvider {
                                routes: ["299", "307"])
                 ])
             ]), showNearByStationSheet: .constant(true)
-            , clickOnStationName: { _ in print("")},
-            dynamicHeight: .constant(0.0)
+            , clickOnStationName: { _ in print("")}
         )
     }
 }

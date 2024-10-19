@@ -38,12 +38,10 @@ struct ContentView: View {
                         NearByStationSheet(
                             nearByStations: $viewModel.nearByStations,
                             showNearByStationSheet: $showNearByStationSheet,
-                            clickOnStationName: onClickStationName(subStations: ),
-                            dynamicHeight: $bottomPadding
+                            clickOnStationName: onClickStationName(subStations: )
                         )
                     } else {
                         ArrivalTimeSheet(
-                            mapViewModel: viewModel,
                             viewModel: ArrivalTimeSheetViewModel(location: locationManager.location, stationID: viewModel.currentStationID),
                             arrivalTimes: $viewModel.sortedArrivalTimes,
                             push: $push,
@@ -80,8 +78,6 @@ struct ContentView: View {
         Task {
             showNearByStationSheet = false
             viewModel.subStations = subStations
-//            await viewModel.fetchArrivalTime()
-//            viewModel.fetchArrivalTimeRepeatedly(subStations: subStations)
         }
         // highlight marker
         viewModel.highlightMarker(subStations: subStations)

@@ -44,6 +44,7 @@
 		A1A7B7522896372500893EF3 /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1A7B7512896372500893EF3 /* HomeView.swift */; };
 		A1A7B7542896395800893EF3 /* FavStationsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1A7B7532896395800893EF3 /* FavStationsView.swift */; };
 		A1A7B7562896462300893EF3 /* TestView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1A7B7552896462300893EF3 /* TestView.swift */; };
+		A1BDB5652CC3EEDE0077D3E0 /* BottomSheetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1BDB5642CC3EEDE0077D3E0 /* BottomSheetView.swift */; };
 		A1DA52362898E1D0006CB3D4 /* ArrivalTimeSheetViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1DA52352898E1D0006CB3D4 /* ArrivalTimeSheetViewModel.swift */; };
 		A1DA5238289A2A2E006CB3D4 /* .gitignore in Resources */ = {isa = PBXBuildFile; fileRef = A1DA5237289A2A2E006CB3D4 /* .gitignore */; };
 		A1DA523B28A4F5ED006CB3D4 /* UserView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1DA523A28A4F5ED006CB3D4 /* UserView.swift */; };
@@ -143,6 +144,7 @@
 		A1A7B7512896372500893EF3 /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
 		A1A7B7532896395800893EF3 /* FavStationsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavStationsView.swift; sourceTree = "<group>"; };
 		A1A7B7552896462300893EF3 /* TestView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestView.swift; sourceTree = "<group>"; };
+		A1BDB5642CC3EEDE0077D3E0 /* BottomSheetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BottomSheetView.swift; sourceTree = "<group>"; };
 		A1DA52352898E1D0006CB3D4 /* ArrivalTimeSheetViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArrivalTimeSheetViewModel.swift; sourceTree = "<group>"; };
 		A1DA5237289A2A2E006CB3D4 /* .gitignore */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitignore; sourceTree = "<group>"; };
 		A1DA523928A4F442006CB3D4 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
@@ -257,6 +259,7 @@
 		A11295262891827F0093D936 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				A1BDB5642CC3EEDE0077D3E0 /* BottomSheetView.swift */,
 				A112952428911A9C0093D936 /* NearByStationSheet.swift */,
 				A11295272891834C0093D936 /* ArrivalTimeSheet.swift */,
 				A1DA52352898E1D0006CB3D4 /* ArrivalTimeSheetViewModel.swift */,
@@ -599,6 +602,7 @@
 				A1A7B7522896372500893EF3 /* HomeView.swift in Sources */,
 				A178B13D2CC0022C000DB801 /* FavStationsViewModel.swift in Sources */,
 				A112952528911A9C0093D936 /* NearByStationSheet.swift in Sources */,
+				A1BDB5652CC3EEDE0077D3E0 /* BottomSheetView.swift in Sources */,
 				A162B8CD28A4FB6A00FF82FE /* GoogleSignInButton.swift in Sources */,
 				A1821A2A2893A4A8003CB0EB /* TimeListView.swift in Sources */,
 				A112952A28918E4E0093D936 /* ArrivalTime.swift in Sources */,

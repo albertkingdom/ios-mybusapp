@@ -11,24 +11,25 @@ import CoreLocation
 struct HomeView: View {
     @EnvironmentObject var locationManager: LocationManager
     @StateObject var mapViewModel = MapViewModel()
+    @State private var selectedTab = 0
     var body: some View {
       
-        TabView {
+        TabView(selection: $selectedTab) {
             ContentView(viewModel: mapViewModel)
                     .tabItem {
                         Image(systemName: "map")
                         Text("Map")
-                    }
-            FavStationsView()
+                    }.tag(0)
+            FavStationsView(selectedTab: $selectedTab)
                     .tabItem {
                         Image(systemName: "list.bullet")
                         Text("List")
-                    }
+                    }.tag(1)
             UserView()
                 .tabItem {
                     Image(systemName: "person.fill")
                     Text("User")
-                }
+                }.tag(2)
         }
         .onReceive(locationManager.$location, perform: { newLocation in
             mapViewModel.fetchNearByStationsWrapper(location: newLocation ?? CLLocation(latitude: 0, longitude: 0))
