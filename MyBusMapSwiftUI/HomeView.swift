@@ -19,7 +19,7 @@ struct HomeView: View {
                     .tabItem {
                         Image(systemName: "map")
                         Text("Map")
-                    }.tag(0)
+                    }.tag(0).environmentObject(locationManager)
             FavStationsView(selectedTab: $selectedTab)
                     .tabItem {
                         Image(systemName: "list.bullet")

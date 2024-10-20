@@ -22,6 +22,7 @@
 		A1202169288FA00400C8746A /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1202168288FA00400C8746A /* ContentView.swift */; };
 		A120216B288FA00800C8746A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A120216A288FA00800C8746A /* Assets.xcassets */; };
 		A120216E288FA00800C8746A /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A120216D288FA00800C8746A /* Preview Assets.xcassets */; };
+		A15E1E642CC53BB400F2F7EF /* CurrentLocationButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = A15E1E632CC53BB400F2F7EF /* CurrentLocationButton.swift */; };
 		A162B8CD28A4FB6A00FF82FE /* GoogleSignInButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = A162B8CC28A4FB6A00FF82FE /* GoogleSignInButton.swift */; };
 		A162B8CF28A550CC00FF82FE /* Favorite.swift in Sources */ = {isa = PBXBuildFile; fileRef = A162B8CE28A550CC00FF82FE /* Favorite.swift */; };
 		A162B8D228A61CA200FF82FE /* FirebaseManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A162B8D128A61CA200FF82FE /* FirebaseManager.swift */; };
@@ -43,13 +44,12 @@
 		A1A7B7502895010500893EF3 /* PlateView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1A7B74F2895010500893EF3 /* PlateView.swift */; };
 		A1A7B7522896372500893EF3 /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1A7B7512896372500893EF3 /* HomeView.swift */; };
 		A1A7B7542896395800893EF3 /* FavStationsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1A7B7532896395800893EF3 /* FavStationsView.swift */; };
-		A1A7B7562896462300893EF3 /* TestView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1A7B7552896462300893EF3 /* TestView.swift */; };
 		A1BDB5652CC3EEDE0077D3E0 /* BottomSheetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1BDB5642CC3EEDE0077D3E0 /* BottomSheetView.swift */; };
+		A1BDB5682CC3F86F0077D3E0 /* View+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1BDB5672CC3F86F0077D3E0 /* View+Extension.swift */; };
 		A1DA52362898E1D0006CB3D4 /* ArrivalTimeSheetViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1DA52352898E1D0006CB3D4 /* ArrivalTimeSheetViewModel.swift */; };
 		A1DA5238289A2A2E006CB3D4 /* .gitignore in Resources */ = {isa = PBXBuildFile; fileRef = A1DA5237289A2A2E006CB3D4 /* .gitignore */; };
 		A1DA523B28A4F5ED006CB3D4 /* UserView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1DA523A28A4F5ED006CB3D4 /* UserView.swift */; };
 		A1E1722A2BE6290600ED5916 /* RoundedCorner.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1E172292BE6290600ED5916 /* RoundedCorner.swift */; };
-		A1E1722C2BE6866400ED5916 /* BottomContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1E1722B2BE6866400ED5916 /* BottomContainer.swift */; };
 		A1E1722E2BE688E200ED5916 /* shareFunction.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1E1722D2BE688E200ED5916 /* shareFunction.swift */; };
 		A1E172412BEA6B6100ED5916 /* GoogleMaps in Frameworks */ = {isa = PBXBuildFile; productRef = A1E172402BEA6B6100ED5916 /* GoogleMaps */; };
 		A1E172432BEA6B6100ED5916 /* GoogleMapsBase in Frameworks */ = {isa = PBXBuildFile; productRef = A1E172422BEA6B6100ED5916 /* GoogleMapsBase */; };
@@ -121,6 +121,7 @@
 		A1202168288FA00400C8746A /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		A120216A288FA00800C8746A /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		A120216D288FA00800C8746A /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		A15E1E632CC53BB400F2F7EF /* CurrentLocationButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrentLocationButton.swift; sourceTree = "<group>"; };
 		A162B8CC28A4FB6A00FF82FE /* GoogleSignInButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoogleSignInButton.swift; sourceTree = "<group>"; };
 		A162B8CE28A550CC00FF82FE /* Favorite.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Favorite.swift; sourceTree = "<group>"; };
 		A162B8D128A61CA200FF82FE /* FirebaseManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseManager.swift; sourceTree = "<group>"; };
@@ -143,14 +144,13 @@
 		A1A7B74F2895010500893EF3 /* PlateView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlateView.swift; sourceTree = "<group>"; };
 		A1A7B7512896372500893EF3 /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
 		A1A7B7532896395800893EF3 /* FavStationsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavStationsView.swift; sourceTree = "<group>"; };
-		A1A7B7552896462300893EF3 /* TestView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestView.swift; sourceTree = "<group>"; };
 		A1BDB5642CC3EEDE0077D3E0 /* BottomSheetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BottomSheetView.swift; sourceTree = "<group>"; };
+		A1BDB5672CC3F86F0077D3E0 /* View+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View+Extension.swift"; sourceTree = "<group>"; };
 		A1DA52352898E1D0006CB3D4 /* ArrivalTimeSheetViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArrivalTimeSheetViewModel.swift; sourceTree = "<group>"; };
 		A1DA5237289A2A2E006CB3D4 /* .gitignore */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitignore; sourceTree = "<group>"; };
 		A1DA523928A4F442006CB3D4 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		A1DA523A28A4F5ED006CB3D4 /* UserView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserView.swift; sourceTree = "<group>"; };
 		A1E172292BE6290600ED5916 /* RoundedCorner.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoundedCorner.swift; sourceTree = "<group>"; };
-		A1E1722B2BE6866400ED5916 /* BottomContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BottomContainer.swift; sourceTree = "<group>"; };
 		A1E1722D2BE688E200ED5916 /* shareFunction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = shareFunction.swift; sourceTree = "<group>"; };
 		A1E172392BE92EB600ED5916 /* .swiftlint.yml */ = {isa = PBXFileReference; lastKnownFileType = text.yaml; path = .swiftlint.yml; sourceTree = "<group>"; };
 		A1F037272C02F2D000141F16 /* URLSession+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "URLSession+.swift"; sourceTree = "<group>"; };
@@ -259,7 +259,7 @@
 		A11295262891827F0093D936 /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				A1BDB5642CC3EEDE0077D3E0 /* BottomSheetView.swift */,
+				A1BDB5662CC3F71A0077D3E0 /* Reusable */,
 				A112952428911A9C0093D936 /* NearByStationSheet.swift */,
 				A11295272891834C0093D936 /* ArrivalTimeSheet.swift */,
 				A1DA52352898E1D0006CB3D4 /* ArrivalTimeSheetViewModel.swift */,
@@ -270,15 +270,15 @@
 				A1821A292893A4A8003CB0EB /* TimeListView.swift */,
 				A1A7B74F2895010500893EF3 /* PlateView.swift */,
 				A1A7B7532896395800893EF3 /* FavStationsView.swift */,
-				A1A7B7552896462300893EF3 /* TestView.swift */,
 				A1129519288FD3AC0093D936 /* MapViewModel.swift */,
 				A1DA523A28A4F5ED006CB3D4 /* UserView.swift */,
 				A162B8CC28A4FB6A00FF82FE /* GoogleSignInButton.swift */,
 				A17E340228A754090058C8AE /* PlacesSearch.swift */,
 				A1E172292BE6290600ED5916 /* RoundedCorner.swift */,
-				A1E1722B2BE6866400ED5916 /* BottomContainer.swift */,
 				A178B13A2CBFFB72000DB801 /* SearchBar.swift */,
 				A178B13C2CC0022C000DB801 /* FavStationsViewModel.swift */,
+				A1BDB5672CC3F86F0077D3E0 /* View+Extension.swift */,
+				A15E1E632CC53BB400F2F7EF /* CurrentLocationButton.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -357,6 +357,14 @@
 				A178B13E2CC140EB000DB801 /* RouteSheetViewModel.swift */,
 			);
 			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		A1BDB5662CC3F71A0077D3E0 /* Reusable */ = {
+			isa = PBXGroup;
+			children = (
+				A1BDB5642CC3EEDE0077D3E0 /* BottomSheetView.swift */,
+			);
+			path = Reusable;
 			sourceTree = "<group>";
 		};
 		A1F037262C02F2B400141F16 /* Extension */ = {
@@ -584,7 +592,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				A1E1722C2BE6866400ED5916 /* BottomContainer.swift in Sources */,
 				A178B1442CC36087000DB801 /* AuthManager.swift in Sources */,
 				A162B8D428A63C4F00FF82FE /* UserDefaultManager.swift in Sources */,
 				A1F037282C02F2D000141F16 /* URLSession+.swift in Sources */,
@@ -602,11 +609,11 @@
 				A1A7B7522896372500893EF3 /* HomeView.swift in Sources */,
 				A178B13D2CC0022C000DB801 /* FavStationsViewModel.swift in Sources */,
 				A112952528911A9C0093D936 /* NearByStationSheet.swift in Sources */,
+				A1BDB5682CC3F86F0077D3E0 /* View+Extension.swift in Sources */,
 				A1BDB5652CC3EEDE0077D3E0 /* BottomSheetView.swift in Sources */,
 				A162B8CD28A4FB6A00FF82FE /* GoogleSignInButton.swift in Sources */,
 				A1821A2A2893A4A8003CB0EB /* TimeListView.swift in Sources */,
 				A112952A28918E4E0093D936 /* ArrivalTime.swift in Sources */,
-				A1A7B7562896462300893EF3 /* TestView.swift in Sources */,
 				A112951F289037110093D936 /* Station.swift in Sources */,
 				A10503A9288FAAB100EF461D /* GoogleMapsView.swift in Sources */,
 				A162B8D228A61CA200FF82FE /* FirebaseManager.swift in Sources */,
@@ -618,6 +625,7 @@
 				A1821A462893D2BB003CB0EB /* StopOfRoute.swift in Sources */,
 				A112951C289033A80093D936 /* NetworkManager.swift in Sources */,
 				A178B13B2CBFFB73000DB801 /* SearchBar.swift in Sources */,
+				A15E1E642CC53BB400F2F7EF /* CurrentLocationButton.swift in Sources */,
 				A17DDF0D28B336C400D04296 /* RealmManager.swift in Sources */,
 				A1821A232892DCE2003CB0EB /* GoogleMapsRouteView.swift in Sources */,
 				A10503AB288FAB1F00EF461D /* MapViewController.swift in Sources */,

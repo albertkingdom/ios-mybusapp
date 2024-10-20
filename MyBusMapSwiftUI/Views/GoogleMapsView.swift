@@ -10,6 +10,8 @@ import GoogleMaps
 import SwiftUI
 
 struct GoogleMapsView: UIViewRepresentable {
+    @Binding var mapView: GMSMapView?
+    @EnvironmentObject var locationManager: LocationManager
     // when binding property changes, will call updateUIView method
     var location: CLLocation?
     @Binding var nearByStations: [NearByStation]
@@ -18,58 +20,31 @@ struct GoogleMapsView: UIViewRepresentable {
     @Binding var existedMarkers: [GMSMarker]
     @Binding var showHighlightMarker: Bool
     @Binding var showNearByStationSheet: Bool
-    @Binding var bottomPadding: Double
+    
     var onSelectMarker: (GMSMarker) -> Void
-    var onTapMyLocationBtn: () -> Void
     
     func makeUIView(context: Context) -> GMSMapView {
         let camera = GMSCameraPosition.london
         let mapView = GMSMapView(frame: CGRect.zero, camera: camera)
         mapView.isMyLocationEnabled = true
-        
-//        mapView.padding = UIEdgeInsets(top: 0, left: 0, bottom: bottomPadding+50, right: 10) // adjust mylocation button position
-        print("bottomPadding \(bottomPadding)")
-        
         mapView.delegate = context.coordinator
+        self.mapView = mapView
         return mapView
     }
     func updateUIView(_ uiView: GMSMapView, context: Context) {
-       
         let currentLocation = GMSCameraPosition(
             latitude: location?.coordinate.latitude ?? 0,
             longitude: location?.coordinate.longitude ?? 0,
             zoom: 15
         )
         uiView.animate(to: currentLocation)
-
+        
         updateMarkersOnMap(uiView: uiView)
         
         updateHighlightMarkersOnMap(uiView: uiView)
-    
-//        moveLocationButton(uiView)
-        uiView.settings.myLocationButton = true
-        let padding=bottomPadding+Double(100)
-        uiView.padding = UIEdgeInsets(top: 0.0, left: 0.0, bottom: padding, right: 10.0) // adjust mylocation button position
-
+        
+        uiView.settings.myLocationButton = false
     }
-    private func moveLocationButton(_ mapView: GMSMapView) {
-            for object in mapView.subviews {
-                if object.thisClassName == "GMSUISettingsPaddingView" {
-                    for view in object.subviews {
-                        if view.thisClassName == "GMSUISettingsView" {
-                            for btn in view.subviews {
-                                if btn.thisClassName == "GMSx_MDCFloatingButton" {
-                                    var frame = btn.frame
-                                    frame.origin.x += 50
-                                    frame.origin.y += 200
-                                    btn.frame = frame
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        }
     
     func updateMarkersOnMap(uiView: GMSMapView) {
         let markers = prepareMarkers()
@@ -82,7 +57,7 @@ struct GoogleMapsView: UIViewRepresentable {
         // put markers on map
         for marker in markers {
             marker.map = uiView
-           
+            
         }
     }
     func updateHighlightMarkersOnMap(uiView: GMSMapView) {
@@ -96,10 +71,8 @@ struct GoogleMapsView: UIViewRepresentable {
             let highlightMarkers = prepareHighlightMarkers()
             // add highlight markers to map
             existedHighLightMarkers.removeAll()
-           
             existedHighLightMarkers.append(contentsOf: highlightMarkers)
-
-            existedHighLightMarkers.forEach({$0.map = uiView})
+            highlightMarkers.forEach({$0.map = uiView})
         }
     }
     
@@ -108,7 +81,7 @@ struct GoogleMapsView: UIViewRepresentable {
                                   showNearByStationSheet: $showNearByStationSheet,
                                   onSelectMarker: onSelectMarker,
                                   location: location,
-                                  onTapMyLocationBtn: onTapMyLocationBtn
+                                  onTapMyLocationBtn: locationManager.backToCurrentLocation
         )
     }
     
@@ -147,7 +120,7 @@ struct GoogleMapsView: UIViewRepresentable {
         var markers: [GMSMarker] = []
         for station in nearByStations {
             for sub in station.subStations {
-            let marker = GMSMarker()
+                let marker = GMSMarker()
                 marker.position = CLLocationCoordinate2D(latitude: sub.stationPosition.positionLat, longitude: sub.stationPosition.positionLon)
                 marker.title = "\(station.stationName)"
                 markers.append(marker)
@@ -171,8 +144,8 @@ struct GoogleMapsView: UIViewRepresentable {
 }
 
 extension GMSCameraPosition  {
-     static var london = GMSCameraPosition.camera(withLatitude: 51.507, longitude: 0, zoom: 15)
- }
+    static var london = GMSCameraPosition.camera(withLatitude: 51.507, longitude: 0, zoom: 15)
+}
 extension NSObject {
     var thisClassName: String {
         return NSStringFromClass(type(of: self))

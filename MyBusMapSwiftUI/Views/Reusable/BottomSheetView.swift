@@ -6,6 +6,15 @@
 //
 import SwiftUI
 
+struct DragBar: View {
+    var body: some View {
+        Rectangle()
+            .frame(width: 50, height: 5, alignment: .center)
+            .foregroundColor(.gray)
+            .padding(.bottom)
+    }
+}
+
 struct BottomSheetView<Content: View>: View {
     @ViewBuilder let content: Content
     var heightFraction=0.4
@@ -37,6 +46,7 @@ struct BottomSheetView<Content: View>: View {
                     }
                     
                     // 這邊插入內容
+                    content
                 }
                 
                 .frame(height: frameH)
@@ -52,8 +62,6 @@ struct BottomSheetView<Content: View>: View {
                         }
                 )
                 .onAppear {
-                    
-//                    viewModel.getRemoteData()
                     self.frameH=geometry.size.height*heightFraction
                     self.maxViewH=geometry.size.height
                     print("初始高度 \(frameH) 最高\(maxViewH)")
@@ -62,10 +70,13 @@ struct BottomSheetView<Content: View>: View {
                 
                 .onDisappear {
                     print("onDisappear")
-                    //                    mapViewModel.stopfetchArrivalTimeRepeatedly()
                 }
             }
             
         }
     }
+}
+
+#Preview {
+    BottomSheetView(content: { Text("Hi") }, onClose: {})
 }

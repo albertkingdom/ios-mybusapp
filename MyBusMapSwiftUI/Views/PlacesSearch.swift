@@ -10,6 +10,7 @@ import SwiftUI
 import GooglePlaces
 
 struct PlacesSearch: UIViewControllerRepresentable {
+    @EnvironmentObject var locationManager: LocationManager
     @Binding var showLocationSearch: Bool
     var location: CLLocation?
     @Binding var query: String
@@ -35,7 +36,7 @@ struct PlacesSearch: UIViewControllerRepresentable {
     }
     
     func makeCoordinator() -> PlacesSearchCoordinator {
-        return PlacesSearchCoordinator(parent: self, showLocationSearch: $showLocationSearch, location: location, query: $query)
+        return PlacesSearchCoordinator(parent: self, showLocationSearch: $showLocationSearch, location: location, query: $query, updateCurrentLocation: locationManager.updateLocation(to: ))
     }
     
     class PlacesSearchCoordinator: NSObject, GMSAutocompleteViewControllerDelegate {
@@ -43,12 +44,15 @@ struct PlacesSearch: UIViewControllerRepresentable {
         @Binding var showLocationSearch: Bool
         var location: CLLocation?
         @Binding var query: String
+        var updateLocation: (CLLocation) -> Void
         
-        init(parent: PlacesSearch, showLocationSearch: Binding<Bool>, location: CLLocation?, query: Binding<String>) {
+        
+        init(parent: PlacesSearch, showLocationSearch: Binding<Bool>, location: CLLocation?, query: Binding<String>, updateCurrentLocation: @escaping (CLLocation)->Void) {
             self.parent = parent
             _showLocationSearch = showLocationSearch
             self.location = location
             _query = query
+            self.updateLocation = updateCurrentLocation
         }
         
         func viewController(_ viewController: GMSAutocompleteViewController, didAutocompleteWith place: GMSPlace) {
@@ -62,6 +66,8 @@ struct PlacesSearch: UIViewControllerRepresentable {
                 query = name
             }
             location = CLLocation(latitude: place.coordinate.latitude, longitude: place.coordinate.longitude)
+            guard let location = location else { return }
+            updateLocation(location)
             showLocationSearch.toggle()
         }
         

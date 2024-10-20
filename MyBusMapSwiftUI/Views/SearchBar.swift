@@ -12,13 +12,12 @@ struct SearchBarView: View {
     @Binding var showLocationSearch: Bool
     
     var body: some View {
-        VStack {
-            HStack {
-                Spacer()
+       
+            
                 Button(action: {
                     showLocationSearch = true
                 }, label: {
-                    HStack {
+//
                         Image(systemName: "magnifyingglass")
                             .foregroundColor(Color.primary)
                         Text(query)
@@ -29,16 +28,11 @@ struct SearchBarView: View {
                             .onTapGesture {
                                 query = "Tap to search"
                             }
-                    }
-                    .padding(.horizontal, 10)
+
                 })
-                .frame(width: UIScreen.main.bounds.width - 30, height: 50)
+                .padding([.horizontal], 10)
+                .frame(height: 50)
                 .background(Color.white)
-                Spacer()
-            }
-            Spacer()
-        }
-        .padding(.top, 30)
     }
 }
 

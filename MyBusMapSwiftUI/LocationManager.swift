@@ -40,7 +40,9 @@ class LocationManager: NSObject, ObservableObject, CLLocationManagerDelegate {
             break
         }
     }
-    
+    func backToCurrentLocation() {
+        locationManager?.startUpdatingLocation()
+    }
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         self.location = locations.last
         print("location \(locations)")
@@ -56,5 +58,10 @@ class LocationManager: NSObject, ObservableObject, CLLocationManagerDelegate {
     
     func fetchNearByStations() async {
         // Your asynchronous fetching logic here
+    }
+    
+    func updateLocation(to location: CLLocation) {
+        
+        self.location = location
     }
 }

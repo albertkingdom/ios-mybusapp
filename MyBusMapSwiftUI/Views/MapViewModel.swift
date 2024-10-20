@@ -6,51 +6,35 @@
 //
 
 import Foundation
-import CoreLocation
 import GoogleMaps
 import FirebaseCore
 import FirebaseFirestoreSwift
 
-import FirebaseAuth
-import FirebaseFirestore
 import SwiftUI
 
 
 class MapViewModel: ObservableObject {
-//    @ObservedObject var locationManager: LocationManager
-    var timer: Timer?
     var subStations: [SubStation]?
     
     @Published var nearByStations: [NearByStation] = []
-    @Published var arrivalTimes: [ArrivalTime] = []
-    @Published var sortedArrivalTimes: [Int: [ArrivalTime]] = [:]
     @Published var sortedArrivalTimesForRouteName: [Int: [ArrivalTime]] = [:]
     @Published var sortedStopsForRouteName: [Int: [StopForRouteName]] = [:]
-    var highlightCoordinate: [[String:Double]] = []
+    var highlightCoordinate: [[String:Double]] = [] {
+        didSet {
+            print("highlightCoordinate", highlightCoordinate)
+        }
+    }
     var currentStationID: String = ""
     var clickedRouteName: String = ""
     var existedHighLightMarkers: [GMSMarker] = []
     var existedMarkers: [GMSMarker] = []
     @Published var isLoading: Bool = true
-    let db = Firestore.firestore()
-    @Published var favoriteList: [Favorite] = []
     var remotwFavoriteRouteNames: [String] = []
-//    var location: CLLocation? {
-//            return locationManager.location // 獲取最新的位置
-//        }
-//    
-//    init(locationManager: LocationManager) {
-//        self.locationManager = locationManager
-//    }
+
     init() {
         
     }
    
-    
-    
-    
-    
-    
     func fetchNearByStationsWrapper(location: CLLocation) {
         Task {
             await fetchNearByStations(location: location)
@@ -103,61 +87,20 @@ class MapViewModel: ObservableObject {
         }
         
     }
-//    func fetchArrivalTimeRepeatedly(subStations: [SubStation]) {
-//        Task {
-//            await self.fetchArrivalTime(subStations: subStations)
-//        }
-//        timer = Timer.scheduledTimer(withTimeInterval: 30, repeats: true){ _ in
-//            Task {
-//                await self.fetchArrivalTime(subStations: subStations)
+
+//    private func handleArrivalTime(arrivalTimes: [ArrivalTime]) -> [Int:[ArrivalTime]] {
+//        var sorted: [Int: [ArrivalTime]] = [0: [], 1: []] // 0:'去程',1:'返程'
+//        for time in arrivalTimes {
+//            if time.direction == 0 {
+//                sorted[0]?.append(time)
+//            }
+//            if time.direction == 1 {
+//                sorted[1]?.append(time)
 //            }
 //        }
+//        // self.sortedArrivalTimes = sorted
+//        return sorted
 //    }
-//    func stopfetchArrivalTimeRepeatedly() {
-//            // 停止定時器
-//            timer?.invalidate()
-//            timer = nil
-//    }
-//    func fetchArrivalTime() async {
-//        DispatchQueue.main.async {
-//            self.isLoading = true
-//        }
-//        guard let subStations else { return }
-//        //let city = "NewTaipei"
-//        let stationID = subStations[0].stationID
-//        let coordinate = (location?.coordinate.latitude ?? 0, location?.coordinate.longitude ?? 0)
-//        do {
-//            let city = try await NetworkManager.shared.getDistrictAsync(from: coordinate)
-//            print("station_id: \(stationID)")
-//            let arrivalTimes = try await NetworkManager.shared.fetchArrivalTimeAsync(city: city, stationID: stationID)
-//            print("fetchArrivalTime  \(arrivalTimes)")
-//            let sorted = handleArrivalTime(arrivalTimes: arrivalTimes)
-//            DispatchQueue.main.async {
-//                self.sortedArrivalTimes = sorted
-//                self.isLoading = false
-//            }
-//        } catch let DecodingError.typeMismatch(type, context) {
-//            print("Type '\(type)' mismatch:", context.debugDescription)
-//            print("codingPath:", context.codingPath)
-//        
-//        } catch {
-//            print("fetchArrivalTime error \(error)")
-//        }
-//    }
-//    
-    private func handleArrivalTime(arrivalTimes: [ArrivalTime]) -> [Int:[ArrivalTime]] {
-        var sorted: [Int: [ArrivalTime]] = [0: [], 1: []] // 0:'去程',1:'返程'
-        for time in arrivalTimes {
-            if time.direction == 0 {
-                sorted[0]?.append(time)
-            }
-            if time.direction == 1 {
-                sorted[1]?.append(time)
-            }
-        }
-        // self.sortedArrivalTimes = sorted
-        return sorted
-    }
     
 //    func fetchArrivalTimeForRouteNameAsync(routeName: String) async {
 //        DispatchQueue.main.async {
@@ -235,40 +178,5 @@ class MapViewModel: ObservableObject {
         
         
     }
-    
-    func getRemoteData() {
-        if let user = Auth.auth().currentUser,
-           let email = user.email
-        {
-            let docRef = db.collection("favoriteRoute").document(email)
-            
-            docRef.addSnapshotListener { documentSnapshot, error in
-                guard let document = documentSnapshot else {
-                    print("Error fetching document: \(error!)")
-                    return
-                }
-                guard let data = document.data() else {
-                    print("Document data was empty.")
-                    return
-                }
-                print("Current data: \(data)")
-                
-                do {
-                    let list = try document.data(as: FavoriteList.self)
-                    print("getRemoteData favoriteList \(list)")
-                    self.favoriteList = list.list ?? []
-                    self.remotwFavoriteRouteNames = self.favoriteList.compactMap({
-                        $0.name
-                    })
-                }catch {
-                    print(error.localizedDescription)
-                }
-                
-            }
-            
-        } else {
-            print("not login")
-        }
-        
-    }
+
 }

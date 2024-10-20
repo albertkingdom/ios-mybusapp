@@ -6,40 +6,8 @@
 //
 import SwiftUI
 
-struct DragBar: View {
-    var body: some View {
-        Rectangle()
-            .frame(width: 50, height: 5, alignment: .center)
-            .foregroundColor(.gray)
-            .padding(.bottom)
-    }
-}
-extension View {
-    func bottomSheetStyle() -> some View {
-        padding(.top)
-            .background(Color.white)
-            .cornerRadius(10, corners: [.topLeft, .topRight])
-            .ignoresSafeArea(edges: [.bottom])
-        //                .compositingGroup()
-            .shadow(color: .gray, radius: 1, x: 0, y: -1)
-            .mask(Rectangle()
-                .padding(.top, -20))
-    }
-    func onDrag(yTranslation: CGFloat, frameH: Double, maxViewH: Double) -> Double {
-        if yTranslation > 0 {
-            let newframeH=frameH-Double(yTranslation)
-            if newframeH > 110 { // 最低高度
-                return newframeH
-            }
-        }
-        if yTranslation < 0 {
-            if frameH < maxViewH {
-                return frameH-Double(yTranslation)
-            }
-        }
-        return frameH
-    }
-}
+
+
 struct ListItem: View {
     var title: String
     var subTitle: String
@@ -67,10 +35,6 @@ struct NearByStationSheet: View {
     @Binding var nearByStations: [NearByStation]
     @Binding var showNearByStationSheet: Bool
     let clickOnStationName: ([SubStation]) -> Void
-    let heightFraction=0.4
-    @State var frameH: Double=0.0 // 目前bottom sheet高度
-    @State var maxViewH: Double=0.0 // bottom sheet高度上限
-
     
     
     var stationList: some View {
@@ -88,46 +52,20 @@ struct NearByStationSheet: View {
         }
         .listStyle(.plain)
     }
+    
+    
     var body: some View {
-        GeometryReader { geometry in
-            VStack {
-                Spacer()
-                VStack {
-                    ZStack {
-                       DragBar()
-                    }
-                    Text("附近站牌")
-                        .multilineTextAlignment(.leading)
-                    if #available(iOS 15.0, *) {
-                       stationList
-                            .listRowSeparator(.hidden)
-                    } else {
-                        stationList
-                    }
-                }
-                .frame(height: frameH)
-                .bottomSheetStyle()
-                .gesture(
-                    DragGesture()
-                        .onChanged { value in
-                            print("draggedOffset \(value.translation)")
-                            self.frameH = onDrag(
-                                yTranslation: value.translation.height,
-                                frameH: self.frameH,
-                                maxViewH: self.maxViewH
-                            )
-                        }
-                )
+        BottomSheetView(content: {
+            Text("附近站牌")
+                .multilineTextAlignment(.leading)
+            if #available(iOS 15.0, *) {
+               stationList
+                    .listRowSeparator(.hidden)
+            } else {
+                stationList
             }
-            .onAppear {
-                self.frameH=geometry.size.height*heightFraction
-                self.maxViewH=geometry.size.height
-                print("初始高度 \(frameH) 最高\(maxViewH)")
-            }
-            .onChange(of: geometry.size.height) { newSize in
-                print("new H value \(newSize)")
-            }
-        }
+        }, onClose: {})
+        
     }
 }
 
