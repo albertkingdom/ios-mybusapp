@@ -52,6 +52,7 @@ struct TimeListItem: View {
 }
 
 struct TimeListView: View {
+    @EnvironmentObject var authManager: AuthManager
 //    @ObservedObject var mapViewModel: MapViewModel
     @State var remoteFavoriteRouteNames: [String] = []
     @State var arrivalTimes: [ArrivalTime]
@@ -157,6 +158,7 @@ struct TimeListView: View {
 }
 // 愛心(實心、空心) or 車牌
 struct Aux: View {
+    @EnvironmentObject var authManager: AuthManager
     let rowContent: RowContent
     let arrivalTime: ArrivalTime
     @State var isSaved: Bool
@@ -189,7 +191,7 @@ struct Aux: View {
                         let favoriteRealm = FavoriteRealm(name: arrivalTime.routeName.zhTw, stationID: "")
                         if isLogin {
                             print("isLogin save to remote")
-                            FirebaseManager.shared.saveToRemote(favorite: favorite)
+                            FirebaseManager.shared.saveToRemote(email: authManager.email ,favorite: favorite)
                             
                         } else {
                             print("is not Login save to local")

@@ -10,7 +10,9 @@ import CoreLocation
 
 struct HomeView: View {
     @EnvironmentObject var locationManager: LocationManager
+    @EnvironmentObject var firebaseManager: FirebaseManager
     @StateObject var mapViewModel = MapViewModel()
+    var favStationsViewModel = FavStationsViewModel(firebaseService: FirebaseManager(), realmManager: RealmManager())
     @State private var selectedTab = 0
     var body: some View {
       
@@ -20,7 +22,7 @@ struct HomeView: View {
                         Image(systemName: "map")
                         Text("Map")
                     }.tag(0).environmentObject(locationManager)
-            FavStationsView(selectedTab: $selectedTab)
+            FavStationsView(favStationsViewModel: favStationsViewModel, selectedTab: $selectedTab)
                     .tabItem {
                         Image(systemName: "list.bullet")
                         Text("List")

@@ -27,6 +27,7 @@
 		A162B8CF28A550CC00FF82FE /* Favorite.swift in Sources */ = {isa = PBXBuildFile; fileRef = A162B8CE28A550CC00FF82FE /* Favorite.swift */; };
 		A162B8D228A61CA200FF82FE /* FirebaseManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A162B8D128A61CA200FF82FE /* FirebaseManager.swift */; };
 		A162B8D428A63C4F00FF82FE /* UserDefaultManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A162B8D328A63C4E00FF82FE /* UserDefaultManager.swift */; };
+		A176B2912CD67D19002954BB /* FavStationsViewModelTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = A176B28F2CD67D19002954BB /* FavStationsViewModelTest.swift */; };
 		A178B13B2CBFFB73000DB801 /* SearchBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = A178B13A2CBFFB72000DB801 /* SearchBar.swift */; };
 		A178B13D2CC0022C000DB801 /* FavStationsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A178B13C2CC0022C000DB801 /* FavStationsViewModel.swift */; };
 		A178B13F2CC140EB000DB801 /* RouteSheetViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A178B13E2CC140EB000DB801 /* RouteSheetViewModel.swift */; };
@@ -126,6 +127,7 @@
 		A162B8CE28A550CC00FF82FE /* Favorite.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Favorite.swift; sourceTree = "<group>"; };
 		A162B8D128A61CA200FF82FE /* FirebaseManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseManager.swift; sourceTree = "<group>"; };
 		A162B8D328A63C4E00FF82FE /* UserDefaultManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultManager.swift; sourceTree = "<group>"; };
+		A176B28F2CD67D19002954BB /* FavStationsViewModelTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavStationsViewModelTest.swift; sourceTree = "<group>"; };
 		A178B13A2CBFFB72000DB801 /* SearchBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchBar.swift; sourceTree = "<group>"; };
 		A178B13C2CC0022C000DB801 /* FavStationsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavStationsViewModel.swift; sourceTree = "<group>"; };
 		A178B13E2CC140EB000DB801 /* RouteSheetViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RouteSheetViewModel.swift; sourceTree = "<group>"; };
@@ -378,6 +380,7 @@
 		A1F22EE52C426E2C003DF7EE /* MyBusMapTests */ = {
 			isa = PBXGroup;
 			children = (
+				A176B28F2CD67D19002954BB /* FavStationsViewModelTest.swift */,
 				A1F22EE62C426E2C003DF7EE /* TokenManagerTests.swift */,
 			);
 			path = MyBusMapTests;
@@ -650,6 +653,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				A1F22EE72C426E2C003DF7EE /* TokenManagerTests.swift in Sources */,
+				A176B2912CD67D19002954BB /* FavStationsViewModelTest.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -807,7 +811,7 @@
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.6;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -816,6 +820,10 @@
 				"OTHER_LDFLAGS[arch=*]" = "-ObjC";
 				PRODUCT_BUNDLE_IDENTIFIER = com.a2006mike.MyBusMapSwiftUI;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 1;
@@ -840,7 +848,7 @@
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.6;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -848,6 +856,10 @@
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.a2006mike.MyBusMapSwiftUI;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 1;
@@ -921,7 +933,7 @@
 				ENABLE_USER_SCRIPT_SANDBOXING = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu17;
 				GENERATE_INFOPLIST_FILE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 17.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.6;
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.a2006mike.MyBusMapTests;
@@ -946,7 +958,7 @@
 				ENABLE_USER_SCRIPT_SANDBOXING = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu17;
 				GENERATE_INFOPLIST_FILE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 17.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.6;
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.a2006mike.MyBusMapTests;

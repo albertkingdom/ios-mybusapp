@@ -8,7 +8,12 @@
 import Foundation
 import RealmSwift
 
-class RealmManager {
+protocol RealmManagerProtocol {
+    func saveToDB(_ favorite: FavoriteRealm)
+    func readAllFromDB() -> Results<FavoriteRealm>
+    func deleteFromDB(objectToDelete: FavoriteRealm)
+}
+class RealmManager: RealmManagerProtocol {
     static let shared = RealmManager()
     private let realm: Realm
 

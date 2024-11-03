@@ -5,52 +5,56 @@
 //  Created by yklin on 2024/10/16.
 //
 
+import FirebaseAuth
+import FirebaseFirestore
+import FirebaseFirestoreSwift
 import Foundation
 import RealmSwift
-import FirebaseAuth
-import FirebaseFirestoreSwift
-import FirebaseFirestore
 
 class FavStationsViewModel: ObservableObject {
-    let db = Firestore.firestore()
-    
-    @Published var realmFavList: Results<FavoriteRealm> = RealmManager.shared.readAllFromDB()
+    @Published var realmFavList: [FavoriteRealm]
     @Published var favoriteList: [Favorite] = []
-    @Published var remoteFavoriteRouteNames: [String] = []
+    var remoteFavoriteRouteNames: [String] {
+        return favoriteList.compactMap({
+            $0.name
+        })
+    }
+    let firebaseService: FirebaseManagerProtocol
+    let realmManager: RealmManagerProtocol
+    init(
+        firebaseService: FirebaseManagerProtocol,
+        realmManager: RealmManagerProtocol
+    ) {
+        self.firebaseService = firebaseService
+        self.realmManager = realmManager
+        self.realmFavList = Array(realmManager.readAllFromDB())
+    }
+
+    func getRemoteData(email: String) async {
+
+        let favorites = await firebaseService.getRemoteData(email: email)
+        print("favorites \(favorites)")
+        self.favoriteList = favorites
+
+    }
     
-    func getRemoteData() {
-        if let user = Auth.auth().currentUser,
-           let email = user.email
-        {
-            let docRef = db.collection("favoriteRoute").document(email)
-            
-            docRef.addSnapshotListener { documentSnapshot, error in
-                guard let document = documentSnapshot else {
-                    print("Error fetching document: \(error!)")
-                    return
-                }
-                guard let data = document.data() else {
-                    print("Document data was empty.")
-                    return
-                }
-                print("Current data: \(data)")
-                
-                do {
-                    let list = try document.data(as: FavoriteList.self)
-                    print("getRemoteData favoriteList \(list)")
-                    self.favoriteList = list.list ?? []
-                    self.remoteFavoriteRouteNames = self.favoriteList.compactMap({
-                        $0.name
-                    })
-                }catch {
-                    print(error.localizedDescription)
-                }
-                
-            }
-            
-        } else {
-            print("not login")
+    func deleteRemoteData(indexSet: IndexSet) {
+        if let index = indexSet.first {
+            let favorite = favoriteList[index]
+            firebaseService.removeFromRemote(favorite: favorite)
+            favoriteList.remove(at: index)
         }
-        
+    }
+    
+    func deleteLocalData(indexSet: IndexSet) {
+        if let index = indexSet.first {
+            let favorite = realmFavList[index]
+            realmManager.deleteFromDB(objectToDelete: favorite)
+            self.realmFavList = Array(realmManager.readAllFromDB())
+        }
+    }
+    
+    func readLocalData() {
+        self.realmFavList = Array(realmManager.readAllFromDB())
     }
 }
