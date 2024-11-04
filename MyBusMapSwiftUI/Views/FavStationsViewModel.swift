@@ -50,7 +50,7 @@ class FavStationsViewModel: ObservableObject {
         if let index = indexSet.first {
             let favorite = realmFavList[index]
             realmManager.deleteFromDB(objectToDelete: favorite)
-            self.realmFavList = Array(realmManager.readAllFromDB())
+            readLocalData()
         }
     }
     

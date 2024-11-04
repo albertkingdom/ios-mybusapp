@@ -10,6 +10,8 @@ import FirebaseFirestore
 import FirebaseFirestoreSwift
 import Foundation
 import SwiftUI
+import FirebaseCore
+import GoogleSignIn
 
 protocol FirebaseManagerProtocol {
     func getRemoteData(email: String) async -> [Favorite]

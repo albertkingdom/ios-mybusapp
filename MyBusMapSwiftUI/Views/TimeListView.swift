@@ -96,7 +96,7 @@ struct TimeListView: View {
 //                            clickOnRouteName(routeName)
                         })
         }
-        .border(.yellow)
+//        .border(.yellow)
         .listStyle(.plain)
         .listRowSeparator(.hidden)
         .navigationBarHidden(true)

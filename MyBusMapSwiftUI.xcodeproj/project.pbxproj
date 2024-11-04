@@ -28,6 +28,8 @@
 		A162B8D228A61CA200FF82FE /* FirebaseManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A162B8D128A61CA200FF82FE /* FirebaseManager.swift */; };
 		A162B8D428A63C4F00FF82FE /* UserDefaultManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A162B8D328A63C4E00FF82FE /* UserDefaultManager.swift */; };
 		A176B2912CD67D19002954BB /* FavStationsViewModelTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = A176B28F2CD67D19002954BB /* FavStationsViewModelTest.swift */; };
+		A176B2932CD7AE2D002954BB /* UserViewModelTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = A176B2922CD7AE2D002954BB /* UserViewModelTest.swift */; };
+		A176B2952CD7AFE3002954BB /* UserViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A176B2942CD7AFE3002954BB /* UserViewModel.swift */; };
 		A178B13B2CBFFB73000DB801 /* SearchBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = A178B13A2CBFFB72000DB801 /* SearchBar.swift */; };
 		A178B13D2CC0022C000DB801 /* FavStationsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A178B13C2CC0022C000DB801 /* FavStationsViewModel.swift */; };
 		A178B13F2CC140EB000DB801 /* RouteSheetViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A178B13E2CC140EB000DB801 /* RouteSheetViewModel.swift */; };
@@ -128,6 +130,8 @@
 		A162B8D128A61CA200FF82FE /* FirebaseManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseManager.swift; sourceTree = "<group>"; };
 		A162B8D328A63C4E00FF82FE /* UserDefaultManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultManager.swift; sourceTree = "<group>"; };
 		A176B28F2CD67D19002954BB /* FavStationsViewModelTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavStationsViewModelTest.swift; sourceTree = "<group>"; };
+		A176B2922CD7AE2D002954BB /* UserViewModelTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserViewModelTest.swift; sourceTree = "<group>"; };
+		A176B2942CD7AFE3002954BB /* UserViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserViewModel.swift; sourceTree = "<group>"; };
 		A178B13A2CBFFB72000DB801 /* SearchBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchBar.swift; sourceTree = "<group>"; };
 		A178B13C2CC0022C000DB801 /* FavStationsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavStationsViewModel.swift; sourceTree = "<group>"; };
 		A178B13E2CC140EB000DB801 /* RouteSheetViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RouteSheetViewModel.swift; sourceTree = "<group>"; };
@@ -274,6 +278,7 @@
 				A1A7B7532896395800893EF3 /* FavStationsView.swift */,
 				A1129519288FD3AC0093D936 /* MapViewModel.swift */,
 				A1DA523A28A4F5ED006CB3D4 /* UserView.swift */,
+				A176B2942CD7AFE3002954BB /* UserViewModel.swift */,
 				A162B8CC28A4FB6A00FF82FE /* GoogleSignInButton.swift */,
 				A17E340228A754090058C8AE /* PlacesSearch.swift */,
 				A1E172292BE6290600ED5916 /* RoundedCorner.swift */,
@@ -382,6 +387,7 @@
 			children = (
 				A176B28F2CD67D19002954BB /* FavStationsViewModelTest.swift */,
 				A1F22EE62C426E2C003DF7EE /* TokenManagerTests.swift */,
+				A176B2922CD7AE2D002954BB /* UserViewModelTest.swift */,
 			);
 			path = MyBusMapTests;
 			sourceTree = "<group>";
@@ -596,6 +602,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				A178B1442CC36087000DB801 /* AuthManager.swift in Sources */,
+				A176B2952CD7AFE3002954BB /* UserViewModel.swift in Sources */,
 				A162B8D428A63C4F00FF82FE /* UserDefaultManager.swift in Sources */,
 				A1F037282C02F2D000141F16 /* URLSession+.swift in Sources */,
 				A17DDF0B28B3352300D04296 /* FavoriteRealm.swift in Sources */,
@@ -653,6 +660,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				A1F22EE72C426E2C003DF7EE /* TokenManagerTests.swift in Sources */,
+				A176B2932CD7AE2D002954BB /* UserViewModelTest.swift in Sources */,
 				A176B2912CD67D19002954BB /* FavStationsViewModelTest.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
