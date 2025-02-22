@@ -13,58 +13,55 @@ struct ContentView: View {
     
     @EnvironmentObject var locationManager: LocationManager
     @StateObject var viewModel: MapViewModel
-    @State var showNearByStationSheet = true
     @State var push: Bool = false
-    @State private var showHighlightMarker: Bool = false
-    @State private var showLocationSearch = false
-    @State var query: String = "Tap to search"
-    
-    
+
     var body: some View {
         ZStack {
             googleMapsView
-            if showLocationSearch {
-                PlacesSearch(showLocationSearch: $showLocationSearch,
+            if viewModel.showLocationSearch {
+                PlacesSearch(showLocationSearch: $viewModel.showLocationSearch,
                              location: locationManager.location,
-                             query: $query
+                             query: $viewModel.query
                 )
                 .ignoresSafeArea()
                 .zIndex(5)
             }
             
             HStack {
-                SearchBarView(query: $query, showLocationSearch: $showLocationSearch)
+                SearchBarView(query: $viewModel.query, showLocationSearch: $viewModel.showLocationSearch)
+                    .clipShape(.rect(cornerRadii: .init(
+                        topLeading: 10,
+                        bottomLeading: 10,
+                        bottomTrailing: 10,
+                        topTrailing: 10))
+                    )
                     .padding([.horizontal], 10)
                 CurrentLocationButton(onTapButton: {
                     locationManager.backToCurrentLocation()
                 })
-                
             }
             .padding([.horizontal], 20)
             .frame(width: UIScreen.main.bounds.width)
             .position(CGPoint(x: UIScreen.main.bounds.width/2, y: 40.0))
             
             ZStack {
-                if showNearByStationSheet {
+                if viewModel.showNearByStationSheet {
                     NearByStationSheet(
                         nearByStations: $viewModel.nearByStations,
-                        showNearByStationSheet: $showNearByStationSheet,
-                        clickOnStationName: onClickStationName(subStations: )
+                        showNearByStationSheet: $viewModel.showNearByStationSheet,
+                        clickOnStationName: viewModel.onClickStationName(subStations: )
                     )
                 } else {
                     ArrivalTimeSheet(
-                        viewModel: ArrivalTimeSheetViewModel(location: locationManager.location, stationID: viewModel.currentStationID),
+                        viewModel: ArrivalTimeSheetViewModel(
+                            location: locationManager.location,
+                            stationID: viewModel.currentStationID
+                        ),
                         push: $push,
-                        showNearByStationSheet: $showNearByStationSheet,
-                        //                            clickOnRouteName: onClickRouteName(routeName:),
-                        unHighlightMarkers: unHighlightMarker,
+                        showNearByStationSheet: $viewModel.showNearByStationSheet,
+                        unHighlightMarkers: viewModel.unHighlightMarker,
                         clearData: {}
                     )
-                    .onDisappear {
-                        print("ArrivalTimeSheet onDisappear")
-                        // viewModel.sortedArrivalTimes.removeAll()
-                        // viewModel.currentStationID = ""
-                    }
                 }
             }
             //                if push {
@@ -84,17 +81,7 @@ struct ContentView: View {
         }
         .zIndex(2)
     }
-    func onClickStationName(subStations: [SubStation]) {
-        print("onClickStationName", subStations)
-        Task {
-            showNearByStationSheet = false
-            viewModel.subStations = subStations
-        }
-        // highlight marker
-        viewModel.highlightMarker(subStations: subStations)
-        showHighlightMarker = true
-        viewModel.currentStationID = subStations.first?.stationID ?? ""
-    }
+   
     //    func onClickRouteName(routeName: String) {
     //        print("onClickRouteName \(routeName)")
     //        viewModel.clickedRouteName = routeName
@@ -103,20 +90,12 @@ struct ContentView: View {
     //            await viewModel.fetchStopsAsync(routeName: routeName)
     //        }
     //    }
-    func unHighlightMarker() {
-        viewModel.unHighlightMarker()
-        showHighlightMarker = false
-    }
+    
     //    func clearData() {
     //        viewModel.sortedArrivalTimes.removeAll()
     //    }
-    func onSelectMarker (marker: GMSMarker) {
-        viewModel.onSelectMarker(marker: marker)
-        showHighlightMarker = true
-    }
-    func onTapMyLocationButton() {
-        //        viewModel.checkLocationAuthorization()
-    }
+
+
 }
 
 private extension ContentView {
@@ -128,15 +107,11 @@ private extension ContentView {
             highlightMarkersCoordinates: $viewModel.highlightCoordinate,
             existedHighLightMarkers: $viewModel.existedHighLightMarkers,
             existedMarkers: $viewModel.existedMarkers,
-            showHighlightMarker: $showHighlightMarker,
-            showNearByStationSheet: $showNearByStationSheet,
-            onSelectMarker: onSelectMarker(marker:)
+            showHighlightMarker: $viewModel.shouldShowHighlightMarker,
+            showNearByStationSheet: $viewModel.showNearByStationSheet,
+            onSelectMarker: viewModel.onSelectMarker(marker:)
         )
         .edgesIgnoringSafeArea(.top)
-        .onAppear {
-            //            viewModel.checkIfLogin()
-            //            viewModel.checkLocationAuthorization()
-        }
     }
 }
 
@@ -144,7 +119,8 @@ private extension ContentView {
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
-        ContentView(viewModel: MapViewModel()
+        ContentView(
+            viewModel: MapViewModel()
         )
     }
 }

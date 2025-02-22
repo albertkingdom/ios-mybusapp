@@ -12,14 +12,13 @@ import FirebaseFirestoreSwift
 
 import SwiftUI
 
-
 class MapViewModel: ObservableObject {
     var subStations: [SubStation]?
     
     @Published var nearByStations: [NearByStation] = []
     @Published var sortedArrivalTimesForRouteName: [Int: [ArrivalTime]] = [:]
     @Published var sortedStopsForRouteName: [Int: [StopForRouteName]] = [:]
-    var highlightCoordinate: [[String:Double]] = [] {
+    var highlightCoordinate: [[String: Double]] = [] {
         didSet {
             print("highlightCoordinate", highlightCoordinate)
         }
@@ -30,6 +29,10 @@ class MapViewModel: ObservableObject {
     var existedMarkers: [GMSMarker] = []
     @Published var isLoading: Bool = true
     var remotwFavoriteRouteNames: [String] = []
+    @Published var showNearByStationSheet: Bool = true
+    @Published var shouldShowHighlightMarker: Bool = false
+    @Published var showLocationSearch: Bool = false
+    @Published var query: String = "Tap to search"
 
     init() {
         
@@ -42,9 +45,8 @@ class MapViewModel: ObservableObject {
     }
     private func fetchNearByStations(location: CLLocation) async {
         
-        let coordinate = (location.coordinate.latitude ?? 0, location.coordinate.longitude ?? 0)
+        let coordinate = (location.coordinate.latitude, location.coordinate.longitude)
         do {
-            
             let stations = try await NetworkManager.shared.fetchNearByStops(coordinate: coordinate)
             print("fetchNearByStations stations \(stations)")
             handleNearByStationsResponse(stations: stations)
@@ -153,15 +155,16 @@ class MapViewModel: ObservableObject {
     
     // highlight marker
     func highlightMarker(subStations: [SubStation]) {
-        var output: [[String:Double]] = []
+        var output: [[String: Double]] = []
         subStations.forEach {
             output.append(["lat": $0.stationPosition.positionLat, "lon": $0.stationPosition.positionLon])
         }
-        //return output
+        // return output
         self.highlightCoordinate = output
     }
     func unHighlightMarker() {
         self.highlightCoordinate.removeAll()
+        shouldShowHighlightMarker = false
     }
     
     func onSelectMarker(marker: GMSMarker) {
@@ -175,8 +178,16 @@ class MapViewModel: ObservableObject {
             highlightMarker(subStations: selectStation.subStations)
             currentStationID = selectStation.subStations.first?.stationID ?? ""
         }
-        
-        
+        shouldShowHighlightMarker = true
     }
 
+    func onClickStationName(subStations: [SubStation]) {
+        Task {
+            showNearByStationSheet = false
+            self.subStations = subStations
+        }
+        highlightMarker(subStations: subStations)
+        shouldShowHighlightMarker = true
+        currentStationID = subStations.first?.stationID ?? ""
+    }
 }
