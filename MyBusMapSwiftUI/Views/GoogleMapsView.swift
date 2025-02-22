@@ -15,7 +15,7 @@ struct GoogleMapsView: UIViewRepresentable {
     // when binding property changes, will call updateUIView method
     var location: CLLocation?
     @Binding var nearByStations: [NearByStation]
-    @Binding var highlightMarkersCoordinates: [[String:Double]]
+    @Binding var highlightMarkersCoordinates: [[String: Double]]
     @Binding var existedHighLightMarkers: [GMSMarker]
     @Binding var existedMarkers: [GMSMarker]
     @Binding var showHighlightMarker: Bool
@@ -24,8 +24,10 @@ struct GoogleMapsView: UIViewRepresentable {
     var onSelectMarker: (GMSMarker) -> Void
     
     func makeUIView(context: Context) -> GMSMapView {
-        let camera = GMSCameraPosition.london
-        let mapView = GMSMapView(frame: CGRect.zero, camera: camera)
+        let options = GMSMapViewOptions()
+        options.camera = GMSCameraPosition.taipei
+        options.frame = .zero
+        let mapView = GMSMapView(options: options)
         mapView.isMyLocationEnabled = true
         mapView.delegate = context.coordinator
         self.mapView = mapView
@@ -143,8 +145,9 @@ struct GoogleMapsView: UIViewRepresentable {
     }
 }
 
-extension GMSCameraPosition  {
+extension GMSCameraPosition {
     static var london = GMSCameraPosition.camera(withLatitude: 51.507, longitude: 0, zoom: 15)
+    static var taipei = GMSCameraPosition.camera(withLatitude: 25.0395125, longitude: 121.4457487, zoom: 15)
 }
 extension NSObject {
     var thisClassName: String {
