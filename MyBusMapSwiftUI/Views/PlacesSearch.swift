@@ -18,13 +18,12 @@ struct PlacesSearch: UIViewControllerRepresentable {
     func makeUIViewController(context: Context) -> GMSAutocompleteViewController {
         let autocompleteController = GMSAutocompleteViewController()
         // Specify the place data types to return.
-        let fields: GMSPlaceField = GMSPlaceField(rawValue: UInt64(UInt(GMSPlaceField.name.rawValue) | UInt(GMSPlaceField.coordinate.rawValue)))
-        autocompleteController.placeFields = fields
+        autocompleteController.placeFields = [.name, .coordinate]
         
         // Specify a filter.
         let filter = GMSAutocompleteFilter()
         
-        filter.country = "TW"
+        filter.countries = ["TW"]
         autocompleteController.autocompleteFilter = filter
         
         autocompleteController.delegate = context.coordinator
@@ -36,7 +35,13 @@ struct PlacesSearch: UIViewControllerRepresentable {
     }
     
     func makeCoordinator() -> PlacesSearchCoordinator {
-        return PlacesSearchCoordinator(parent: self, showLocationSearch: $showLocationSearch, location: location, query: $query, updateCurrentLocation: locationManager.updateLocation(to: ))
+        return PlacesSearchCoordinator(
+            parent: self,
+            showLocationSearch: $showLocationSearch,
+            location: location,
+            query: $query,
+            updateCurrentLocation: locationManager.updateLocation(to: )
+        )
     }
     
     class PlacesSearchCoordinator: NSObject, GMSAutocompleteViewControllerDelegate {
@@ -45,7 +50,6 @@ struct PlacesSearch: UIViewControllerRepresentable {
         var location: CLLocation?
         @Binding var query: String
         var updateLocation: (CLLocation) -> Void
-        
         
         init(parent: PlacesSearch, showLocationSearch: Binding<Bool>, location: CLLocation?, query: Binding<String>, updateCurrentLocation: @escaping (CLLocation)->Void) {
             self.parent = parent
@@ -56,46 +60,36 @@ struct PlacesSearch: UIViewControllerRepresentable {
         }
         
         func viewController(_ viewController: GMSAutocompleteViewController, didAutocompleteWith place: GMSPlace) {
-            print("didAutocompleteWith")
-            print("Place name: \(place.name)")
-               print("Place ID: \(place.placeID)")
-               print("Place attributions: \(place.attributions)")
-            print("Place coord: \(place.coordinate)")
-//            dismiss(animated: true, completion: nil)
             if let name = place.name {
                 query = name
             }
-            location = CLLocation(latitude: place.coordinate.latitude, longitude: place.coordinate.longitude)
-            guard let location = location else { return }
-            updateLocation(location)
+            let newLocation = CLLocation(latitude: place.coordinate.latitude, longitude: place.coordinate.longitude)
+            updateLocation(newLocation)
             showLocationSearch.toggle()
         }
         
         func viewController(_ viewController: GMSAutocompleteViewController, didFailAutocompleteWithError error: Error) {
-
             print("Error: ", error.localizedDescription)
-
         }
+        
         func viewController(_ viewController: GMSAutocompleteViewController, didSelect prediction: GMSAutocompletePrediction) -> Bool {
-           print("didSelect prediction")
-            
-            
+            print("didSelect prediction")
             return true
         }
         // User canceled the operation.
-          func wasCancelled(_ viewController: GMSAutocompleteViewController) {
-              showLocationSearch.toggle()
-          }
-
-          // Turn the network activity indicator on and off again.
-          func didRequestAutocompletePredictions(_ viewController: GMSAutocompleteViewController) {
-          
-          }
-
-          func didUpdateAutocompletePredictions(_ viewController: GMSAutocompleteViewController) {
-           
-          }
-
+        func wasCancelled(_ viewController: GMSAutocompleteViewController) {
+            showLocationSearch.toggle()
+        }
+        
+        // Turn the network activity indicator on and off again.
+        func didRequestAutocompletePredictions(_ viewController: GMSAutocompleteViewController) {
+            
+        }
+        
+        func didUpdateAutocompletePredictions(_ viewController: GMSAutocompleteViewController) {
+            
+        }
+        
     }
     typealias UIViewControllerType = GMSAutocompleteViewController
     
