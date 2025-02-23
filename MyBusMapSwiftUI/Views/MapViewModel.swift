@@ -18,11 +18,7 @@ class MapViewModel: ObservableObject {
     @Published var nearByStations: [NearByStation] = []
     @Published var sortedArrivalTimesForRouteName: [Int: [ArrivalTime]] = [:]
     @Published var sortedStopsForRouteName: [Int: [StopForRouteName]] = [:]
-    @Published var highlightCoordinate: [[String: Double]] = [] {
-        didSet {
-            print("highlightCoordinate", highlightCoordinate)
-        }
-    }
+    @Published var highlightCoordinate: [[String: Double]] = []
     var currentStationID: String = ""
     private var clickedRouteName: String = ""
     var existedHighLightMarkers: [GMSMarker] = []
@@ -38,23 +34,17 @@ class MapViewModel: ObservableObject {
         
     }
    
-    func fetchNearByStationsWrapper(location: CLLocation) {
-        Task {
-            await fetchNearByStations(location: location)
-        }
-    }
-    private func fetchNearByStations(location: CLLocation) async {
-        
+    func fetchNearByStations(location: CLLocation) async {
         let coordinate = (location.coordinate.latitude, location.coordinate.longitude)
         do {
             let stations = try await NetworkManager.shared.fetchNearByStops(coordinate: coordinate)
-            print("fetchNearByStations stations \(stations)")
             handleNearByStationsResponse(stations: stations)
         } catch {
             print("fetchNearByStations error \(error)")
         }
     }
-    func handleNearByStationsResponse(stations: [Station]) {
+    
+    private func handleNearByStationsResponse(stations: [Station]) {
         var nearbyStationsDict: [String: NearByStation] = [:]
         
         stations.forEach { station in
@@ -142,18 +132,18 @@ class MapViewModel: ObservableObject {
 //        }
 //    }
     
-    private func handleStops(routes: [StopOfRoute]) -> [Int: [StopForRouteName]] {
-        var sorted: [Int: [StopForRouteName]] = [0: [], 1: []] // 0:'去程',1:'返程'
-        for route in routes {
-            if route.direction == 0 {
-                sorted[0]?.append(contentsOf: route.stops)
-            }
-            if route.direction == 1 {
-                sorted[1]?.append(contentsOf: route.stops)
-            }
-        }
-        return sorted
-    }
+//    private func handleStops(routes: [StopOfRoute]) -> [Int: [StopForRouteName]] {
+//        var sorted: [Int: [StopForRouteName]] = [0: [], 1: []] // 0:'去程',1:'返程'
+//        for route in routes {
+//            if route.direction == 0 {
+//                sorted[0]?.append(contentsOf: route.stops)
+//            }
+//            if route.direction == 1 {
+//                sorted[1]?.append(contentsOf: route.stops)
+//            }
+//        }
+//        return sorted
+//    }
     
     // highlight marker
     func highlightMarker(subStations: [SubStation]) {
@@ -164,6 +154,7 @@ class MapViewModel: ObservableObject {
         // return output
         self.highlightCoordinate = output
     }
+    
     func unHighlightMarker() {
         self.highlightCoordinate.removeAll()
         shouldShowHighlightMarker = false
@@ -171,12 +162,9 @@ class MapViewModel: ObservableObject {
     
     func onSelectMarker(marker: GMSMarker) {
         let stationName = marker.title
-        if let selectStation = nearByStations.first(where:{ station in
+        if let selectStation = nearByStations.first(where: { station in
             station.stationName == stationName
         }) {
-            Task {
-//                await fetchArrivalTime()
-            }
             highlightMarker(subStations: selectStation.subStations)
             currentStationID = selectStation.subStations.first?.stationID ?? ""
         }
