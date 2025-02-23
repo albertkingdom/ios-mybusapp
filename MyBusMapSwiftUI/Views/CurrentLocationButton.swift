@@ -10,13 +10,19 @@ import SwiftUI
 struct CurrentLocationButton: View {
     var onTapButton: () -> Void
     var body: some View {
-        Button(action: {
+        Button {
             onTapButton()
-        }){
+        } label: {
             Image(systemName: "location.fill")
                 .frame(width: 50, height: 50)
                 .background(Color.white)
                 .border(.clear)
+                .clipShape(.rect(cornerRadii: .init(
+                    topLeading: 10,
+                    bottomLeading: 10,
+                    bottomTrailing: 10,
+                    topTrailing: 10))
+                )
                 .shadow(radius: 5)
         }
     }

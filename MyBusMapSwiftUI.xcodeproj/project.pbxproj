@@ -44,6 +44,7 @@
 		A1821A2528937E73003CB0EB /* District.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1821A2428937E73003CB0EB /* District.swift */; };
 		A1821A2A2893A4A8003CB0EB /* TimeListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1821A292893A4A8003CB0EB /* TimeListView.swift */; };
 		A1821A462893D2BB003CB0EB /* StopOfRoute.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1821A452893D2BB003CB0EB /* StopOfRoute.swift */; };
+		A1955AC02D6A2E7A0090F44C /* SearchAndLocationBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1955ABF2D6A2E7A0090F44C /* SearchAndLocationBar.swift */; };
 		A1A7B7502895010500893EF3 /* PlateView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1A7B74F2895010500893EF3 /* PlateView.swift */; };
 		A1A7B7522896372500893EF3 /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1A7B7512896372500893EF3 /* HomeView.swift */; };
 		A1A7B7542896395800893EF3 /* FavStationsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1A7B7532896395800893EF3 /* FavStationsView.swift */; };
@@ -147,6 +148,7 @@
 		A1821A2428937E73003CB0EB /* District.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = District.swift; sourceTree = "<group>"; };
 		A1821A292893A4A8003CB0EB /* TimeListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeListView.swift; sourceTree = "<group>"; };
 		A1821A452893D2BB003CB0EB /* StopOfRoute.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StopOfRoute.swift; sourceTree = "<group>"; };
+		A1955ABF2D6A2E7A0090F44C /* SearchAndLocationBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchAndLocationBar.swift; sourceTree = "<group>"; };
 		A1A7B74F2895010500893EF3 /* PlateView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlateView.swift; sourceTree = "<group>"; };
 		A1A7B7512896372500893EF3 /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
 		A1A7B7532896395800893EF3 /* FavStationsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavStationsView.swift; sourceTree = "<group>"; };
@@ -265,6 +267,7 @@
 		A11295262891827F0093D936 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				A1955ABF2D6A2E7A0090F44C /* SearchAndLocationBar.swift */,
 				A1BDB5662CC3F71A0077D3E0 /* Reusable */,
 				A112952428911A9C0093D936 /* NearByStationSheet.swift */,
 				A11295272891834C0093D936 /* ArrivalTimeSheet.swift */,
@@ -622,6 +625,7 @@
 				A1BDB5682CC3F86F0077D3E0 /* View+Extension.swift in Sources */,
 				A1BDB5652CC3EEDE0077D3E0 /* BottomSheetView.swift in Sources */,
 				A162B8CD28A4FB6A00FF82FE /* GoogleSignInButton.swift in Sources */,
+				A1955AC02D6A2E7A0090F44C /* SearchAndLocationBar.swift in Sources */,
 				A1821A2A2893A4A8003CB0EB /* TimeListView.swift in Sources */,
 				A112952A28918E4E0093D936 /* ArrivalTime.swift in Sources */,
 				A112951F289037110093D936 /* Station.swift in Sources */,

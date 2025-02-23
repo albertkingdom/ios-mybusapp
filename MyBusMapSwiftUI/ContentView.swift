@@ -27,22 +27,13 @@ struct ContentView: View {
                 .zIndex(5)
             }
             
-            HStack {
-                SearchBarView(query: $viewModel.query, showLocationSearch: $viewModel.showLocationSearch)
-                    .clipShape(.rect(cornerRadii: .init(
-                        topLeading: 10,
-                        bottomLeading: 10,
-                        bottomTrailing: 10,
-                        topTrailing: 10))
-                    )
-                    .padding([.horizontal], 10)
-                CurrentLocationButton(onTapButton: {
+            SearchAndLocationBar(
+                query: $viewModel.query,
+                showLocationSearch: $viewModel.showLocationSearch,
+                onCurrentLocationTap: {
                     locationManager.backToCurrentLocation()
-                })
-            }
-            .padding([.horizontal], 20)
-            .frame(width: UIScreen.main.bounds.width)
-            .position(CGPoint(x: UIScreen.main.bounds.width/2, y: 40.0))
+                }
+            )
             
             ZStack {
                 if viewModel.showNearByStationSheet {
