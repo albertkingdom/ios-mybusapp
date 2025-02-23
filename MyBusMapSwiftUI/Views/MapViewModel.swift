@@ -55,51 +55,41 @@ class MapViewModel: ObservableObject {
         }
     }
     func handleNearByStationsResponse(stations: [Station]) {
-        var nearbyStations: [NearByStation] = []
+        var nearbyStationsDict: [String: NearByStation] = [:]
         
-        for station in stations {
-            if let index = nearbyStations.firstIndex(where: { $0.stationName == station.stationName.zhTw}) {
-                // existing
-                let routes = station.stops.map {
-                    $0.routeName.zhTw
-                }
-                //
-                if let indexOfSub = nearbyStations[index].subStations.firstIndex(where: { $0.stationID == station.stationID}) {
-                    // existing substation
-                    nearbyStations[index].subStations[indexOfSub].routes.append(contentsOf: routes)
+        stations.forEach { station in
+            let stationName = station.stationName.zhTw
+            let routes = station.stops.map { $0.routeName.zhTw }
+
+            if var existedNearByStation = nearbyStationsDict[stationName] {
+                if let subStationIndex = existedNearByStation.subStations.firstIndex(where: { $0.stationID == station.stationID}) {
+                    existedNearByStation.subStations[subStationIndex].routes.append(contentsOf: routes)
                 } else {
-                    // add new substation
                     let subStation = SubStation(
-                        stationID: station.stationID,
-                        stationPosition: station.stationPosition,
-                        stationAddress: station.stationAddress,
-                        routes: routes
-                    )
-                    nearbyStations[index].subStations.append(subStation)
+                                       stationID: station.stationID,
+                                       stationPosition: station.stationPosition,
+                                       stationAddress: station.stationAddress,
+                                       routes: routes
+                                   )
+                    existedNearByStation.subStations.append(subStation)
                 }
-                
+                nearbyStationsDict[stationName] = existedNearByStation
             } else {
-                // no existing NearByStation
-                let routes = station.stops.map {
-                    $0.routeName.zhTw
-                }
-                let subStations = [
-                    SubStation(
-                        stationID: station.stationID,
-                        stationPosition: station.stationPosition,
-                        stationAddress: station.stationAddress,
-                        routes: routes
-                    )
-                ]
-                nearbyStations.append(
-                    NearByStation(stationName: station.stationName.zhTw, subStations: subStations)
-                )
+                let subStation = SubStation(
+                                   stationID: station.stationID,
+                                   stationPosition: station.stationPosition,
+                                   stationAddress: station.stationAddress,
+                                   routes: routes
+                               )
+                nearbyStationsDict[stationName] = NearByStation(stationName: stationName, subStations: [subStation])
             }
+            
         }
+        let nearbyStations = Array(nearbyStationsDict.values)
+    
         DispatchQueue.main.async {
             self.nearByStations = nearbyStations
         }
-        
     }
 
 //    private func handleArrivalTime(arrivalTimes: [ArrivalTime]) -> [Int:[ArrivalTime]] {
