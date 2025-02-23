@@ -13,22 +13,22 @@ import FirebaseFirestoreSwift
 import SwiftUI
 
 class MapViewModel: ObservableObject {
-    var subStations: [SubStation]?
+    private var subStations: [SubStation]?
     
     @Published var nearByStations: [NearByStation] = []
     @Published var sortedArrivalTimesForRouteName: [Int: [ArrivalTime]] = [:]
     @Published var sortedStopsForRouteName: [Int: [StopForRouteName]] = [:]
-    var highlightCoordinate: [[String: Double]] = [] {
+    @Published var highlightCoordinate: [[String: Double]] = [] {
         didSet {
             print("highlightCoordinate", highlightCoordinate)
         }
     }
     var currentStationID: String = ""
-    var clickedRouteName: String = ""
+    private var clickedRouteName: String = ""
     var existedHighLightMarkers: [GMSMarker] = []
     var existedMarkers: [GMSMarker] = []
     @Published var isLoading: Bool = true
-    var remotwFavoriteRouteNames: [String] = []
+    private var remotwFavoriteRouteNames: [String] = []
     @Published var showNearByStationSheet: Bool = true
     @Published var shouldShowHighlightMarker: Bool = false
     @Published var showLocationSearch: Bool = false
@@ -69,7 +69,12 @@ class MapViewModel: ObservableObject {
                     nearbyStations[index].subStations[indexOfSub].routes.append(contentsOf: routes)
                 } else {
                     // add new substation
-                    let subStation = SubStation(stationID: station.stationID,stationPosition: station.stationPosition, stationAddress: station.stationAddress, routes: routes)
+                    let subStation = SubStation(
+                        stationID: station.stationID,
+                        stationPosition: station.stationPosition,
+                        stationAddress: station.stationAddress,
+                        routes: routes
+                    )
                     nearbyStations[index].subStations.append(subStation)
                 }
                 
@@ -78,7 +83,14 @@ class MapViewModel: ObservableObject {
                 let routes = station.stops.map {
                     $0.routeName.zhTw
                 }
-                let subStations = [SubStation(stationID: station.stationID,stationPosition: station.stationPosition, stationAddress: station.stationAddress, routes: routes)]
+                let subStations = [
+                    SubStation(
+                        stationID: station.stationID,
+                        stationPosition: station.stationPosition,
+                        stationAddress: station.stationAddress,
+                        routes: routes
+                    )
+                ]
                 nearbyStations.append(
                     NearByStation(stationName: station.stationName.zhTw, subStations: subStations)
                 )
@@ -169,7 +181,7 @@ class MapViewModel: ObservableObject {
     
     func onSelectMarker(marker: GMSMarker) {
         let stationName = marker.title
-        if let selectStation = nearByStations.first (where:{ station in
+        if let selectStation = nearByStations.first(where:{ station in
             station.stationName == stationName
         }) {
             Task {
@@ -183,8 +195,10 @@ class MapViewModel: ObservableObject {
 
     func onClickStationName(subStations: [SubStation]) {
         Task {
-            showNearByStationSheet = false
-            self.subStations = subStations
+            await MainActor.run {
+                showNearByStationSheet = false
+                self.subStations = subStations
+            }
         }
         highlightMarker(subStations: subStations)
         shouldShowHighlightMarker = true
