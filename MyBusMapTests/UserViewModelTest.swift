@@ -14,6 +14,14 @@ enum MockAuthError: Error {
     case authError
 }
 class MockAuthManager: AuthManagerProtocol {
+    func signOut() {
+        
+    }
+    
+    func checkIfLogin() -> User? {
+        return nil
+    }
+    
     var isSuccess: Bool
     init(isSuccess: Bool) {
         self.isSuccess = isSuccess
