@@ -9,7 +9,6 @@
 /* Begin PBXBuildFile section */
 		A10503A7288FA90900EF461D /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A10503A6288FA90900EF461D /* AppDelegate.swift */; };
 		A10503A9288FAAB100EF461D /* GoogleMapsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A10503A8288FAAB100EF461D /* GoogleMapsView.swift */; };
-		A10503AB288FAB1F00EF461D /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A10503AA288FAB1F00EF461D /* MapViewController.swift */; };
 		A112951A288FD3AC0093D936 /* MapViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1129519288FD3AC0093D936 /* MapViewModel.swift */; };
 		A112951C289033A80093D936 /* NetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A112951B289033A80093D936 /* NetworkManager.swift */; };
 		A112951F289037110093D936 /* Station.swift in Sources */ = {isa = PBXBuildFile; fileRef = A112951E289037110093D936 /* Station.swift */; };
@@ -111,7 +110,6 @@
 /* Begin PBXFileReference section */
 		A10503A6288FA90900EF461D /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		A10503A8288FAAB100EF461D /* GoogleMapsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoogleMapsView.swift; sourceTree = "<group>"; };
-		A10503AA288FAB1F00EF461D /* MapViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapViewController.swift; sourceTree = "<group>"; };
 		A1129519288FD3AC0093D936 /* MapViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapViewModel.swift; sourceTree = "<group>"; };
 		A112951B289033A80093D936 /* NetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkManager.swift; sourceTree = "<group>"; };
 		A112951E289037110093D936 /* Station.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Station.swift; sourceTree = "<group>"; };
@@ -267,28 +265,8 @@
 		A11295262891827F0093D936 /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				A1955ABF2D6A2E7A0090F44C /* SearchAndLocationBar.swift */,
-				A1BDB5662CC3F71A0077D3E0 /* Reusable */,
-				A112952428911A9C0093D936 /* NearByStationSheet.swift */,
-				A11295272891834C0093D936 /* ArrivalTimeSheet.swift */,
-				A1DA52352898E1D0006CB3D4 /* ArrivalTimeSheetViewModel.swift */,
 				A1821A2028929762003CB0EB /* RouteSheet.swift */,
-				A1821A1D28924C9A003CB0EB /* Tabs.swift */,
-				A10503A8288FAAB100EF461D /* GoogleMapsView.swift */,
-				A1821A222892DCE2003CB0EB /* GoogleMapsRouteView.swift */,
-				A1821A292893A4A8003CB0EB /* TimeListView.swift */,
 				A1A7B74F2895010500893EF3 /* PlateView.swift */,
-				A1A7B7532896395800893EF3 /* FavStationsView.swift */,
-				A1129519288FD3AC0093D936 /* MapViewModel.swift */,
-				A1DA523A28A4F5ED006CB3D4 /* UserView.swift */,
-				A176B2942CD7AFE3002954BB /* UserViewModel.swift */,
-				A162B8CC28A4FB6A00FF82FE /* GoogleSignInButton.swift */,
-				A17E340228A754090058C8AE /* PlacesSearch.swift */,
-				A1E172292BE6290600ED5916 /* RoundedCorner.swift */,
-				A178B13A2CBFFB72000DB801 /* SearchBar.swift */,
-				A178B13C2CC0022C000DB801 /* FavStationsViewModel.swift */,
-				A1BDB5672CC3F86F0077D3E0 /* View+Extension.swift */,
-				A15E1E632CC53BB400F2F7EF /* CurrentLocationButton.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -319,6 +297,10 @@
 		A1202165288FA00400C8746A /* MyBusMapSwiftUI */ = {
 			isa = PBXGroup;
 			children = (
+				A1D56B082D97B22A0041C438 /* Common */,
+				A1D56B072D97B1220041C438 /* Map */,
+				A1D56B062D97AF8C0041C438 /* FavList */,
+				A1D56B052D97AE790041C438 /* User */,
 				A178B1402CC15135000DB801 /* ViewModel */,
 				A1F037262C02F2B400141F16 /* Extension */,
 				A162B8D028A61C3200FF82FE /* Util */,
@@ -331,14 +313,8 @@
 				A120216A288FA00800C8746A /* Assets.xcassets */,
 				A120216C288FA00800C8746A /* Preview Content */,
 				A10503A6288FA90900EF461D /* AppDelegate.swift */,
-				A10503AA288FAB1F00EF461D /* MapViewController.swift */,
-				A112951B289033A80093D936 /* NetworkManager.swift */,
-				A1F22EDB2C424688003DF7EE /* TokenManager.swift */,
 				A1821A1F28924CFD003CB0EB /* README.md */,
 				DF81285F29B05D98008095FE /* Config.xcconfig */,
-				A1E1722D2BE688E200ED5916 /* shareFunction.swift */,
-				A178B1412CC2C883000DB801 /* LocationManager.swift */,
-				A178B1432CC36087000DB801 /* AuthManager.swift */,
 			);
 			path = MyBusMapSwiftUI;
 			sourceTree = "<group>";
@@ -357,6 +333,10 @@
 				A162B8D128A61CA200FF82FE /* FirebaseManager.swift */,
 				A162B8D328A63C4E00FF82FE /* UserDefaultManager.swift */,
 				A17DDF0C28B336C400D04296 /* RealmManager.swift */,
+				A112951B289033A80093D936 /* NetworkManager.swift */,
+				A1F22EDB2C424688003DF7EE /* TokenManager.swift */,
+				A178B1412CC2C883000DB801 /* LocationManager.swift */,
+				A178B1432CC36087000DB801 /* AuthManager.swift */,
 			);
 			path = Util;
 			sourceTree = "<group>";
@@ -365,22 +345,63 @@
 			isa = PBXGroup;
 			children = (
 				A178B13E2CC140EB000DB801 /* RouteSheetViewModel.swift */,
+				A1129519288FD3AC0093D936 /* MapViewModel.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
 		};
-		A1BDB5662CC3F71A0077D3E0 /* Reusable */ = {
+		A1D56B052D97AE790041C438 /* User */ = {
 			isa = PBXGroup;
 			children = (
-				A1BDB5642CC3EEDE0077D3E0 /* BottomSheetView.swift */,
+				A162B8CC28A4FB6A00FF82FE /* GoogleSignInButton.swift */,
+				A1DA523A28A4F5ED006CB3D4 /* UserView.swift */,
+				A176B2942CD7AFE3002954BB /* UserViewModel.swift */,
 			);
-			path = Reusable;
+			path = User;
+			sourceTree = "<group>";
+		};
+		A1D56B062D97AF8C0041C438 /* FavList */ = {
+			isa = PBXGroup;
+			children = (
+				A1A7B7532896395800893EF3 /* FavStationsView.swift */,
+				A178B13C2CC0022C000DB801 /* FavStationsViewModel.swift */,
+			);
+			path = FavList;
+			sourceTree = "<group>";
+		};
+		A1D56B072D97B1220041C438 /* Map */ = {
+			isa = PBXGroup;
+			children = (
+				A1955ABF2D6A2E7A0090F44C /* SearchAndLocationBar.swift */,
+				A11295272891834C0093D936 /* ArrivalTimeSheet.swift */,
+				A1DA52352898E1D0006CB3D4 /* ArrivalTimeSheetViewModel.swift */,
+				A112952428911A9C0093D936 /* NearByStationSheet.swift */,
+				A10503A8288FAAB100EF461D /* GoogleMapsView.swift */,
+				A1821A222892DCE2003CB0EB /* GoogleMapsRouteView.swift */,
+				A1821A292893A4A8003CB0EB /* TimeListView.swift */,
+				A15E1E632CC53BB400F2F7EF /* CurrentLocationButton.swift */,
+				A17E340228A754090058C8AE /* PlacesSearch.swift */,
+				A178B13A2CBFFB72000DB801 /* SearchBar.swift */,
+			);
+			path = Map;
+			sourceTree = "<group>";
+		};
+		A1D56B082D97B22A0041C438 /* Common */ = {
+			isa = PBXGroup;
+			children = (
+				A1E172292BE6290600ED5916 /* RoundedCorner.swift */,
+				A1BDB5642CC3EEDE0077D3E0 /* BottomSheetView.swift */,
+				A1E1722D2BE688E200ED5916 /* shareFunction.swift */,
+				A1821A1D28924C9A003CB0EB /* Tabs.swift */,
+			);
+			path = Common;
 			sourceTree = "<group>";
 		};
 		A1F037262C02F2B400141F16 /* Extension */ = {
 			isa = PBXGroup;
 			children = (
 				A1F037272C02F2D000141F16 /* URLSession+.swift */,
+				A1BDB5672CC3F86F0077D3E0 /* View+Extension.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -642,7 +663,6 @@
 				A15E1E642CC53BB400F2F7EF /* CurrentLocationButton.swift in Sources */,
 				A17DDF0D28B336C400D04296 /* RealmManager.swift in Sources */,
 				A1821A232892DCE2003CB0EB /* GoogleMapsRouteView.swift in Sources */,
-				A10503AB288FAB1F00EF461D /* MapViewController.swift in Sources */,
 				A162B8CF28A550CC00FF82FE /* Favorite.swift in Sources */,
 				A1202167288FA00400C8746A /* MyBusMapSwiftUIApp.swift in Sources */,
 				A112951A288FD3AC0093D936 /* MapViewModel.swift in Sources */,

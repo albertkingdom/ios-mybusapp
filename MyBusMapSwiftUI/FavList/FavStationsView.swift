@@ -53,7 +53,8 @@ struct FavStationsView: View {
                                             Spacer()
                                             Image(systemName: "heart.fill")
                                         }
-                                    })
+                                    }
+                                )
 
                             }
                             .onDelete { indexSet in
@@ -113,4 +114,8 @@ struct FavStationsView: View {
             }
         })
     }
+}
+
+#Preview {
+    
 }

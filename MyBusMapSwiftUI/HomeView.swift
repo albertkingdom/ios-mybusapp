@@ -33,12 +33,14 @@ struct HomeView: View {
                     Text("User")
                 }.tag(2)
         }
-        .onReceive(locationManager.$location, perform: { newLocation in
-            mapViewModel.fetchNearByStationsWrapper(location: newLocation ?? CLLocation(latitude: 0, longitude: 0))
+        .onReceive(locationManager.$location,
+                   perform: { newLocation in
+            Task {
+                await mapViewModel.fetchNearByStations(location: newLocation ?? CLLocation(latitude: 0, longitude: 0))
+            }
         })
         
         
-            
     }
 }
 
