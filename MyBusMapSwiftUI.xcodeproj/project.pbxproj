@@ -37,7 +37,6 @@
 		A17DDF0B28B3352300D04296 /* FavoriteRealm.swift in Sources */ = {isa = PBXBuildFile; fileRef = A17DDF0A28B3352300D04296 /* FavoriteRealm.swift */; };
 		A17DDF0D28B336C400D04296 /* RealmManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A17DDF0C28B336C400D04296 /* RealmManager.swift */; };
 		A17E340328A754090058C8AE /* PlacesSearch.swift in Sources */ = {isa = PBXBuildFile; fileRef = A17E340228A754090058C8AE /* PlacesSearch.swift */; };
-		A1821A1E28924C9A003CB0EB /* Tabs.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1821A1D28924C9A003CB0EB /* Tabs.swift */; };
 		A1821A2128929762003CB0EB /* RouteSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1821A2028929762003CB0EB /* RouteSheet.swift */; };
 		A1821A232892DCE2003CB0EB /* GoogleMapsRouteView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1821A222892DCE2003CB0EB /* GoogleMapsRouteView.swift */; };
 		A1821A2528937E73003CB0EB /* District.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1821A2428937E73003CB0EB /* District.swift */; };
@@ -49,6 +48,7 @@
 		A1A7B7542896395800893EF3 /* FavStationsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1A7B7532896395800893EF3 /* FavStationsView.swift */; };
 		A1BDB5652CC3EEDE0077D3E0 /* BottomSheetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1BDB5642CC3EEDE0077D3E0 /* BottomSheetView.swift */; };
 		A1BDB5682CC3F86F0077D3E0 /* View+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1BDB5672CC3F86F0077D3E0 /* View+Extension.swift */; };
+		A1D56B0B2D97B81F0041C438 /* Tabs.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1D56B0A2D97B81F0041C438 /* Tabs.swift */; };
 		A1DA52362898E1D0006CB3D4 /* ArrivalTimeSheetViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1DA52352898E1D0006CB3D4 /* ArrivalTimeSheetViewModel.swift */; };
 		A1DA5238289A2A2E006CB3D4 /* .gitignore in Resources */ = {isa = PBXBuildFile; fileRef = A1DA5237289A2A2E006CB3D4 /* .gitignore */; };
 		A1DA523B28A4F5ED006CB3D4 /* UserView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1DA523A28A4F5ED006CB3D4 /* UserView.swift */; };
@@ -139,7 +139,6 @@
 		A17DDF0A28B3352300D04296 /* FavoriteRealm.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteRealm.swift; sourceTree = "<group>"; };
 		A17DDF0C28B336C400D04296 /* RealmManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealmManager.swift; sourceTree = "<group>"; };
 		A17E340228A754090058C8AE /* PlacesSearch.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlacesSearch.swift; sourceTree = "<group>"; };
-		A1821A1D28924C9A003CB0EB /* Tabs.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tabs.swift; sourceTree = "<group>"; };
 		A1821A1F28924CFD003CB0EB /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		A1821A2028929762003CB0EB /* RouteSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RouteSheet.swift; sourceTree = "<group>"; };
 		A1821A222892DCE2003CB0EB /* GoogleMapsRouteView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoogleMapsRouteView.swift; sourceTree = "<group>"; };
@@ -152,6 +151,7 @@
 		A1A7B7532896395800893EF3 /* FavStationsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavStationsView.swift; sourceTree = "<group>"; };
 		A1BDB5642CC3EEDE0077D3E0 /* BottomSheetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BottomSheetView.swift; sourceTree = "<group>"; };
 		A1BDB5672CC3F86F0077D3E0 /* View+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View+Extension.swift"; sourceTree = "<group>"; };
+		A1D56B0A2D97B81F0041C438 /* Tabs.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tabs.swift; sourceTree = "<group>"; };
 		A1DA52352898E1D0006CB3D4 /* ArrivalTimeSheetViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArrivalTimeSheetViewModel.swift; sourceTree = "<group>"; };
 		A1DA5237289A2A2E006CB3D4 /* .gitignore */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitignore; sourceTree = "<group>"; };
 		A1DA523928A4F442006CB3D4 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
@@ -389,10 +389,10 @@
 		A1D56B082D97B22A0041C438 /* Common */ = {
 			isa = PBXGroup;
 			children = (
+				A1D56B0A2D97B81F0041C438 /* Tabs.swift */,
 				A1E172292BE6290600ED5916 /* RoundedCorner.swift */,
 				A1BDB5642CC3EEDE0077D3E0 /* BottomSheetView.swift */,
 				A1E1722D2BE688E200ED5916 /* shareFunction.swift */,
-				A1821A1D28924C9A003CB0EB /* Tabs.swift */,
 			);
 			path = Common;
 			sourceTree = "<group>";
@@ -640,6 +640,7 @@
 				A1202169288FA00400C8746A /* ContentView.swift in Sources */,
 				A1E1722A2BE6290600ED5916 /* RoundedCorner.swift in Sources */,
 				A1A7B7542896395800893EF3 /* FavStationsView.swift in Sources */,
+				A1D56B0B2D97B81F0041C438 /* Tabs.swift in Sources */,
 				A1A7B7522896372500893EF3 /* HomeView.swift in Sources */,
 				A178B13D2CC0022C000DB801 /* FavStationsViewModel.swift in Sources */,
 				A112952528911A9C0093D936 /* NearByStationSheet.swift in Sources */,
@@ -652,7 +653,6 @@
 				A112951F289037110093D936 /* Station.swift in Sources */,
 				A10503A9288FAAB100EF461D /* GoogleMapsView.swift in Sources */,
 				A162B8D228A61CA200FF82FE /* FirebaseManager.swift in Sources */,
-				A1821A1E28924C9A003CB0EB /* Tabs.swift in Sources */,
 				A178B1422CC2C883000DB801 /* LocationManager.swift in Sources */,
 				A1DA52362898E1D0006CB3D4 /* ArrivalTimeSheetViewModel.swift in Sources */,
 				A11295282891834C0093D936 /* ArrivalTimeSheet.swift in Sources */,
