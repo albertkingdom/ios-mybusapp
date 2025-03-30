@@ -25,91 +25,58 @@ struct FavStationsView: View {
                         .font(Font.headline)
                         .padding()
 
-                    if !authManager.isLogin {
-                        List {
-                            ForEach(favStationsViewModel.realmFavList) { item in
-                                //                                NavigationLink(destination: RouteSheet(
-                                //                                    mapViewModel: viewModel,
-                                //                                    viewModel: RouteSheetViewModel(routeName: item.name, location: viewModel.location),
-                                //                                    push: $push,
-                                //                                    location: $viewModel.location,
-                                //                                    title: viewModel.clickedRouteName,
-                                //                                    stops: $viewModel.sortedStopsForRouteName)
-                                //                                 ){
-                                //                                    HStack {
-                                //                                        Text(item.name)
-                                //                                        Spacer()
-                                //                                        Image(systemName: "heart.fill")
-                                //                                    }
-                                //                                }
-                                Button(
-                                    action: {
-                                        print("click")
-                                        selectedTab = 0
-                                    },
-                                    label: {
-                                        HStack {
-                                            Text(item.name)
-                                            Spacer()
-                                            Image(systemName: "heart.fill")
-                                        }
+                    List {
+                        ForEach(favStationsViewModel.displayList) { item in
+                            //                                NavigationLink(destination: RouteSheet(
+                            //                                    mapViewModel: viewModel,
+                            //                                    viewModel: RouteSheetViewModel(routeName: item.name, location: viewModel.location),
+                            //                                    push: $push,
+                            //                                    location: $viewModel.location,
+                            //                                    title: viewModel.clickedRouteName,
+                            //                                    stops: $viewModel.sortedStopsForRouteName)
+                            //                                 ){
+                            //                                    HStack {
+                            //                                        Text(item.name)
+                            //                                        Spacer()
+                            //                                        Image(systemName: "heart.fill")
+                            //                                    }
+                            //                                }
+                            Button(
+                                action: {
+                                    print("click")
+                                    selectedTab = 0
+                                },
+                                label: {
+                                    HStack {
+                                        Text(item.name)
+                                        Spacer()
+                                        Image(systemName: "heart.fill")
                                     }
-                                )
+                                }
+                            )
 
-                            }
-                            .onDelete { indexSet in
+                        }
+                        .onDelete { indexSet in
+                            if authManager.isLogin {
+                                favStationsViewModel.deleteRemoteData(
+                                    indexSet: indexSet)
+                            } else {
                                 favStationsViewModel.deleteLocalData(
                                     indexSet: indexSet)
                             }
+                        }
 
-                        }
-                        .onAppear {
-                            favStationsViewModel.readLocalData()
-                        }
-                    } else {
-                        List {
-
-                            ForEach(favStationsViewModel.favoriteList) { item in
-                                //                                NavigationLink(destination: RouteSheet(
-                                //                                    mapViewModel: viewModel,
-                                //                                    viewModel: RouteSheetViewModel(routeName: item.name ?? "", location: viewModel.location),
-                                //                                    push: $push,
-                                //                                    location: $viewModel.location,
-                                //                                    title: viewModel.clickedRouteName,
-                                //                                    stops: $viewModel.sortedStopsForRouteName)
-                                //                                ){
-                                //                                    HStack {
-                                //                                        Text(item.name ?? "")
-                                //
-                                //                                        Spacer()
-                                //                                        Image(systemName: "heart.fill")
-                                //                                    }
-                                //                                }
-                                Button(
-                                    action: {
-                                        print("click")
-                                        selectedTab = 0
-                                    },
-                                    label: {
-                                        HStack {
-                                            Text(item.name ?? "")
-                                            Spacer()
-                                            Image(systemName: "heart.fill")
-                                        }
-                                    })
-                            }.onDelete { indexSet in
-                                favStationsViewModel.deleteRemoteData(
-                                    indexSet: indexSet)
-                            }
-                        }
-                        .onAppear {
+                    }
+                    .onAppear {
+                        if authManager.isLogin {
                             Task {
                                 await favStationsViewModel.getRemoteData(
                                     email: authManager.email)
                             }
+                        } else {
+                            favStationsViewModel.readLocalData()
                         }
                     }
-
                 }
             }
         })
@@ -117,5 +84,5 @@ struct FavStationsView: View {
 }
 
 #Preview {
-    
+
 }

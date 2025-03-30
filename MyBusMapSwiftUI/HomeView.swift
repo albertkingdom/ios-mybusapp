@@ -11,9 +11,18 @@ import CoreLocation
 struct HomeView: View {
     @EnvironmentObject var locationManager: LocationManager
     @EnvironmentObject var firebaseManager: FirebaseManager
+    @EnvironmentObject var authManager: AuthManager
+
     @StateObject var mapViewModel = MapViewModel()
-    var favStationsViewModel = FavStationsViewModel(firebaseService: FirebaseManager(), realmManager: RealmManager())
+
+    var favStationsViewModel = FavStationsViewModel(
+        firebaseService: FirebaseManager(),
+        realmManager: RealmManager(),
+        authManager: AuthManager()
+    )
+    
     @State private var selectedTab = 0
+    
     var body: some View {
       
         TabView(selection: $selectedTab) {

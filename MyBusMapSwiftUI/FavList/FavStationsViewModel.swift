@@ -11,9 +11,27 @@ import FirebaseFirestoreSwift
 import Foundation
 import RealmSwift
 
+struct FavoriteDisplayItem: Identifiable {
+    let id = UUID()
+    let name: String
+    let isRemote: Bool
+}
+
 class FavStationsViewModel: ObservableObject {
     @Published var realmFavList: [FavoriteRealm]
     @Published var favoriteList: [Favorite] = []
+    var displayList: [FavoriteDisplayItem] {
+        if authManager.isLogin {
+            return favoriteList.map {
+                FavoriteDisplayItem(name: $0.name ?? "", isRemote: true)
+            }
+        } else {
+            return realmFavList.map {
+                FavoriteDisplayItem(name: $0.name, isRemote: false)
+            }
+        }
+    }
+
     var remoteFavoriteRouteNames: [String] {
         return favoriteList.compactMap({
             $0.name
@@ -21,13 +39,16 @@ class FavStationsViewModel: ObservableObject {
     }
     let firebaseService: FirebaseManagerProtocol
     let realmManager: RealmManagerProtocol
+    let authManager: AuthManager
     init(
         firebaseService: FirebaseManagerProtocol,
-        realmManager: RealmManagerProtocol
+        realmManager: RealmManagerProtocol,
+        authManager: AuthManager
     ) {
         self.firebaseService = firebaseService
         self.realmManager = realmManager
         self.realmFavList = Array(realmManager.readAllFromDB())
+        self.authManager = authManager
     }
 
     func getRemoteData(email: String) async {
@@ -37,7 +58,7 @@ class FavStationsViewModel: ObservableObject {
         self.favoriteList = favorites
 
     }
-    
+
     func deleteRemoteData(indexSet: IndexSet) {
         if let index = indexSet.first {
             let favorite = favoriteList[index]
@@ -45,7 +66,7 @@ class FavStationsViewModel: ObservableObject {
             favoriteList.remove(at: index)
         }
     }
-    
+
     func deleteLocalData(indexSet: IndexSet) {
         if let index = indexSet.first {
             let favorite = realmFavList[index]
@@ -53,7 +74,7 @@ class FavStationsViewModel: ObservableObject {
             readLocalData()
         }
     }
-    
+
     func readLocalData() {
         self.realmFavList = Array(realmManager.readAllFromDB())
     }
