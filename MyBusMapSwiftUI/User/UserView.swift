@@ -5,6 +5,7 @@
 //  Created by 林煜凱 on 8/11/22.
 //
 
+import ComposableArchitecture
 import FirebaseAuth
 import FirebaseCore
 import GoogleSignIn
@@ -12,11 +13,72 @@ import GoogleSignInSwift
 import Kingfisher
 import SwiftUI
 
+@Reducer
+struct UserFeature: Reducer {
+    @ObservableState
+    struct State {
+        var isAuthenticated: Bool = false
+        var userEmail: String? = nil
+        var imageUrl: URL? = nil
+        var error: String? = nil
+    }
+
+    enum Action {
+        case checkAuthStatus
+        case signInWithGoogle
+        case signInResponse(AuthResult)
+        case signOut
+        case signOutResponse
+    }
+
+    @Dependency(\.authClient) var authClient
+
+    var body: some ReducerOf<Self> {
+        Reduce { state, action in
+            switch action {
+            case .checkAuthStatus:
+                state.isAuthenticated = authClient.checkAuthStatus() != nil
+
+                return Effect<Action>.none
+
+            case .signInWithGoogle:
+                return .run { send in
+                    let authResult = try await authClient.signIn()
+                    await send(
+                        .signInResponse(
+                            authResult
+                        )
+                    )
+                }
+            case .signInResponse(let result):
+                state.userEmail = result.userEmail
+                state.imageUrl = result.imageUrl
+                state.isAuthenticated = true
+                return .none
+
+            case .signOut:
+                return .run { send in
+                    try await authClient.signOut()
+                    await send(.signOutResponse)
+                }
+            case .signOutResponse:
+                state.isAuthenticated = false
+                state.userEmail = nil
+                state.imageUrl = nil
+                return .none
+
+            }
+        }
+    }
+
+}
+
 struct UserView: View {
-    @StateObject var userViewModel = UserViewModel(authManager: AuthManager())
+    let store: StoreOf<UserFeature>
+
     var body: some View {
         VStack {
-            if userViewModel.imageUrl == nil {
+            if store.imageUrl == nil {
                 Image(systemName: "person.fill")
                     .resizable()
                     //.border(.black, width: 1)
@@ -28,7 +90,7 @@ struct UserView: View {
                     }
 
             } else {
-                KFImage(userViewModel.imageUrl)
+                KFImage(store.imageUrl)
                     .resizable()
                     //.border(.black, width: 1)
                     .frame(width: 100, height: 100, alignment: .center)
@@ -39,11 +101,11 @@ struct UserView: View {
                     }
 
             }
-            Text(userViewModel.userEmail)
-            if !userViewModel.isLogin {
+            Text(store.userEmail ?? "")
+            if !store.isAuthenticated {
                 GoogleSignInButton(action: {
                     Task {
-                        try? await userViewModel.siginIn()
+                        store.send(.signInWithGoogle)
                     }
                 })
                 .frame(height: 50, alignment: .center)
@@ -51,9 +113,9 @@ struct UserView: View {
             }
             Spacer()
 
-            if userViewModel.isLogin {
+            if store.isAuthenticated {
                 Button {
-                    userViewModel.signOut()
+                    store.send(.signOut)
                 } label: {
                     Text("登出".uppercased())
                         .foregroundColor(Color.black)
@@ -65,7 +127,7 @@ struct UserView: View {
         }
         .padding([.top], 50)
         .onAppear {
-            userViewModel.checkIfSignIn()
+            store.send(.checkAuthStatus)
         }
     }
 
@@ -73,6 +135,12 @@ struct UserView: View {
 
 struct UserView_Previews: PreviewProvider {
     static var previews: some View {
-        UserView()
+        UserView(
+            store: Store(
+                initialState: UserFeature.State()
+            ) {
+                UserFeature()
+            }
+        )
     }
 }

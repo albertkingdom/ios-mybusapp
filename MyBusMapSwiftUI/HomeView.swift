@@ -4,11 +4,16 @@
 //
 //  Created by 林煜凱 on 7/31/22.
 //
-
-import SwiftUI
+import ComposableArchitecture
 import CoreLocation
+import SwiftUI
 
 struct HomeView: View {
+    let userStore = Store(
+        initialState: UserFeature.State()
+    ) {
+        UserFeature()
+    }
     @EnvironmentObject var locationManager: LocationManager
     @EnvironmentObject var firebaseManager: FirebaseManager
     @EnvironmentObject var authManager: AuthManager
@@ -24,7 +29,7 @@ struct HomeView: View {
     @State private var selectedTab = 0
     
     var body: some View {
-      
+
         TabView(selection: $selectedTab) {
             ContentView(viewModel: mapViewModel)
                     .tabItem {
@@ -42,10 +47,14 @@ struct HomeView: View {
                     Text("我")
                 }.tag(2)
         }
-        .onReceive(locationManager.$location,
-                   perform: { newLocation in
-            Task {
-                await mapViewModel.fetchNearByStations(location: newLocation ?? CLLocation(latitude: 0, longitude: 0))
+        .onReceive(
+            locationManager.$location,
+            perform: { newLocation in
+                Task {
+                    await mapViewModel.fetchNearByStations(
+                        location: newLocation
+                            ?? CLLocation(latitude: 0, longitude: 0))
+                }
             }
         })
         .onAppear {

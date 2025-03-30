@@ -17,6 +17,8 @@
 		A112952528911A9C0093D936 /* NearByStationSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = A112952428911A9C0093D936 /* NearByStationSheet.swift */; };
 		A11295282891834C0093D936 /* ArrivalTimeSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = A11295272891834C0093D936 /* ArrivalTimeSheet.swift */; };
 		A112952A28918E4E0093D936 /* ArrivalTime.swift in Sources */ = {isa = PBXBuildFile; fileRef = A112952928918E4E0093D936 /* ArrivalTime.swift */; };
+		A11D02382D97EF7300A041A7 /* ComposableArchitecture in Frameworks */ = {isa = PBXBuildFile; productRef = A11D02372D97EF7300A041A7 /* ComposableArchitecture */; };
+		A11D023A2D97EFB200A041A7 /* AuthClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = A11D02392D97EFB200A041A7 /* AuthClient.swift */; };
 		A1202167288FA00400C8746A /* MyBusMapSwiftUIApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1202166288FA00400C8746A /* MyBusMapSwiftUIApp.swift */; };
 		A1202169288FA00400C8746A /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1202168288FA00400C8746A /* ContentView.swift */; };
 		A120216B288FA00800C8746A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A120216A288FA00800C8746A /* Assets.xcassets */; };
@@ -122,6 +124,7 @@
 		A112952428911A9C0093D936 /* NearByStationSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NearByStationSheet.swift; sourceTree = "<group>"; };
 		A11295272891834C0093D936 /* ArrivalTimeSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArrivalTimeSheet.swift; sourceTree = "<group>"; };
 		A112952928918E4E0093D936 /* ArrivalTime.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArrivalTime.swift; sourceTree = "<group>"; };
+		A11D02392D97EFB200A041A7 /* AuthClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthClient.swift; sourceTree = "<group>"; };
 		A1202163288FA00400C8746A /* MyBusMapSwiftUI.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MyBusMapSwiftUI.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A1202166288FA00400C8746A /* MyBusMapSwiftUIApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyBusMapSwiftUIApp.swift; sourceTree = "<group>"; };
 		A1202168288FA00400C8746A /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -216,6 +219,7 @@
 				A1E172432BEA6B6100ED5916 /* GoogleMapsBase in Frameworks */,
 				DF03DAF929AF4DDF00FD4377 /* RealmSwift in Frameworks */,
 				DF03DAF229AF229500FD4377 /* Kingfisher in Frameworks */,
+				A11D02382D97EF7300A041A7 /* ComposableArchitecture in Frameworks */,
 				A1F168462BDFF1250080F57E /* FirebaseFirestore in Frameworks */,
 				DF03DAB529AF0C9500FD4377 /* CoreText.framework in Frameworks */,
 				DF03DAB629AF0C9500FD4377 /* CoreData.framework in Frameworks */,
@@ -336,6 +340,7 @@
 		A162B8D028A61C3200FF82FE /* Util */ = {
 			isa = PBXGroup;
 			children = (
+				A11D02392D97EFB200A041A7 /* AuthClient.swift */,
 				A162B8D128A61CA200FF82FE /* FirebaseManager.swift */,
 				A162B8D328A63C4E00FF82FE /* UserDefaultManager.swift */,
 				A17DDF0C28B336C400D04296 /* RealmManager.swift */,
@@ -486,6 +491,7 @@
 				A1E172472BEA6BDD00ED5916 /* GooglePlaces */,
 				A1296EB02E9370C200B93B80 /* Alamofire */,
 				A1296EB52E93719500B93B80 /* KeychainAccess */,
+				A11D02372D97EF7300A041A7 /* ComposableArchitecture */,
 			);
 			productName = MyBusMapSwiftUI;
 			productReference = A1202163288FA00400C8746A /* MyBusMapSwiftUI.app */;
@@ -579,6 +585,7 @@
 				A1E172462BEA6BDD00ED5916 /* XCRemoteSwiftPackageReference "ios-places-sdk" */,
 				A1296EAF2E9370C200B93B80 /* XCRemoteSwiftPackageReference "Alamofire" */,
 				A1296EB42E93719500B93B80 /* XCRemoteSwiftPackageReference "KeychainAccess" */,
+				A11D02362D97EF7300A041A7 /* XCRemoteSwiftPackageReference "swift-composable-architecture" */,
 			);
 			productRefGroup = A1202164288FA00400C8746A /* Products */;
 			projectDirPath = "";
@@ -646,6 +653,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				A178B1442CC36087000DB801 /* AuthManager.swift in Sources */,
+				A11D023A2D97EFB200A041A7 /* AuthClient.swift in Sources */,
 				A176B2952CD7AFE3002954BB /* UserViewModel.swift in Sources */,
 				A162B8D428A63C4F00FF82FE /* UserDefaultManager.swift in Sources */,
 				A1F037282C02F2D000141F16 /* URLSession+.swift in Sources */,
@@ -1097,6 +1105,14 @@
 				kind = branch;
 			};
 		};
+		A11D02362D97EF7300A041A7 /* XCRemoteSwiftPackageReference "swift-composable-architecture" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/pointfreeco/swift-composable-architecture";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.18.0;
+			};
+		};
 		A1E1723F2BEA6B6100ED5916 /* XCRemoteSwiftPackageReference "ios-maps-sdk" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/googlemaps/ios-maps-sdk";
@@ -1157,6 +1173,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = A1296EB42E93719500B93B80 /* XCRemoteSwiftPackageReference "KeychainAccess" */;
 			productName = KeychainAccess;
+		};
+		A11D02372D97EF7300A041A7 /* ComposableArchitecture */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = A11D02362D97EF7300A041A7 /* XCRemoteSwiftPackageReference "swift-composable-architecture" */;
+			productName = ComposableArchitecture;
 		};
 		A1E172402BEA6B6100ED5916 /* GoogleMaps */ = {
 			isa = XCSwiftPackageProductDependency;
