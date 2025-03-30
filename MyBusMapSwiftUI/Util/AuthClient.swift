@@ -7,7 +7,7 @@ import GoogleSignIn
 struct AuthClient {
     var signIn: () async throws -> AuthResult
     var signOut: () async throws -> Void
-    var checkAuthStatus: () -> FirebaseAuth.User?
+    var checkAuthStatus: () -> Bool
 }
 
 extension AuthClient: DependencyKey {
@@ -65,7 +65,7 @@ extension AuthClient: DependencyKey {
             GIDSignIn.sharedInstance.signOut()
         },
         checkAuthStatus: {
-            return Auth.auth().currentUser
+            return Auth.auth().currentUser != nil
         }
     )
 }

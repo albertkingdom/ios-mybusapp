@@ -16,11 +16,18 @@ import SwiftUI
 @Reducer
 struct UserFeature: Reducer {
     @ObservableState
-    struct State {
+    struct State: Equatable {
         var isAuthenticated: Bool = false
-        var userEmail: String? = nil
-        var imageUrl: URL? = nil
-        var error: String? = nil
+        var userEmail: String?
+        var imageUrl: URL?
+        var error: String?
+        // 明確實現 Equatable
+        static func == (lhs: Self, rhs: Self) -> Bool {
+            lhs.isAuthenticated == rhs.isAuthenticated
+                && lhs.userEmail == rhs.userEmail
+                && lhs.imageUrl?.absoluteString == rhs.imageUrl?.absoluteString
+                && lhs.error == rhs.error
+        }
     }
 
     enum Action {

@@ -19,6 +19,7 @@
 		A112952A28918E4E0093D936 /* ArrivalTime.swift in Sources */ = {isa = PBXBuildFile; fileRef = A112952928918E4E0093D936 /* ArrivalTime.swift */; };
 		A11D02382D97EF7300A041A7 /* ComposableArchitecture in Frameworks */ = {isa = PBXBuildFile; productRef = A11D02372D97EF7300A041A7 /* ComposableArchitecture */; };
 		A11D023A2D97EFB200A041A7 /* AuthClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = A11D02392D97EFB200A041A7 /* AuthClient.swift */; };
+		A11D023C2D98437800A041A7 /* UserFeatureTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A11D023B2D98437800A041A7 /* UserFeatureTests.swift */; };
 		A1202167288FA00400C8746A /* MyBusMapSwiftUIApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1202166288FA00400C8746A /* MyBusMapSwiftUIApp.swift */; };
 		A1202169288FA00400C8746A /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1202168288FA00400C8746A /* ContentView.swift */; };
 		A120216B288FA00800C8746A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A120216A288FA00800C8746A /* Assets.xcassets */; };
@@ -125,6 +126,7 @@
 		A11295272891834C0093D936 /* ArrivalTimeSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArrivalTimeSheet.swift; sourceTree = "<group>"; };
 		A112952928918E4E0093D936 /* ArrivalTime.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArrivalTime.swift; sourceTree = "<group>"; };
 		A11D02392D97EFB200A041A7 /* AuthClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthClient.swift; sourceTree = "<group>"; };
+		A11D023B2D98437800A041A7 /* UserFeatureTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserFeatureTests.swift; sourceTree = "<group>"; };
 		A1202163288FA00400C8746A /* MyBusMapSwiftUI.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MyBusMapSwiftUI.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A1202166288FA00400C8746A /* MyBusMapSwiftUIApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyBusMapSwiftUIApp.swift; sourceTree = "<group>"; };
 		A1202168288FA00400C8746A /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -360,6 +362,14 @@
 			path = ViewModel;
 			sourceTree = "<group>";
 		};
+		A1A541F22D9921E000DE211B /* User */ = {
+			isa = PBXGroup;
+			children = (
+				A11D023B2D98437800A041A7 /* UserFeatureTests.swift */,
+			);
+			path = User;
+			sourceTree = "<group>";
+		};
 		A1D56B052D97AE790041C438 /* User */ = {
 			isa = PBXGroup;
 			children = (
@@ -419,6 +429,7 @@
 		A1F22EE52C426E2C003DF7EE /* MyBusMapTests */ = {
 			isa = PBXGroup;
 			children = (
+				A1A541F22D9921E000DE211B /* User */,
 				A176B28F2CD67D19002954BB /* FavStationsViewModelTest.swift */,
 				A1F22EE62C426E2C003DF7EE /* TokenManagerTests.swift */,
 				A176B2922CD7AE2D002954BB /* UserViewModelTest.swift */,
@@ -706,6 +717,7 @@
 				A1F22EE72C426E2C003DF7EE /* TokenManagerTests.swift in Sources */,
 				A176B2932CD7AE2D002954BB /* UserViewModelTest.swift in Sources */,
 				A176B2912CD67D19002954BB /* FavStationsViewModelTest.swift in Sources */,
+				A11D023C2D98437800A041A7 /* UserFeatureTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
