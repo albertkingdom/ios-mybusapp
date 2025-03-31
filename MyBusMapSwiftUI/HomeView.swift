@@ -14,6 +14,9 @@ struct HomeView: View {
     ) {
         UserFeature()
     }
+    let favoriteStore = Store(initialState: FavStations.State()) {
+        FavStations()
+    }
     @EnvironmentObject var locationManager: LocationManager
     @EnvironmentObject var firebaseManager: FirebaseManager
     @EnvironmentObject var authManager: AuthManager
@@ -22,7 +25,7 @@ struct HomeView: View {
 
     var favStationsViewModel = FavStationsViewModel(
         firebaseService: FirebaseManager(),
-        realmManager: RealmManager(),
+        realmManager: RealmManager.shared,
         authManager: AuthManager()
     )
     

@@ -26,6 +26,8 @@
 		A120216E288FA00800C8746A /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A120216D288FA00800C8746A /* Preview Assets.xcassets */; };
 		A1296EB12E9370C200B93B80 /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = A1296EB02E9370C200B93B80 /* Alamofire */; };
 		A1296EB62E93719500B93B80 /* KeychainAccess in Frameworks */ = {isa = PBXBuildFile; productRef = A1296EB52E93719500B93B80 /* KeychainAccess */; };
+		A1379C532D998634003B59E4 /* FirebaseClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1379C522D998634003B59E4 /* FirebaseClient.swift */; };
+		A1379C552D998804003B59E4 /* RealmClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1379C542D998804003B59E4 /* RealmClient.swift */; };
 		A15E1E642CC53BB400F2F7EF /* CurrentLocationButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = A15E1E632CC53BB400F2F7EF /* CurrentLocationButton.swift */; };
 		A162B8CD28A4FB6A00FF82FE /* GoogleSignInButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = A162B8CC28A4FB6A00FF82FE /* GoogleSignInButton.swift */; };
 		A162B8CF28A550CC00FF82FE /* Favorite.swift in Sources */ = {isa = PBXBuildFile; fileRef = A162B8CE28A550CC00FF82FE /* Favorite.swift */; };
@@ -132,6 +134,8 @@
 		A1202168288FA00400C8746A /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		A120216A288FA00800C8746A /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		A120216D288FA00800C8746A /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		A1379C522D998634003B59E4 /* FirebaseClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseClient.swift; sourceTree = "<group>"; };
+		A1379C542D998804003B59E4 /* RealmClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealmClient.swift; sourceTree = "<group>"; };
 		A15E1E632CC53BB400F2F7EF /* CurrentLocationButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrentLocationButton.swift; sourceTree = "<group>"; };
 		A162B8CC28A4FB6A00FF82FE /* GoogleSignInButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoogleSignInButton.swift; sourceTree = "<group>"; };
 		A162B8CE28A550CC00FF82FE /* Favorite.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Favorite.swift; sourceTree = "<group>"; };
@@ -342,9 +346,11 @@
 		A162B8D028A61C3200FF82FE /* Util */ = {
 			isa = PBXGroup;
 			children = (
+				A1379C522D998634003B59E4 /* FirebaseClient.swift */,
 				A11D02392D97EFB200A041A7 /* AuthClient.swift */,
 				A162B8D128A61CA200FF82FE /* FirebaseManager.swift */,
 				A162B8D328A63C4E00FF82FE /* UserDefaultManager.swift */,
+				A1379C542D998804003B59E4 /* RealmClient.swift */,
 				A17DDF0C28B336C400D04296 /* RealmManager.swift */,
 				A112951B289033A80093D936 /* NetworkManager.swift */,
 				A1F22EDB2C424688003DF7EE /* TokenManager.swift */,
@@ -683,6 +689,7 @@
 				A112952528911A9C0093D936 /* NearByStationSheet.swift in Sources */,
 				A1BDB5682CC3F86F0077D3E0 /* View+Extension.swift in Sources */,
 				A1BDB5652CC3EEDE0077D3E0 /* BottomSheetView.swift in Sources */,
+				A1379C552D998804003B59E4 /* RealmClient.swift in Sources */,
 				A162B8CD28A4FB6A00FF82FE /* GoogleSignInButton.swift in Sources */,
 				A1955AC02D6A2E7A0090F44C /* SearchAndLocationBar.swift in Sources */,
 				A1821A2A2893A4A8003CB0EB /* TimeListView.swift in Sources */,
@@ -694,6 +701,7 @@
 				A1DA52362898E1D0006CB3D4 /* ArrivalTimeSheetViewModel.swift in Sources */,
 				A11295282891834C0093D936 /* ArrivalTimeSheet.swift in Sources */,
 				A11295232890E8FE0093D936 /* NearByStation.swift in Sources */,
+				A1379C532D998634003B59E4 /* FirebaseClient.swift in Sources */,
 				A1821A462893D2BB003CB0EB /* StopOfRoute.swift in Sources */,
 				A112951C289033A80093D936 /* NetworkManager.swift in Sources */,
 				A1F468372EC076E600A7AAE1 /* ToastView.swift in Sources */,

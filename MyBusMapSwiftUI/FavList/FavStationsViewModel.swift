@@ -11,10 +11,11 @@ import FirebaseFirestoreSwift
 import Foundation
 import RealmSwift
 
-struct FavoriteDisplayItem: Identifiable {
+struct FavoriteDisplayItem: Identifiable, Equatable {
     let id = UUID()
     let name: String
     let isRemote: Bool
+    
 }
 
 class FavStationsViewModel: ObservableObject {
