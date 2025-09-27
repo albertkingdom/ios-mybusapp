@@ -34,6 +34,7 @@ struct UserFeature: Reducer {
         case checkAuthStatus
         case signInWithGoogle
         case signInResponse(AuthResult)
+        case signInError(String)
         case signOut
         case signOutResponse
     }
@@ -44,23 +45,32 @@ struct UserFeature: Reducer {
         Reduce { state, action in
             switch action {
             case .checkAuthStatus:
-                state.isAuthenticated = authClient.checkAuthStatus() != nil
-
+                state.isAuthenticated = authClient.checkAuthStatus()
+                if state.isAuthenticated {
+                    state.userEmail = Auth.auth().currentUser?.email
+                    state.imageUrl = Auth.auth().currentUser?.photoURL
+                }
+                state.error = nil
                 return Effect<Action>.none
 
             case .signInWithGoogle:
                 return .run { send in
-                    let authResult = try await authClient.signIn()
-                    await send(
-                        .signInResponse(
-                            authResult
-                        )
-                    )
+                    do {
+                        let authResult = try await authClient.signIn()
+                        await send(.signInResponse(authResult))
+                    } catch {
+                        await send(.signInError(error.localizedDescription))
+                    }
                 }
             case .signInResponse(let result):
                 state.userEmail = result.userEmail
                 state.imageUrl = result.imageUrl
                 state.isAuthenticated = true
+                state.error = nil
+                return .none
+
+            case .signInError(let errorMessage):
+                state.error = errorMessage
                 return .none
 
             case .signOut:
@@ -109,6 +119,11 @@ struct UserView: View {
 
             }
             Text(store.userEmail ?? "")
+            if let error = store.error {
+                Text(error)
+                    .foregroundColor(.red)
+                    .font(.caption)
+            }
             if !store.isAuthenticated {
                 GoogleSignInButton(action: {
                     Task {
