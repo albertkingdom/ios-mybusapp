@@ -103,70 +103,72 @@ struct FavStationsView: View {
     @Binding var selectedTab: Int
 
     var body: some View {
-        NavigationView(
-            content: {
-
-                ZStack {
-                    VStack {
-                        Text("路線收藏")
-                            .font(Font.headline)
-                            .padding()
-
-                        List {
-                            ForEach(store.displayList) { item in
-                                //                                NavigationLink(destination: RouteSheet(
-                                //                                    mapViewModel: viewModel,
-                                //                                    viewModel: RouteSheetViewModel(routeName: item.name, location: viewModel.location),
-                                //                                    push: $push,
-                                //                                    location: $viewModel.location,
-                                //                                    title: viewModel.clickedRouteName,
-                                //                                    stops: $viewModel.sortedStopsForRouteName)
-                                //                                 ){
-                                //                                    HStack {
-                                //                                        Text(item.name)
-                                //                                        Spacer()
-                                //                                        Image(systemName: "heart.fill")
-                                //                                    }
-                                //                                }
-                                Button(
-                                    action: {
-                                        print("click")
-                                        selectedTab = 0
-                                    },
-                                    label: {
-                                        HStack {
-                                            Text(item.name)
-                                            Spacer()
-                                            Image(systemName: "heart.fill")
+            
+            NavigationView(
+                content: {
+                    
+                    ZStack {
+                        VStack {
+                            Text("路線收藏")
+                                .font(Font.headline)
+                                .padding()
+                            
+                            List {
+                                ForEach(store.displayList) { item in
+                                    //                                NavigationLink(destination: RouteSheet(
+                                    //                                    mapViewModel: viewModel,
+                                    //                                    viewModel: RouteSheetViewModel(routeName: item.name, location: viewModel.location),
+                                    //                                    push: $push,
+                                    //                                    location: $viewModel.location,
+                                    //                                    title: viewModel.clickedRouteName,
+                                    //                                    stops: $viewModel.sortedStopsForRouteName)
+                                    //                                 ){
+                                    //                                    HStack {
+                                    //                                        Text(item.name)
+                                    //                                        Spacer()
+                                    //                                        Image(systemName: "heart.fill")
+                                    //                                    }
+                                    //                                }
+                                    Button(
+                                        action: {
+                                            print("click")
+                                            selectedTab = 0
+                                        },
+                                        label: {
+                                            HStack {
+                                                Text(item.name)
+                                                Spacer()
+                                                Image(systemName: "heart.fill")
+                                            }
                                         }
-                                    }
-                                )
-
-                            }
-                            .onDelete { indexSet in
-                                if authManager.isLogin {
-                                    store.send(
-                                        .deleteRemoteData(indexSet: indexSet))
-                                } else {
-                                    store.send(
-                                        .deleteLocalData(indexSet: indexSet))
+                                    )
+                                    
                                 }
+                                .onDelete { indexSet in
+                                    if authManager.isLogin {
+                                        store.send(
+                                            .deleteRemoteData(indexSet: indexSet))
+                                    } else {
+                                        store.send(
+                                            .deleteLocalData(indexSet: indexSet))
+                                    }
+                                }
+                                
                             }
-
-                        }
-                        .onAppear {
-                            if authManager.isLogin {
-
-                                store.send(
-                                    .getRemoteData(email: authManager.email))
-                            } else {
-                                store.send(.readLocalData)
+                            .onAppear {
+                                if authManager.isLogin {
+                                    
+                                    store.send(
+                                        .getRemoteData(email: authManager.email))
+                                } else {
+                                    store.send(.readLocalData)
+                                }
                             }
                         }
                     }
-                }
-            })
-    }
+                })
+        }
+    
 }
 
 #Preview {

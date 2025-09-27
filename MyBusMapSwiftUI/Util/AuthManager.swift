@@ -17,7 +17,7 @@ struct UserSession {
 
 struct AuthResult {
     let userEmail: String
-    let imageUrl: URL
+    let imageUrl: URL?
 }
 protocol AuthManagerProtocol {
     var isLogin: Bool { get }

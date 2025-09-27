@@ -8,6 +8,7 @@ struct AuthClient {
     var signIn: () async throws -> AuthResult
     var signOut: () async throws -> Void
     var checkAuthStatus: () -> Bool
+    var getCurrentUser: () -> AuthResult?
 }
 
 extension AuthClient: DependencyKey {
@@ -66,6 +67,10 @@ extension AuthClient: DependencyKey {
         },
         checkAuthStatus: {
             return Auth.auth().currentUser != nil
+        },
+        getCurrentUser: {
+            guard let user = Auth.auth().currentUser else { return nil }
+            return AuthResult(userEmail: user.email ?? "", imageUrl: user.photoURL )
         }
     )
 }
