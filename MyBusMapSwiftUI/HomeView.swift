@@ -22,12 +22,6 @@ struct HomeView: View {
     @EnvironmentObject var authManager: AuthManager
 
     @StateObject var mapViewModel = MapViewModel()
-
-    var favStationsViewModel = FavStationsViewModel(
-        firebaseService: FirebaseManager(),
-        realmManager: RealmManager.shared,
-        authManager: AuthManager()
-    )
     
     @State private var selectedTab = 0
     
