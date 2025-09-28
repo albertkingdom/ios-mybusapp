@@ -6,6 +6,7 @@
 //
 
 import ComposableArchitecture
+import Perception
 import RealmSwift
 import SwiftUI
 
@@ -20,6 +21,7 @@ struct FavStations {
     }
 
     enum Action {
+        case onAppear
         case deleteRemoteData(indexSet: IndexSet)
         case deleteLocalData(indexSet: IndexSet)
         case getRemoteData(email: String)
@@ -35,6 +37,20 @@ struct FavStations {
     var body: some ReducerOf<Self> {
         Reduce { state, action in
             switch action {
+            case .onAppear:
+                state.isLoggedIn = authClient.checkAuthStatus()
+                if state.isLoggedIn, let currentUser = authClient.getCurrentUser() {
+                    return .run { send in
+                        let favorites = await firebaseClient.getRemoteData(currentUser.userEmail)
+                        await send(.setFavoriteList(favoriteList: favorites))
+                    }
+                } else {
+                    return .run { send in
+                        let favorites = await realmClient.readAllFromDB()
+                        await send(.setRealmFavList(realmFavList: favorites))
+                    }
+                }
+
             case .deleteRemoteData(let indexSet):
                 guard let index = indexSet.first else { return .none }
                 let favorite = state.favoriteList[index]
@@ -95,79 +111,49 @@ struct FavStations {
 
 struct FavStationsView: View {
     let store: StoreOf<FavStations>
-    @EnvironmentObject var authManager: AuthManager
-    //    @EnvironmentObject var firebaseManager: FirebaseManager
-    //    @StateObject var favStationsViewModel: FavStationsViewModel
-    @State var push: Bool = false
-    @State var showAlert: Bool = false
     @Binding var selectedTab: Int
 
     var body: some View {
-            
-            NavigationView(
-                content: {
-                    
-                    ZStack {
-                        VStack {
-                            Text("路線收藏")
-                                .font(Font.headline)
-                                .padding()
-                            
-                            List {
-                                ForEach(store.displayList) { item in
-                                    //                                NavigationLink(destination: RouteSheet(
-                                    //                                    mapViewModel: viewModel,
-                                    //                                    viewModel: RouteSheetViewModel(routeName: item.name, location: viewModel.location),
-                                    //                                    push: $push,
-                                    //                                    location: $viewModel.location,
-                                    //                                    title: viewModel.clickedRouteName,
-                                    //                                    stops: $viewModel.sortedStopsForRouteName)
-                                    //                                 ){
-                                    //                                    HStack {
-                                    //                                        Text(item.name)
-                                    //                                        Spacer()
-                                    //                                        Image(systemName: "heart.fill")
-                                    //                                    }
-                                    //                                }
-                                    Button(
-                                        action: {
-                                            print("click")
-                                            selectedTab = 0
-                                        },
-                                        label: {
-                                            HStack {
-                                                Text(item.name)
-                                                Spacer()
-                                                Image(systemName: "heart.fill")
-                                            }
+        WithPerceptionTracking {
+            NavigationView {
+                ZStack {
+                    VStack {
+                        Text("路線收藏")
+                            .font(.headline)
+                            .padding()
+
+                        List {
+                            ForEach(store.displayList) { item in
+                                Button(
+                                    action: {
+                                        print("click")
+                                        selectedTab = 0
+                                    },
+                                    label: {
+                                        HStack {
+                                            Text(item.name)
+                                            Spacer()
+                                            Image(systemName: "heart.fill")
                                         }
-                                    )
-                                    
-                                }
-                                .onDelete { indexSet in
-                                    if authManager.isLogin {
-                                        store.send(
-                                            .deleteRemoteData(indexSet: indexSet))
-                                    } else {
-                                        store.send(
-                                            .deleteLocalData(indexSet: indexSet))
                                     }
-                                }
-                                
+                                )
                             }
-                            .onAppear {
-                                if authManager.isLogin {
-                                    
-                                    store.send(
-                                        .getRemoteData(email: authManager.email))
+                            .onDelete { indexSet in
+                                if store.isLoggedIn {
+                                    store.send(.deleteRemoteData(indexSet: indexSet))
                                 } else {
-                                    store.send(.readLocalData)
+                                    store.send(.deleteLocalData(indexSet: indexSet))
                                 }
                             }
                         }
+                        .onAppear {
+                            store.send(.onAppear)
+                        }
                     }
-                })
+                }
+            }
         }
+    }
     
 }
 
