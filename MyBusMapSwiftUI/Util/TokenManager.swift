@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import KeychainAccess
 
 class TokenManager {
     private var currentToken: String?
@@ -14,7 +15,12 @@ class TokenManager {
     private let session: URLSessionProtocol
     private let TOKEN_URL: String
     
-    init(clientID: String?, 
+    // Use bundle identifier for service name to ensure uniqueness.
+    // Please verify this matches your project's bundle identifier.
+    private let keychain = Keychain(service: "com.example.MyBusMapSwiftUI")
+    private let tokenKey = "authToken"
+
+    init(clientID: String?,
          clientKey: String?,
          session: URLSessionProtocol = URLSession(configuration: .default)
     ) {
@@ -24,6 +30,7 @@ class TokenManager {
         self.TOKEN_URL = "https://tdx.transportdata.tw/auth/realms/TDXConnect/protocol/openid-connect/token"
         self.currentToken = retrieveTokenFromKeychain()
     }
+    
     func saveTokenExpiration(expiresIn: Int) {
         let expirationDate = Date().addingTimeInterval(TimeInterval(expiresIn)) // 當前時間加上 expires_in 秒
         UserDefaults.standard.set(expirationDate, forKey: "tokenExpirationDate")
@@ -48,67 +55,31 @@ class TokenManager {
     
     internal func saveTokenToKeychain(token: String) {
         do {
-            let tokenData = try JSONEncoder().encode(token)
-            
-            let query: [String: Any] = [
-                kSecClass as String: kSecClassGenericPassword,
-                kSecAttrAccount as String: "authToken",
-                kSecValueData as String: tokenData
-            ]
-            
-            // Delete any existing items
-            SecItemDelete(query as CFDictionary)
-            
-            // Add the new token
-            let status = SecItemAdd(query as CFDictionary, nil)
-            if status != errSecSuccess {
-                print("Error saving token: \(status)")
-            }
-            print("success save token \(token)")
+            try keychain.set(token, key: tokenKey)
+            print("success save token")
         } catch {
-            print("\(error)")
+            print("Error saving token to keychain: \(error)")
         }
-        
     }
+    
     internal func retrieveTokenFromKeychain() -> String? {
-        let query: [String: Any] = [
-            kSecClass as String: kSecClassGenericPassword,
-            kSecAttrAccount as String: "authToken",
-            kSecReturnData as String: true,
-            kSecMatchLimit as String: kSecMatchLimitOne
-        ]
-        
-        var item: CFTypeRef?
-        let status = SecItemCopyMatching(query as CFDictionary, &item)
-        guard status == errSecSuccess else {
-            
-            if status == errSecItemNotFound {
-                print("Token not found in Keychain")
-            } else {
-                print("Error retrieving token: \(status)")
-            }
+        do {
+            let token = try keychain.get(tokenKey)
+            return token
+        } catch {
+            print("Error retrieving token from keychain: \(error)")
             return nil
         }
-        
-        
-        guard let tokenData = item as? Data,
-              let token = try? JSONDecoder().decode(String.self, from: tokenData) else {
-            return nil
-        }
-        
-        return token
     }
     
     func deleteTokenFromKeychain() throws {
-        let query: [String: Any] = [
-            kSecClass as String: kSecClassGenericPassword,
-            kSecAttrAccount as String: "authToken"
-        ]
-        let status = SecItemDelete(query as CFDictionary)
-        guard status == errSecSuccess || status == errSecItemNotFound else {
-            throw KeychainError.unhandledError(status: status)
+        do {
+            try keychain.remove(tokenKey)
+            print("success 刪除token")
+        } catch {
+            // Re-throw if you need the caller to handle it
+            throw error
         }
-        print("success 刪除token")
     }
 
     
@@ -122,8 +93,7 @@ class TokenManager {
         
         let request = NetworkManager.Endpoint.token.request
         do {
-//            let data = try await NetworkManager.shared.getData(request)
-            let data = try await session.data(for: request)
+            let (data, _) = try await session.data(for: request)
             print("data \(data)")
             let decoder = JSONDecoder()
             let token = try decoder.decode(Token.self, from: data)
@@ -135,8 +105,8 @@ class TokenManager {
             return token.accessToken
         } catch {
             print("fetchToken error \(error)")
+            throw error
         }
-        return ""
     }
 }
 

@@ -43,7 +43,7 @@ class NetworkManager {
         let token = try await tokenManager.getValidToken()
         var authenticatedRequest = request
         authenticatedRequest.setValue("Bearer \(token)", forHTTPHeaderField: "Authorization")
-        let data = try await session.data(for: authenticatedRequest)
+        let (data, _) = try await session.data(for: authenticatedRequest)
         return data
     }
 //    static let shared = {
