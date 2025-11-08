@@ -8,9 +8,9 @@ import SwiftUI
 
 struct DragBar: View {
     var body: some View {
-        Rectangle()
-            .frame(width: 50, height: 5, alignment: .center)
-            .foregroundColor(.gray)
+        Capsule()
+            .fill(Color(.systemGray4))
+            .frame(width: 40, height: 5)
             .padding(.bottom)
     }
 }
