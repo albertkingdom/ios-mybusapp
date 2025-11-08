@@ -66,28 +66,26 @@ struct NearByStationSheet: View {
     }
 }
 
-struct NearByStationSheet_Previews: PreviewProvider {
-    static var previews: some View {
-        NearByStationSheet(
-            nearByStations: .constant([
-                NearByStation(
-                    stationName: "Test A",
-                    subStations: [
-                        SubStation(
-                            stationID: "111",
-                            stationPosition: StationPosition(
-                                positionLon: 25,
-                                positionLat: 120,
-                                geoHash: "aaa"
-                            ),
-                            stationAddress: "Taipei",
-                            routes: ["299", "307"]
-                        )
-                    ]
-                )
-            ]),
-            showNearByStationSheet: .constant(true),
-            clickOnStationName: { _ in print("") }
-        )
-    }
+#Preview {
+    NearByStationSheet(
+        nearByStations: .constant([
+            NearByStation(
+                stationName: "Test A",
+                subStations: [
+                    SubStation(
+                        stationID: "111",
+                        stationPosition: StationPosition(
+                            positionLon: 25,
+                            positionLat: 120,
+                            geoHash: "aaa"
+                        ),
+                        stationAddress: "Taipei",
+                        routes: ["299", "307"]
+                    )
+                ]
+            )
+        ]),
+        showNearByStationSheet: .constant(true),
+        clickOnStationName: { _ in print("") }
+    )
 }
