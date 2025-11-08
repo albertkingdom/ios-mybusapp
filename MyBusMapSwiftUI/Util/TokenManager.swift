@@ -9,7 +9,7 @@ import Foundation
 import KeychainAccess
 
 class TokenManager {
-    private var currentToken: String?
+    var currentToken: String?
     private let clientID: String?
     private let clientKey: String?
     private let session: URLSessionProtocol
@@ -31,6 +31,16 @@ class TokenManager {
         self.currentToken = retrieveTokenFromKeychain()
     }
     
+    // Initializer for testing purposes to avoid keychain access during setup.
+    init(forTestWith clientID: String?, clientKey: String?, session: URLSessionProtocol) {
+        self.clientID = clientID
+        self.clientKey = clientKey
+        self.session = session
+        self.TOKEN_URL = "https://tdx.transportdata.tw/auth/realms/TDXConnect/protocol/openid-connect/token"
+        // We intentionally don't read from keychain in tests to ensure isolation.
+        self.currentToken = nil
+    }
+    
     func saveTokenExpiration(expiresIn: Int) {
         let expirationDate = Date().addingTimeInterval(TimeInterval(expiresIn)) // 當前時間加上 expires_in 秒
         UserDefaults.standard.set(expirationDate, forKey: "tokenExpirationDate")
@@ -44,7 +54,7 @@ class TokenManager {
         return try await fetchNewToken()
     }
     
-    private func isTokenExpired() -> Bool {
+    internal func isTokenExpired() -> Bool {
         // 實現過期檢查邏輯
         guard let expirationDate = UserDefaults.standard.object(forKey: "tokenExpirationDate") as? Date else {
                return true // 如果沒有儲存過期時間，視為過期
