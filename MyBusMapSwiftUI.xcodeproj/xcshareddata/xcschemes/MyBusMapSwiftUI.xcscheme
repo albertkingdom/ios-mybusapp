@@ -27,25 +27,19 @@
       buildConfiguration = "Debug"
       selectedDebuggerIdentifier = "Xcode.DebuggerFoundation.Debugger.LLDB"
       selectedLauncherIdentifier = "Xcode.DebuggerFoundation.Launcher.LLDB"
-      shouldUseLaunchSchemeArgsEnv = "YES"
-      shouldAutocreateTestPlan = "YES">
+      shouldUseLaunchSchemeArgsEnv = "YES">
+      <TestPlans>
+         <TestPlanReference
+            reference = "container:MyBusMapSwiftUI.xctestplan"
+            default = "YES">
+         </TestPlanReference>
+      </TestPlans>
       <Testables>
          <TestableReference
             skipped = "NO"
             parallelizable = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "A1F0372C2C032C0700141F16"
-               BuildableName = "testNetWorkManager.xctest"
-               BlueprintName = "testNetWorkManager"
-               ReferencedContainer = "container:MyBusMapSwiftUI.xcodeproj">
-            </BuildableReference>
-         </TestableReference>
-         <TestableReference
-            skipped = "NO"
-            parallelizable = "YES">
-            <BuildableReference
-               BuildableIdentifier = "primary"
                BlueprintIdentifier = "A1F22EE32C426E2C003DF7EE"
                BuildableName = "MyBusMapTests.xctest"
                BlueprintName = "MyBusMapTests"
@@ -60,6 +54,17 @@
                BlueprintIdentifier = "A1F22EE32C426E2C003DF7EE"
                BuildableName = "MyBusMapTests.xctest"
                BlueprintName = "MyBusMapTests"
+               ReferencedContainer = "container:MyBusMapSwiftUI.xcodeproj">
+            </BuildableReference>
+         </TestableReference>
+         <TestableReference
+            skipped = "NO"
+            parallelizable = "YES">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "A1F4682A2EBF10C000A7AAE1"
+               BuildableName = "MyBusMapSwiftUITests.xctest"
+               BlueprintName = "MyBusMapSwiftUITests"
                ReferencedContainer = "container:MyBusMapSwiftUI.xcodeproj">
             </BuildableReference>
          </TestableReference>
