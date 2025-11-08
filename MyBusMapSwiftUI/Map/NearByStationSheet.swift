@@ -64,7 +64,7 @@ struct NearByStationSheet: View {
             } else {
                 stationList
             }
-        }, onClose: {})
+        }, showCloseButton: false, onClose: {})
         
     }
 }

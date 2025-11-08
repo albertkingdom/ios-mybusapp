@@ -17,10 +17,20 @@ struct DragBar: View {
 
 struct BottomSheetView<Content: View>: View {
     @ViewBuilder let content: Content
-    var heightFraction=0.4
+    var heightFraction: Double
+    let showCloseButton: Bool
+    
     @State var frameH: Double=0.0 // 目前bottom sheet高度
     @State var maxViewH: Double=0.0 // bottom sheet高度上限
     var onClose: () -> Void
+    
+    init(@ViewBuilder content: () -> Content, heightFraction: Double = 0.4, showCloseButton: Bool = true, onClose: @escaping () -> Void) {
+        self.content = content()
+        self.heightFraction = heightFraction
+        self.showCloseButton = showCloseButton
+        self.onClose = onClose
+    }
+    
     var closeButton: some View {
         Image(systemName: "xmark.circle.fill")
             .resizable()
@@ -40,7 +50,9 @@ struct BottomSheetView<Content: View>: View {
                         DragBar()
                         HStack {
                             Spacer()
-                            closeButton
+                            if showCloseButton {
+                                closeButton
+                            }
                         }
                         .padding(.trailing)
                     }
