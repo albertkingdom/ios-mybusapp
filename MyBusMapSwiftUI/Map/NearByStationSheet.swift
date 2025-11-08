@@ -6,13 +6,11 @@
 //
 import SwiftUI
 
-
-
 struct ListItem: View {
     var title: String
     var subTitle: String
     var onTap: () -> Void
-    
+
     var body: some View {
         HStack {
             VStack(alignment: .leading) {
@@ -35,8 +33,7 @@ struct NearByStationSheet: View {
     @Binding var nearByStations: [NearByStation]
     @Binding var showNearByStationSheet: Bool
     let clickOnStationName: ([SubStation]) -> Void
-    
-    
+
     var stationList: some View {
         List(nearByStations, id: \.id) { station in
             ListItem(
@@ -52,20 +49,20 @@ struct NearByStationSheet: View {
         }
         .listStyle(.plain)
     }
-    
-    
+
     var body: some View {
-        BottomSheetView(content: {
-            Text("附近站牌")
-                .multilineTextAlignment(.leading)
-            if #available(iOS 15.0, *) {
-               stationList
-                    .listRowSeparator(.hidden)
-            } else {
+        BottomSheetView(
+            content: {
+                Text("附近站牌")
+                    .multilineTextAlignment(.leading)
                 stationList
-            }
-        }, showCloseButton: false, onClose: {})
-        
+                    .listRowSeparator(.hidden)
+
+            },
+            showCloseButton: false,
+            onClose: {}
+        )
+
     }
 }
 
@@ -73,14 +70,24 @@ struct NearByStationSheet_Previews: PreviewProvider {
     static var previews: some View {
         NearByStationSheet(
             nearByStations: .constant([
-                NearByStation(stationName: "Test A", subStations: [
-                    SubStation(stationID: "111",
-                               stationPosition: StationPosition(positionLon: 25, positionLat: 120, geoHash: "aaa"),
-                               stationAddress: "Taipei",
-                               routes: ["299", "307"])
-                ])
-            ]), showNearByStationSheet: .constant(true)
-            , clickOnStationName: { _ in print("")}
+                NearByStation(
+                    stationName: "Test A",
+                    subStations: [
+                        SubStation(
+                            stationID: "111",
+                            stationPosition: StationPosition(
+                                positionLon: 25,
+                                positionLat: 120,
+                                geoHash: "aaa"
+                            ),
+                            stationAddress: "Taipei",
+                            routes: ["299", "307"]
+                        )
+                    ]
+                )
+            ]),
+            showNearByStationSheet: .constant(true),
+            clickOnStationName: { _ in print("") }
         )
     }
 }
