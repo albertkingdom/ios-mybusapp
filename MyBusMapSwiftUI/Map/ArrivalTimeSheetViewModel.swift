@@ -27,6 +27,8 @@ class ArrivalTimeSheetViewModel: NSObject, ObservableObject {
     @Published var remoteFavoriteRouteNames: [String] = []
     @Published var isLoading = true
     @Published var sortedArrivalTimes = [Int:[ArrivalTime]]()
+    @Published var errorMessage: String?
+    private var listenerRegistration: ListenerRegistration?
     var location: CLLocation?
     var stationID: String = ""
     
@@ -70,12 +72,16 @@ class ArrivalTimeSheetViewModel: NSObject, ObservableObject {
             let sorted = handleArrivalTime(arrivalTimes: arrivalTimes)
             self.sortedArrivalTimes = sorted
             self.isLoading = false
+            self.errorMessage = nil // Clear any previous error
         } catch let DecodingError.typeMismatch(type, context) {
+            self.errorMessage = "資料解析錯誤：類型 '\(type)' 不匹配: \(context.debugDescription)"
             print("Type '\(type)' mismatch:", context.debugDescription)
             print("codingPath:", context.codingPath)
-        
+            self.isLoading = false
         } catch {
+            self.errorMessage = "獲取到站時間失敗：\(error.localizedDescription)"
             print("fetchArrivalTime error \(error)")
+            self.isLoading = false
         }
     }
     
@@ -85,7 +91,7 @@ class ArrivalTimeSheetViewModel: NSObject, ObservableObject {
         {
             let docRef = db.collection("favoriteRoute").document(email)
             
-            docRef.addSnapshotListener { documentSnapshot, error in
+            self.listenerRegistration = docRef.addSnapshotListener { documentSnapshot, error in
                 guard let document = documentSnapshot else {
                     print("Error fetching document: \(error!)")
                     return
@@ -113,5 +119,10 @@ class ArrivalTimeSheetViewModel: NSObject, ObservableObject {
             print("not login")
         }
         
+    }
+    
+    deinit {
+        listenerRegistration?.remove()
+        print("ArrivalTimeSheetViewModel deinitialized and listener removed.")
     }
 }
