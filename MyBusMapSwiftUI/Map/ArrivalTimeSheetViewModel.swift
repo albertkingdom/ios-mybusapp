@@ -19,7 +19,6 @@ struct DirectionTabInfo: Identifiable {
 
 @MainActor
 class ArrivalTimeSheetViewModel: NSObject, ObservableObject {
-    //    static let shared = ArrivalTimeSheetViewModel()
     @Published var favoriteList: [Favorite] = []
     @Published var remoteFavoriteRouteNames: [String] = []
     @Published var isLoading = true
@@ -99,24 +98,25 @@ class ArrivalTimeSheetViewModel: NSObject, ObservableObject {
         }
     }
 
-    func getRemoteData() {
-        if let user = Auth.auth().currentUser,
-            let email = user.email
-        {
-            let docRef = db.collection("favoriteRoute").document(email)
-
-            self.listenerRegistration = docRef.addSnapshotListener {
-                documentSnapshot,
-                error in
+    func getFavRouteFromRemote() {
+        guard let user = Auth.auth().currentUser,
+              let email = user.email else {
+            // self.errorMessage = "用戶未登入，無法獲取收藏路線。"
+            return
+        }
+        
+        let docRef = db.collection("favoriteRoute").document(email)
+        
+        self.listenerRegistration = docRef.addSnapshotListener { documentSnapshot, error in
                 guard let document = documentSnapshot else {
                     self.errorMessage = "無法獲取收藏路線數據。"
                     return
                 }
-                guard let data = document.data() else {
+                guard document.data() != nil else {
                     self.errorMessage = "收藏路線數據為空。"
                     return
                 }
-
+                
                 do {
                     let list = try document.data(as: FavoriteList.self)
                     self.favoriteList = list.list ?? []
@@ -126,15 +126,10 @@ class ArrivalTimeSheetViewModel: NSObject, ObservableObject {
                         })
                 } catch {
                     self.errorMessage =
-                        "解析收藏路線數據失敗：\(error.localizedDescription)"
+                    "解析收藏路線數據失敗：\(error.localizedDescription)"
                 }
-
             }
-
-        } else {
-            self.errorMessage = "用戶未登入，無法獲取收藏路線。"
-        }
-
+        
     }
 
     deinit {

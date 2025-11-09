@@ -102,7 +102,7 @@ struct ArrivalTimeSheet: View {
             }
         )
         .onAppear {
-            viewModel.getRemoteData()
+            viewModel.getFavRouteFromRemote()
             Task {
                 await viewModel.fetchArrivalTime()
             }
