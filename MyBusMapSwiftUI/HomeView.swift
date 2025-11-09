@@ -29,17 +29,17 @@ struct HomeView: View {
             ContentView(viewModel: mapViewModel)
                     .tabItem {
                         Image(systemName: "map")
-                        Text("Map")
+                        Text("地圖")
                     }.tag(0).environmentObject(locationManager)
             FavStationsView(favStationsViewModel: favStationsViewModel, selectedTab: $selectedTab)
                     .tabItem {
                         Image(systemName: "list.bullet")
-                        Text("List")
+                        Text("路線蒐藏")
                     }.tag(1)
             UserView()
                 .tabItem {
                     Image(systemName: "person.fill")
-                    Text("User")
+                    Text("我")
                 }.tag(2)
         }
         .onReceive(locationManager.$location,
