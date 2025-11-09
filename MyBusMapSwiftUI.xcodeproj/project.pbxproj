@@ -379,9 +379,8 @@
 		A1D56B072D97B1220041C438 /* Map */ = {
 			isa = PBXGroup;
 			children = (
+				A1F4683C2EC0A7D400A7AAE1 /* ArrivalTime */,
 				A1955ABF2D6A2E7A0090F44C /* SearchAndLocationBar.swift */,
-				A11295272891834C0093D936 /* ArrivalTimeSheet.swift */,
-				A1DA52352898E1D0006CB3D4 /* ArrivalTimeSheetViewModel.swift */,
 				A112952428911A9C0093D936 /* NearByStationSheet.swift */,
 				A10503A8288FAAB100EF461D /* GoogleMapsView.swift */,
 				A1821A222892DCE2003CB0EB /* GoogleMapsRouteView.swift */,
@@ -422,6 +421,15 @@
 				A176B2922CD7AE2D002954BB /* UserViewModelTest.swift */,
 			);
 			path = MyBusMapTests;
+			sourceTree = "<group>";
+		};
+		A1F4683C2EC0A7D400A7AAE1 /* ArrivalTime */ = {
+			isa = PBXGroup;
+			children = (
+				A1DA52352898E1D0006CB3D4 /* ArrivalTimeSheetViewModel.swift */,
+				A11295272891834C0093D936 /* ArrivalTimeSheet.swift */,
+			);
+			path = ArrivalTime;
 			sourceTree = "<group>";
 		};
 		DF03DA9D29AF0BD900FD4377 /* Frameworks */ = {
