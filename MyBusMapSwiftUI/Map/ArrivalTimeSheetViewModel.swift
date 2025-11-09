@@ -12,6 +12,13 @@ import FirebaseFirestore
 import CoreLocation
 
 
+
+struct DirectionTabInfo: Identifiable {
+    let id = UUID()
+    let direction: Int // The actual direction (0 or 1)
+    let title: String // "去" or "回" (should be localized)
+}
+
 class ArrivalTimeSheetViewModel: NSObject, ObservableObject {
 //    static let shared = ArrivalTimeSheetViewModel()
     let db = Firestore.firestore()
@@ -21,6 +28,13 @@ class ArrivalTimeSheetViewModel: NSObject, ObservableObject {
     @Published var sortedArrivalTimes = [Int:[ArrivalTime]]()
     var location: CLLocation?
     var stationID: String = ""
+    
+    var directionTabInfos: [DirectionTabInfo] {
+        sortedArrivalTimes.keys.sorted().map { key in
+            // TODO: Localize "去" and "回"
+            DirectionTabInfo(direction: key, title: key == 0 ? "去" : "回")
+        }
+    }
     
     init(location: CLLocation?, stationID: String) {
         self.location = location
