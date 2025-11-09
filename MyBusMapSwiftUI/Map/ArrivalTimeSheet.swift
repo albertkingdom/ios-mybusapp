@@ -45,7 +45,7 @@ struct ArrivalTimeSheet: View {
 
     }
 
-    @State private var timeRemaining = 0  // 倒數計時30sec 下次更新到站時間
+    @State private var timeRemaining = 30  // 倒數計時30sec 下次更新到站時間
     @Environment(\.scenePhase) var scenePhase
     @State private var isActive = true
 
@@ -105,6 +105,9 @@ struct ArrivalTimeSheet: View {
         )
         .onAppear {
             viewModel.getRemoteData()
+            Task {
+                await viewModel.fetchArrivalTime()
+            }
         }
         .onReceive(timer) { time in
             guard isActive, !viewModel.isLoading else { return }

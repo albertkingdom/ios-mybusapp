@@ -19,12 +19,13 @@ struct DirectionTabInfo: Identifiable {
     let title: String // "去" or "回" (should be localized)
 }
 
+@MainActor
 class ArrivalTimeSheetViewModel: NSObject, ObservableObject {
 //    static let shared = ArrivalTimeSheetViewModel()
     let db = Firestore.firestore()
     @Published var favoriteList: [Favorite] = []
     @Published var remoteFavoriteRouteNames: [String] = []
-    @Published var isLoading = false
+    @Published var isLoading = true
     @Published var sortedArrivalTimes = [Int:[ArrivalTime]]()
     var location: CLLocation?
     var stationID: String = ""
@@ -39,6 +40,7 @@ class ArrivalTimeSheetViewModel: NSObject, ObservableObject {
     init(location: CLLocation?, stationID: String) {
         self.location = location
         self.stationID = stationID
+        self.isLoading = true
     }
     private func handleArrivalTime(arrivalTimes: [ArrivalTime]) -> [Int:[ArrivalTime]] {
         var sorted: [Int: [ArrivalTime]] = [0: [], 1: []] // 0:'去程',1:'返程'
@@ -55,9 +57,7 @@ class ArrivalTimeSheetViewModel: NSObject, ObservableObject {
     }
     
     func fetchArrivalTime() async {
-        DispatchQueue.main.async {
-            self.isLoading = true
-        }
+        self.isLoading = true
 //        guard let subStations else { return }
         //let city = "NewTaipei"
 //        let stationID = subStations[0].stationID
@@ -68,10 +68,8 @@ class ArrivalTimeSheetViewModel: NSObject, ObservableObject {
             let arrivalTimes = try await NetworkManager.shared.fetchArrivalTimeAsync(city: city, stationID: stationID)
             print("fetchArrivalTime  \(arrivalTimes)")
             let sorted = handleArrivalTime(arrivalTimes: arrivalTimes)
-            DispatchQueue.main.async {
-                self.sortedArrivalTimes = sorted
-                self.isLoading = false
-            }
+            self.sortedArrivalTimes = sorted
+            self.isLoading = false
         } catch let DecodingError.typeMismatch(type, context) {
             print("Type '\(type)' mismatch:", context.debugDescription)
             print("codingPath:", context.codingPath)
