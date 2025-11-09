@@ -33,13 +33,11 @@
 		A176B2952CD7AFE3002954BB /* UserViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A176B2942CD7AFE3002954BB /* UserViewModel.swift */; };
 		A178B13B2CBFFB73000DB801 /* SearchBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = A178B13A2CBFFB72000DB801 /* SearchBar.swift */; };
 		A178B13D2CC0022C000DB801 /* FavStationsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A178B13C2CC0022C000DB801 /* FavStationsViewModel.swift */; };
-		A178B13F2CC140EB000DB801 /* RouteSheetViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A178B13E2CC140EB000DB801 /* RouteSheetViewModel.swift */; };
 		A178B1422CC2C883000DB801 /* LocationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A178B1412CC2C883000DB801 /* LocationManager.swift */; };
 		A178B1442CC36087000DB801 /* AuthManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A178B1432CC36087000DB801 /* AuthManager.swift */; };
 		A17DDF0B28B3352300D04296 /* FavoriteRealm.swift in Sources */ = {isa = PBXBuildFile; fileRef = A17DDF0A28B3352300D04296 /* FavoriteRealm.swift */; };
 		A17DDF0D28B336C400D04296 /* RealmManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A17DDF0C28B336C400D04296 /* RealmManager.swift */; };
 		A17E340328A754090058C8AE /* PlacesSearch.swift in Sources */ = {isa = PBXBuildFile; fileRef = A17E340228A754090058C8AE /* PlacesSearch.swift */; };
-		A1821A2128929762003CB0EB /* RouteSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1821A2028929762003CB0EB /* RouteSheet.swift */; };
 		A1821A232892DCE2003CB0EB /* GoogleMapsRouteView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1821A222892DCE2003CB0EB /* GoogleMapsRouteView.swift */; };
 		A1821A2528937E73003CB0EB /* District.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1821A2428937E73003CB0EB /* District.swift */; };
 		A1821A2A2893A4A8003CB0EB /* TimeListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1821A292893A4A8003CB0EB /* TimeListView.swift */; };
@@ -136,14 +134,12 @@
 		A176B2942CD7AFE3002954BB /* UserViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserViewModel.swift; sourceTree = "<group>"; };
 		A178B13A2CBFFB72000DB801 /* SearchBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchBar.swift; sourceTree = "<group>"; };
 		A178B13C2CC0022C000DB801 /* FavStationsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavStationsViewModel.swift; sourceTree = "<group>"; };
-		A178B13E2CC140EB000DB801 /* RouteSheetViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RouteSheetViewModel.swift; sourceTree = "<group>"; };
 		A178B1412CC2C883000DB801 /* LocationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationManager.swift; sourceTree = "<group>"; };
 		A178B1432CC36087000DB801 /* AuthManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthManager.swift; sourceTree = "<group>"; };
 		A17DDF0A28B3352300D04296 /* FavoriteRealm.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteRealm.swift; sourceTree = "<group>"; };
 		A17DDF0C28B336C400D04296 /* RealmManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealmManager.swift; sourceTree = "<group>"; };
 		A17E340228A754090058C8AE /* PlacesSearch.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlacesSearch.swift; sourceTree = "<group>"; };
 		A1821A1F28924CFD003CB0EB /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
-		A1821A2028929762003CB0EB /* RouteSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RouteSheet.swift; sourceTree = "<group>"; };
 		A1821A222892DCE2003CB0EB /* GoogleMapsRouteView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoogleMapsRouteView.swift; sourceTree = "<group>"; };
 		A1821A2428937E73003CB0EB /* District.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = District.swift; sourceTree = "<group>"; };
 		A1821A292893A4A8003CB0EB /* TimeListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeListView.swift; sourceTree = "<group>"; };
@@ -276,7 +272,6 @@
 		A11295262891827F0093D936 /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				A1821A2028929762003CB0EB /* RouteSheet.swift */,
 				A1A7B74F2895010500893EF3 /* PlateView.swift */,
 			);
 			path = Views;
@@ -357,7 +352,6 @@
 		A178B1402CC15135000DB801 /* ViewModel */ = {
 			isa = PBXGroup;
 			children = (
-				A178B13E2CC140EB000DB801 /* RouteSheetViewModel.swift */,
 				A1129519288FD3AC0093D936 /* MapViewModel.swift */,
 			);
 			path = ViewModel;
@@ -657,8 +651,6 @@
 				A1129521289048DE0093D936 /* Token.swift in Sources */,
 				A1DA523B28A4F5ED006CB3D4 /* UserView.swift in Sources */,
 				A10503A7288FA90900EF461D /* AppDelegate.swift in Sources */,
-				A178B13F2CC140EB000DB801 /* RouteSheetViewModel.swift in Sources */,
-				A1821A2128929762003CB0EB /* RouteSheet.swift in Sources */,
 				A1A7B7502895010500893EF3 /* PlateView.swift in Sources */,
 				A1202169288FA00400C8746A /* ContentView.swift in Sources */,
 				A1E1722A2BE6290600ED5916 /* RoundedCorner.swift in Sources */,
