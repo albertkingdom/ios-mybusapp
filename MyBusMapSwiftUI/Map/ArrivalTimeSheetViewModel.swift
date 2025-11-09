@@ -51,6 +51,7 @@ class ArrivalTimeSheetViewModel: NSObject, ObservableObject {
         self.db = db
         self.networkManager = networkManager
     }
+    
     private func handleArrivalTime(arrivalTimes: [ArrivalTime]) -> [Int:
         [ArrivalTime]]
     {
@@ -63,7 +64,6 @@ class ArrivalTimeSheetViewModel: NSObject, ObservableObject {
                 sorted[1]?.append(time)
             }
         }
-        // self.sortedArrivalTimes = sorted
         return sorted
     }
 
@@ -92,12 +92,9 @@ class ArrivalTimeSheetViewModel: NSObject, ObservableObject {
         } catch let DecodingError.typeMismatch(type, context) {
             self.errorMessage =
                 "資料解析錯誤：類型 '\(type)' 不匹配: \(context.debugDescription)"
-            print("Type '\(type)' mismatch:", context.debugDescription)
-            print("codingPath:", context.codingPath)
             self.isLoading = false
         } catch {
             self.errorMessage = "獲取到站時間失敗：\(error.localizedDescription)"
-            print("fetchArrivalTime error \(error)")
             self.isLoading = false
         }
     }
@@ -112,11 +109,11 @@ class ArrivalTimeSheetViewModel: NSObject, ObservableObject {
                 documentSnapshot,
                 error in
                 guard let document = documentSnapshot else {
-                    // self.errorMessage = "無法獲取收藏路線數據。" // Consider adding user-facing error
+                    self.errorMessage = "無法獲取收藏路線數據。"
                     return
                 }
                 guard let data = document.data() else {
-                    // self.errorMessage = "收藏路線數據為空。" // Consider adding user-facing error
+                    self.errorMessage = "收藏路線數據為空。"
                     return
                 }
 
@@ -128,13 +125,14 @@ class ArrivalTimeSheetViewModel: NSObject, ObservableObject {
                             $0.name
                         })
                 } catch {
-                    // self.errorMessage = "解析收藏路線數據失敗：\(error.localizedDescription)" // Consider adding user-facing error
+                    self.errorMessage =
+                        "解析收藏路線數據失敗：\(error.localizedDescription)"
                 }
 
             }
 
         } else {
-            // self.errorMessage = "用戶未登入，無法獲取收藏路線。" // Consider adding user-facing error
+            self.errorMessage = "用戶未登入，無法獲取收藏路線。"
         }
 
     }

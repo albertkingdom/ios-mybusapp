@@ -71,7 +71,6 @@ struct ArrivalTimeSheet: View {
                         }
                     }
                     if !viewModel.isLoading {
-                        // Views
                         TabView(selection: $selectedTab) {
                             ForEach(
                                 viewModel.sortedArrivalTimes.keys.sorted(),
@@ -84,7 +83,6 @@ struct ArrivalTimeSheet: View {
                                         key
                                     ] ?? [],
                                     push: $push,
-                                    //                                               clickOnRouteName: clickOnRouteName,
                                     rowContent: .routeName,
                                     isLogin: authManager.isLogin
                                 )
@@ -163,7 +161,6 @@ enum RowContent {
         //        ]]),
         push: .constant(false),
         showNearByStationSheet: .constant(false),
-        //        clickOnRouteName: { _ in },
         unHighlightMarkers: {},
         clearData: {}
     )
