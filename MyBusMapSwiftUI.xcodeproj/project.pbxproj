@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 55;
+	objectVersion = 70;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -68,6 +68,7 @@
 		A1F168522BDFF1250080F57E /* FirebaseInstallations in Frameworks */ = {isa = PBXBuildFile; productRef = A1F168512BDFF1250080F57E /* FirebaseInstallations */; };
 		A1F22EDC2C424688003DF7EE /* TokenManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1F22EDB2C424688003DF7EE /* TokenManager.swift */; };
 		A1F22EE72C426E2C003DF7EE /* TokenManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1F22EE62C426E2C003DF7EE /* TokenManagerTests.swift */; };
+		A1F468372EC076E600A7AAE1 /* ToastView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1F468362EC076E600A7AAE1 /* ToastView.swift */; };
 		DF03DAAB29AF0C7100FD4377 /* Accelerate.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DF03DAAA29AF0C7100FD4377 /* Accelerate.framework */; };
 		DF03DAB229AF0C9400FD4377 /* CoreTelephony.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DF03DAAC29AF0C9400FD4377 /* CoreTelephony.framework */; };
 		DF03DAB329AF0C9400FD4377 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DF03DAAD29AF0C9400FD4377 /* CoreGraphics.framework */; };
@@ -165,8 +166,9 @@
 		A1F22EDB2C424688003DF7EE /* TokenManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokenManager.swift; sourceTree = "<group>"; };
 		A1F22EE42C426E2C003DF7EE /* MyBusMapTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MyBusMapTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		A1F22EE62C426E2C003DF7EE /* TokenManagerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokenManagerTests.swift; sourceTree = "<group>"; };
-		A1F468262EBF102A00A7AAE1 /* MyBusMapSwiftUI.xctestplan */ = {isa = PBXFileReference; lastKnownFileType = file; path = MyBusMapSwiftUI.xctestplan; sourceTree = "<group>"; };
+		A1F468262EBF102A00A7AAE1 /* MyBusMapSwiftUI.xctestplan */ = {isa = PBXFileReference; lastKnownFileType = text; path = MyBusMapSwiftUI.xctestplan; sourceTree = "<group>"; };
 		A1F4682B2EBF10C000A7AAE1 /* MyBusMapSwiftUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MyBusMapSwiftUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		A1F468362EC076E600A7AAE1 /* ToastView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToastView.swift; sourceTree = "<group>"; };
 		DF03DA9E29AF0BD900FD4377 /* GoogleMapsCore.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = GoogleMapsCore.xcframework; path = Carthage/Build/GoogleMapsCore.xcframework; sourceTree = "<group>"; };
 		DF03DA9F29AF0BD900FD4377 /* GoogleMapsBase.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = GoogleMapsBase.xcframework; path = Carthage/Build/GoogleMapsBase.xcframework; sourceTree = "<group>"; };
 		DF03DAA029AF0BDA00FD4377 /* GoogleMaps.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = GoogleMaps.xcframework; path = Carthage/Build/GoogleMaps.xcframework; sourceTree = "<group>"; };
@@ -404,6 +406,7 @@
 				A1E172292BE6290600ED5916 /* RoundedCorner.swift */,
 				A1BDB5642CC3EEDE0077D3E0 /* BottomSheetView.swift */,
 				A1E1722D2BE688E200ED5916 /* shareFunction.swift */,
+				A1F468362EC076E600A7AAE1 /* ToastView.swift */,
 			);
 			path = Common;
 			sourceTree = "<group>";
@@ -679,6 +682,7 @@
 				A11295232890E8FE0093D936 /* NearByStation.swift in Sources */,
 				A1821A462893D2BB003CB0EB /* StopOfRoute.swift in Sources */,
 				A112951C289033A80093D936 /* NetworkManager.swift in Sources */,
+				A1F468372EC076E600A7AAE1 /* ToastView.swift in Sources */,
 				A178B13B2CBFFB73000DB801 /* SearchBar.swift in Sources */,
 				A15E1E642CC53BB400F2F7EF /* CurrentLocationButton.swift in Sources */,
 				A17DDF0D28B336C400D04296 /* RealmManager.swift in Sources */,

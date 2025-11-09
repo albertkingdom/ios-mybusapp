@@ -128,6 +128,16 @@ struct ArrivalTimeSheet: View {
                 isActive = false
             }
         }
+        .overlay(
+            Group {
+                if let errorMessage = viewModel.errorMessage {
+                    ToastView(message: errorMessage)
+                        .padding(.bottom, 20)
+                }
+            }
+            .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .bottom)
+            .animation(.easeInOut, value: viewModel.errorMessage)
+        )
     }
 }
 enum RowContent {
