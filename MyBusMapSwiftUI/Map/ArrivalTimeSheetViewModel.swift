@@ -13,7 +13,7 @@ import Foundation
 
 struct DirectionTabInfo: Identifiable {
     let id = UUID()
-    let direction: Int  // The actual direction (0 or 1)
+    let direction: Direction  // The actual direction (0 or 1)
     let title: String  // "去" or "回" (should be localized)
 }
 
@@ -22,7 +22,7 @@ class ArrivalTimeSheetViewModel: NSObject, ObservableObject {
     @Published var favoriteList: [Favorite] = []
     @Published var remoteFavoriteRouteNames: [String] = []
     @Published var isLoading = true
-    @Published var sortedArrivalTimes = [Int: [ArrivalTime]]()
+    @Published var sortedArrivalTimes = [Direction: [ArrivalTime]]()
     @Published var errorMessage: String?
     private var listenerRegistration: ListenerRegistration?
     var location: CLLocation?
@@ -30,8 +30,7 @@ class ArrivalTimeSheetViewModel: NSObject, ObservableObject {
 
     var directionTabInfos: [DirectionTabInfo] {
         sortedArrivalTimes.keys.sorted().map { key in
-            // TODO: Localize "去" and "回"
-            DirectionTabInfo(direction: key, title: key == 0 ? "去" : "回")
+            return DirectionTabInfo(direction: key, title: key == .outbound ? "去" : "回")
         }
     }
 
@@ -51,16 +50,16 @@ class ArrivalTimeSheetViewModel: NSObject, ObservableObject {
         self.networkManager = networkManager
     }
     
-    private func handleArrivalTime(arrivalTimes: [ArrivalTime]) -> [Int:
+    private func handleArrivalTime(arrivalTimes: [ArrivalTime]) -> [Direction:
         [ArrivalTime]]
     {
-        var sorted: [Int: [ArrivalTime]] = [0: [], 1: []]  // 0:'去程',1:'返程'
+        var sorted: [Direction: [ArrivalTime]] = [.outbound: [], .inbound: []]  // 0:'去程',1:'返程'
         for time in arrivalTimes {
-            if time.direction == 0 {
-                sorted[0]?.append(time)
+            if time.direction == .outbound {
+                sorted[.outbound]?.append(time)
             }
-            if time.direction == 1 {
-                sorted[1]?.append(time)
+            if time.direction == .inbound {
+                sorted[.inbound]?.append(time)
             }
         }
         return sorted

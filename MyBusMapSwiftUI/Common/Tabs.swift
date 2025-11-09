@@ -17,36 +17,29 @@ struct Tabs: View {
     var fixed = true
     var tabs: [Tab]
     var geoWidth: CGFloat
-    @Binding var selectedTab: Int
+    var directionKeys: [Direction] // New property
+    @Binding var selectedTab: Direction // Changed type
     var body: some View {
         ScrollView(.horizontal, showsIndicators: false) {
             ScrollViewReader { proxy in
                 VStack(spacing: 0) {
                     HStack(spacing: 0) {
-                        ForEach(0 ..< tabs.count, id: \.self) { row in
+                        ForEach(Array(tabs.enumerated()), id: \.element.title) { (index, tab) in
                             Button(action: {
                                 withAnimation {
-                                    selectedTab = row
-                                    logger.debug("selectedTab=\(selectedTab)")
-                                    logger.debug("selectedTab == row \(selectedTab == row)")
-
+                                    selectedTab = directionKeys[index]
                                 }
                             }, label: {
                                 VStack(spacing: 0) {
                                     HStack {
-                                        // Image
-                                        //                                        AnyView(tabs[row].icon)
-                                        //                                            .foregroundColor(.white)
-                                        //                                            .padding(EdgeInsets(top: 0, leading: 15, bottom: 0, trailing: 0))
-                                        // Text
-                                        Text(tabs[row].title)
+                                        Text(tab.title)
                                             .font(Font.system(size: 18, weight: .semibold))
                                             .foregroundColor(Color.primary)
                                             .padding(EdgeInsets(top: 10, leading: 3, bottom: 10, trailing: 15))
                                     }
                                     .frame(width: fixed ? (geoWidth / CGFloat(tabs.count)) : .none, height: 40)
                                     // Bar Indicator
-                                    Rectangle().fill(selectedTab == row ? Color.blue : Color.clear)
+                                    Rectangle().fill(selectedTab == directionKeys[index] ? Color.blue : Color.clear)
                                         .frame(height: 5)
                                 }
                             })
@@ -56,7 +49,10 @@ struct Tabs: View {
                     }
                     .onChange(of: selectedTab) { target in
                         withAnimation {
-                            proxy.scrollTo(target)
+                            // Find the index of the selected Direction and scroll to it
+                            if let index = directionKeys.firstIndex(of: target) {
+                                proxy.scrollTo(tabs[index].title) // Scroll to the title as ID
+                            }
                         }
                     }
                 }
@@ -72,13 +68,13 @@ struct Tabs: View {
         })
     }
 }
-struct Tabs_Previews: PreviewProvider {
-    static var previews: some View {
-        Tabs(fixed: true,
-             tabs: [.init(icon: Image(systemName: "star.fill"), title: "Tab 1"),
-                    .init(icon: Image(systemName: "star.fill"), title: "Tab 2"),
-                    .init(icon: Image(systemName: "star.fill"), title: "Tab 3")],
-             geoWidth: 375,
-             selectedTab: .constant(0))
-    }
+#Preview {
+    let dummyDirections: [Direction] = [.outbound, .inbound]
+    
+    return Tabs(fixed: true,
+         tabs: [.init(icon: Image(systemName: "star.fill"), title: "Tab 1"),
+                .init(icon: Image(systemName: "star.fill"), title: "Tab 2")],
+         geoWidth: 375,
+         directionKeys: dummyDirections,
+         selectedTab: .constant(.outbound))
 }

@@ -13,7 +13,7 @@ struct ArrivalTimeSheet: View {
     @EnvironmentObject var authManager: AuthManager
     @StateObject var viewModel: ArrivalTimeSheetViewModel
 
-    @State private var selectedTab: Int = 0
+    @State private var selectedTab: Direction = .outbound
     @Binding var push: Bool
     @Binding var showNearByStationSheet: Bool
     let unHighlightMarkers: () -> Void
@@ -25,7 +25,7 @@ struct ArrivalTimeSheet: View {
         }
     }
     var title: String {
-        guard let arrivalTimeList = viewModel.sortedArrivalTimes[0],
+        guard let arrivalTimeList = viewModel.sortedArrivalTimes[.outbound],
             !arrivalTimeList.isEmpty
         else {
             return ""
@@ -38,6 +38,7 @@ struct ArrivalTimeSheet: View {
             Tabs(
                 tabs: directionTabs,
                 geoWidth: geo.size.width,
+                directionKeys: viewModel.sortedArrivalTimes.keys.sorted(), // Pass direction keys
                 selectedTab: $selectedTab
             )
         }
@@ -86,6 +87,7 @@ struct ArrivalTimeSheet: View {
                                     rowContent: .routeName,
                                     isLogin: authManager.isLogin
                                 )
+                                .tag(key) // Add tag for TabView selection
                             }
                         }
                         .tabViewStyle(
