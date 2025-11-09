@@ -5,47 +5,56 @@
 //  Created by 林煜凱 on 8/2/22.
 //
 
-import Foundation
-import FirebaseAuth
-import FirebaseFirestoreSwift
-import FirebaseFirestore
 import CoreLocation
-
-
+import FirebaseAuth
+import FirebaseFirestore
+import FirebaseFirestoreSwift
+import Foundation
 
 struct DirectionTabInfo: Identifiable {
     let id = UUID()
-    let direction: Int // The actual direction (0 or 1)
-    let title: String // "去" or "回" (should be localized)
+    let direction: Int  // The actual direction (0 or 1)
+    let title: String  // "去" or "回" (should be localized)
 }
 
 @MainActor
 class ArrivalTimeSheetViewModel: NSObject, ObservableObject {
-//    static let shared = ArrivalTimeSheetViewModel()
-    let db = Firestore.firestore()
+    //    static let shared = ArrivalTimeSheetViewModel()
     @Published var favoriteList: [Favorite] = []
     @Published var remoteFavoriteRouteNames: [String] = []
     @Published var isLoading = true
-    @Published var sortedArrivalTimes = [Int:[ArrivalTime]]()
+    @Published var sortedArrivalTimes = [Int: [ArrivalTime]]()
     @Published var errorMessage: String?
     private var listenerRegistration: ListenerRegistration?
     var location: CLLocation?
     var stationID: String = ""
-    
+
     var directionTabInfos: [DirectionTabInfo] {
         sortedArrivalTimes.keys.sorted().map { key in
             // TODO: Localize "去" and "回"
             DirectionTabInfo(direction: key, title: key == 0 ? "去" : "回")
         }
     }
-    
-    init(location: CLLocation?, stationID: String) {
+
+    let db: Firestore
+    let networkManager: NetworkManager
+
+    init(
+        location: CLLocation?,
+        stationID: String,
+        db: Firestore = Firestore.firestore(),
+        networkManager: NetworkManager = NetworkManager.shared
+    ) {
         self.location = location
         self.stationID = stationID
         self.isLoading = true
+        self.db = db
+        self.networkManager = networkManager
     }
-    private func handleArrivalTime(arrivalTimes: [ArrivalTime]) -> [Int:[ArrivalTime]] {
-        var sorted: [Int: [ArrivalTime]] = [0: [], 1: []] // 0:'去程',1:'返程'
+    private func handleArrivalTime(arrivalTimes: [ArrivalTime]) -> [Int:
+        [ArrivalTime]]
+    {
+        var sorted: [Int: [ArrivalTime]] = [0: [], 1: []]  // 0:'去程',1:'返程'
         for time in arrivalTimes {
             if time.direction == 0 {
                 sorted[0]?.append(time)
@@ -57,24 +66,32 @@ class ArrivalTimeSheetViewModel: NSObject, ObservableObject {
         // self.sortedArrivalTimes = sorted
         return sorted
     }
-    
+
     func fetchArrivalTime() async {
         self.isLoading = true
-//        guard let subStations else { return }
-        //let city = "NewTaipei"
-//        let stationID = subStations[0].stationID
-        let coordinate = (location?.coordinate.latitude ?? 0, location?.coordinate.longitude ?? 0)
+        guard let location = self.location else {
+            self.errorMessage = "無法取得當前位置資訊。"
+            self.isLoading = false
+            return
+        }
+        let coordinate = (
+            location.coordinate.latitude, location.coordinate.longitude
+        )
         do {
-            let city = try await NetworkManager.shared.getDistrictAsync(from: coordinate)
-            print("station_id: \(stationID)")
-            let arrivalTimes = try await NetworkManager.shared.fetchArrivalTimeAsync(city: city, stationID: stationID)
-            print("fetchArrivalTime  \(arrivalTimes)")
+            let city = try await networkManager.getDistrictAsync(
+                from: coordinate
+            )
+            let arrivalTimes = try await networkManager.fetchArrivalTimeAsync(
+                city: city,
+                stationID: stationID
+            )
             let sorted = handleArrivalTime(arrivalTimes: arrivalTimes)
             self.sortedArrivalTimes = sorted
             self.isLoading = false
-            self.errorMessage = nil // Clear any previous error
+            self.errorMessage = nil  // Clear any previous error
         } catch let DecodingError.typeMismatch(type, context) {
-            self.errorMessage = "資料解析錯誤：類型 '\(type)' 不匹配: \(context.debugDescription)"
+            self.errorMessage =
+                "資料解析錯誤：類型 '\(type)' 不匹配: \(context.debugDescription)"
             print("Type '\(type)' mismatch:", context.debugDescription)
             print("codingPath:", context.codingPath)
             self.isLoading = false
@@ -84,45 +101,45 @@ class ArrivalTimeSheetViewModel: NSObject, ObservableObject {
             self.isLoading = false
         }
     }
-    
+
     func getRemoteData() {
         if let user = Auth.auth().currentUser,
-           let email = user.email
+            let email = user.email
         {
             let docRef = db.collection("favoriteRoute").document(email)
-            
-            self.listenerRegistration = docRef.addSnapshotListener { documentSnapshot, error in
+
+            self.listenerRegistration = docRef.addSnapshotListener {
+                documentSnapshot,
+                error in
                 guard let document = documentSnapshot else {
-                    print("Error fetching document: \(error!)")
+                    // self.errorMessage = "無法獲取收藏路線數據。" // Consider adding user-facing error
                     return
                 }
                 guard let data = document.data() else {
-                    print("Document data was empty.")
+                    // self.errorMessage = "收藏路線數據為空。" // Consider adding user-facing error
                     return
                 }
-                print("Current data: \(data)")
-                
+
                 do {
                     let list = try document.data(as: FavoriteList.self)
-                    print("getRemoteData favoriteList \(list)")
                     self.favoriteList = list.list ?? []
-                    self.remoteFavoriteRouteNames = self.favoriteList.compactMap({
-                        $0.name
-                    })
-                }catch {
-                    print(error.localizedDescription)
+                    self.remoteFavoriteRouteNames = self.favoriteList
+                        .compactMap({
+                            $0.name
+                        })
+                } catch {
+                    // self.errorMessage = "解析收藏路線數據失敗：\(error.localizedDescription)" // Consider adding user-facing error
                 }
-                
+
             }
-            
+
         } else {
-            print("not login")
+            // self.errorMessage = "用戶未登入，無法獲取收藏路線。" // Consider adding user-facing error
         }
-        
+
     }
-    
+
     deinit {
         listenerRegistration?.remove()
-        print("ArrivalTimeSheetViewModel deinitialized and listener removed.")
     }
 }
