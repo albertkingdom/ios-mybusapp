@@ -19,14 +19,13 @@ struct DirectionTabInfo: Identifiable {
 
 @MainActor
 class ArrivalTimeSheetViewModel: NSObject, ObservableObject {
-    @Published var favoriteList: [Favorite] = []
     @Published var remoteFavoriteRouteNames: [String] = []
     @Published var isLoading = true
     @Published var sortedArrivalTimes = [Direction: [ArrivalTime]]()
     @Published var errorMessage: String?
     private var listenerRegistration: ListenerRegistration?
-    var location: CLLocation?
-    var stationID: String = ""
+    private var location: CLLocation?
+    private var stationID: String = ""
 
     var directionTabInfos: [DirectionTabInfo] {
         sortedArrivalTimes.keys.sorted().map { key in
@@ -34,7 +33,7 @@ class ArrivalTimeSheetViewModel: NSObject, ObservableObject {
         }
     }
 
-    let db: Firestore
+    let database: Firestore
     let networkManager: NetworkManager
 
     init(
@@ -46,23 +45,13 @@ class ArrivalTimeSheetViewModel: NSObject, ObservableObject {
         self.location = location
         self.stationID = stationID
         self.isLoading = true
-        self.db = db
+        self.database = db
         self.networkManager = networkManager
     }
     
-    private func handleArrivalTime(arrivalTimes: [ArrivalTime]) -> [Direction:
-        [ArrivalTime]]
-    {
-        var sorted: [Direction: [ArrivalTime]] = [.outbound: [], .inbound: []]  // 0:'去程',1:'返程'
-        for time in arrivalTimes {
-            if time.direction == .outbound {
-                sorted[.outbound]?.append(time)
-            }
-            if time.direction == .inbound {
-                sorted[.inbound]?.append(time)
-            }
-        }
-        return sorted
+    private func groupArrivalTimeByDirection(arrivalTimes: [ArrivalTime]) -> [Direction:
+        [ArrivalTime]] {
+        return Dictionary(grouping: arrivalTimes, by: { $0.direction })
     }
 
     func fetchArrivalTime() async {
@@ -83,8 +72,7 @@ class ArrivalTimeSheetViewModel: NSObject, ObservableObject {
                 city: city,
                 stationID: stationID
             )
-            let sorted = handleArrivalTime(arrivalTimes: arrivalTimes)
-            self.sortedArrivalTimes = sorted
+            self.sortedArrivalTimes = groupArrivalTimeByDirection(arrivalTimes: arrivalTimes)
             self.isLoading = false
             self.errorMessage = nil  // Clear any previous error
         } catch let DecodingError.typeMismatch(type, context) {
@@ -104,7 +92,7 @@ class ArrivalTimeSheetViewModel: NSObject, ObservableObject {
             return
         }
         
-        let docRef = db.collection("favoriteRoute").document(email)
+        let docRef = database.collection("favoriteRoute").document(email)
         
         self.listenerRegistration = docRef.addSnapshotListener { documentSnapshot, error in
                 guard let document = documentSnapshot else {
@@ -118,14 +106,9 @@ class ArrivalTimeSheetViewModel: NSObject, ObservableObject {
                 
                 do {
                     let list = try document.data(as: FavoriteList.self)
-                    self.favoriteList = list.list ?? []
-                    self.remoteFavoriteRouteNames = self.favoriteList
-                        .compactMap({
-                            $0.name
-                        })
+                    self.remoteFavoriteRouteNames = (list.list ?? []).compactMap { $0.name }
                 } catch {
-                    self.errorMessage =
-                    "解析收藏路線數據失敗：\(error.localizedDescription)"
+                    self.errorMessage = "解析收藏路線數據失敗：\(error.localizedDescription)"
                 }
             }
         
