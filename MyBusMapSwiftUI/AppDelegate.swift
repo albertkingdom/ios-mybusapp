@@ -13,10 +13,7 @@ import GooglePlaces
 
 class AppDelegate: NSObject, UIApplicationDelegate {
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey : Any]? = nil) -> Bool {
-        GMSServices.provideAPIKey("AIzaSyCBn-VSL1_pMBJhfImXl7c7YkcfSgx-pWI")
-        GMSPlacesClient.provideAPIKey("AIzaSyCBn-VSL1_pMBJhfImXl7c7YkcfSgx-pWI")
-        FirebaseApp.configure()
-        return false
+        return true
     }
     
     func application(_ app: UIApplication, open url: URL, options: [UIApplication.OpenURLOptionsKey : Any] = [:]) -> Bool {

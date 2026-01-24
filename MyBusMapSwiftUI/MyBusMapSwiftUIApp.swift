@@ -7,6 +7,9 @@
 
 import GoogleSignIn
 import SwiftUI
+import FirebaseCore
+import GoogleMaps
+import GooglePlaces
 
 @main
 struct MyBusMapSwiftUIApp: App {
@@ -14,6 +17,12 @@ struct MyBusMapSwiftUIApp: App {
     @StateObject var locationManager = LocationManager()  // 全局單例
     @StateObject var authManager = AuthManager()
     @StateObject var firebaseManager = FirebaseManager()
+    
+    init() {
+        GMSServices.provideAPIKey("AIzaSyCBn-VSL1_pMBJhfImXl7c7YkcfSgx-pWI")
+        GMSPlacesClient.provideAPIKey("AIzaSyCBn-VSL1_pMBJhfImXl7c7YkcfSgx-pWI")
+        FirebaseApp.configure()
+    }
 
     var body: some Scene {
         WindowGroup {

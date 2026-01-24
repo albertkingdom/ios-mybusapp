@@ -25,7 +25,7 @@ class AuthManager: ObservableObject, AuthManagerProtocol {
     @Published var isLogin = false
     @Published var email: String = ""
     init() {
-        checkIfLogin()
+        
     }
     func checkIfLogin() -> User? {
         if let user = Auth.auth().currentUser, let email = user.email, let imageUrl = user.photoURL {
