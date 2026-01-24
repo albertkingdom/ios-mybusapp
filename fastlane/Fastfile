@@ -14,6 +14,8 @@ platform :ios do
       devices: (
         ENV["SCAN_DEVICES"]&.split(",")&.map(&:strip) || ["iPhone 16 Pro", "iPhone 16e", "iPhone 15", "iPhone 14"]
       ),
+      output_style: "raw",
+      xcargs: "-disable-concurrent-testing",
       clean: true
     )
   end
