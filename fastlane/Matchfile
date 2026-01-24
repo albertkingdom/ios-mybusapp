@@ -1,0 +1,13 @@
+# Recommended for CI code signing:
+# - Put certificates/profiles in a private git repo
+# - Provide MATCH_GIT_URL + MATCH_PASSWORD via secrets
+
+storage_mode("git")
+git_url(ENV["MATCH_GIT_URL"])
+
+type("appstore")
+app_identifier(["com.a2006mike.MyBusMapSwiftUI"])
+team_id("UZ2Z639589")
+
+username(ENV["FASTLANE_USER"]) if ENV["FASTLANE_USER"]
+

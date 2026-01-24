@@ -1,0 +1,6 @@
+app_identifier("com.a2006mike.MyBusMapSwiftUI")
+team_id("UZ2Z639589")
+
+# Set via env in CI/local shell
+apple_id(ENV["FASTLANE_USER"]) if ENV["FASTLANE_USER"]
+

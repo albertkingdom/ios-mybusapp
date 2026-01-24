@@ -1,0 +1,75 @@
+name: iOS CI
+
+on:
+  pull_request:
+  push:
+    branches: [main, master]
+  workflow_dispatch:
+
+jobs:
+  test:
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Select Xcode
+        uses: maxim-lobanov/setup-xcode@v1
+        with:
+          xcode-version: latest-stable
+
+      - name: Set up Ruby + Bundler
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: "3.2"
+          bundler-cache: true
+
+      - name: Create xcconfig (CI)
+        env:
+          API_CLIENT_ID: ${{ secrets.API_CLIENT_ID }}
+          API_CLIENT_KEY: ${{ secrets.API_CLIENT_KEY }}
+        run: |
+          cat > MyBusMapSwiftUI/Config.local.xcconfig <<EOF
+          API_CLIENT_ID = ${API_CLIENT_ID:-ci}
+          API_CLIENT_KEY = ${API_CLIENT_KEY:-ci}
+          EOF
+
+      - name: Run tests (fastlane)
+        run: bundle exec fastlane ios ci
+
+  beta:
+    if: github.event_name == 'workflow_dispatch'
+    runs-on: macos-latest
+    needs: test
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Select Xcode
+        uses: maxim-lobanov/setup-xcode@v1
+        with:
+          xcode-version: latest-stable
+
+      - name: Set up Ruby + Bundler
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: "3.2"
+          bundler-cache: true
+
+      - name: Create xcconfig (CI)
+        env:
+          API_CLIENT_ID: ${{ secrets.API_CLIENT_ID }}
+          API_CLIENT_KEY: ${{ secrets.API_CLIENT_KEY }}
+        run: |
+          cat > MyBusMapSwiftUI/Config.local.xcconfig <<EOF
+          API_CLIENT_ID = ${API_CLIENT_ID:-ci}
+          API_CLIENT_KEY = ${API_CLIENT_KEY:-ci}
+          EOF
+
+      - name: Upload TestFlight (fastlane)
+        env:
+          FASTLANE_USER: ${{ secrets.FASTLANE_USER }}
+          MATCH_GIT_URL: ${{ secrets.MATCH_GIT_URL }}
+          MATCH_PASSWORD: ${{ secrets.MATCH_PASSWORD }}
+          ASC_KEY_ID: ${{ secrets.ASC_KEY_ID }}
+          ASC_ISSUER_ID: ${{ secrets.ASC_ISSUER_ID }}
+          ASC_KEY_CONTENT: ${{ secrets.ASC_KEY_CONTENT }}
+        run: bundle exec fastlane ios beta

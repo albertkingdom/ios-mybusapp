@@ -22,3 +22,27 @@ UI設計和功能模仿App Store上知名公車app: [Bus+](https://apps.apple.co
 
 <img src="https://imgur.com/fbFPlGX.png"  width="150" height="300" />
 
+## CI/CD（GitHub Actions + fastlane）
+
+### 本機
+- 安裝依賴：`bundle install`
+- 跑測試：`bundle exec fastlane ios test`
+- 建置（不上傳）：`bundle exec fastlane ios build`
+
+### GitHub Actions
+- Workflow：`.github/workflows/ios.yml`
+- `test` job：每次 Push/PR 會跑 `fastlane ios ci`
+- `beta` job：手動觸發 `workflow_dispatch` 後上傳 TestFlight（需要設定 Secrets）
+
+### 需要的 Secrets（TestFlight）
+- `FASTLANE_USER`：Apple ID（僅供 match 使用時需要）
+- `MATCH_GIT_URL`、`MATCH_PASSWORD`：fastlane match 的憑證 repo 與密碼
+- `ASC_KEY_ID`、`ASC_ISSUER_ID`、`ASC_KEY_CONTENT`：App Store Connect API Key（`ASC_KEY_CONTENT` 請放 `.p8` 的 base64）
+
+### 需要的 Secrets（CI build 用 xcconfig）
+- `API_CLIENT_ID`、`API_CLIENT_KEY`：用來在 CI 產生 `MyBusMapSwiftUI/Config.local.xcconfig`（PR 來源若拿不到 secrets 會用 `ci` 佔位值）
+
+### 本機設定（不提交到 git）
+- 建立 `MyBusMapSwiftUI/Config.local.xcconfig`（或沿用 repo root 的 `Config.local`），填入：
+  - `API_CLIENT_ID = ...`
+  - `API_CLIENT_KEY = ...`

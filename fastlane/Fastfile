@@ -1,0 +1,48 @@
+default_platform(:ios)
+
+platform :ios do
+  before_all do
+    setup_ci if ENV["CI"]
+  end
+
+  desc "Run unit/UI tests"
+  lane :test do
+    scan(
+      project: "MyBusMapSwiftUI.xcodeproj",
+      scheme: "MyBusMapSwiftUI",
+      testplan: "MyBusMapSwiftUI",
+      destination: "generic/platform=iOS Simulator",
+      clean: true
+    )
+  end
+
+  desc "Build app-store IPA (no upload)"
+  lane :build do
+    gym(
+      project: "MyBusMapSwiftUI.xcodeproj",
+      scheme: "MyBusMapSwiftUI",
+      export_method: "app-store",
+      clean: true,
+      output_directory: "fastlane/build"
+    )
+  end
+
+  desc "Build + upload to TestFlight (requires signing + App Store Connect API key)"
+  lane :beta do
+    api_key = app_store_connect_api_key(
+      key_id: ENV["ASC_KEY_ID"],
+      issuer_id: ENV["ASC_ISSUER_ID"],
+      key_content: ENV["ASC_KEY_CONTENT"],
+      is_key_content_base64: true
+    )
+
+    match(type: "appstore", readonly: !!ENV["CI"])
+    build
+    pilot(api_key: api_key, skip_waiting_for_build_processing: true)
+  end
+
+  desc "CI lane (tests only)"
+  lane :ci do
+    test
+  end
+end

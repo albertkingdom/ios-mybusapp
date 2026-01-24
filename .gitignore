@@ -65,3 +65,17 @@ Carthage/Build/
 
 
 *.xcconfig
+
+# fastlane
+fastlane/build/
+fastlane/report.xml
+fastlane/test_output/
+*.ipa
+*.dSYM.zip
+
+# Bundler
+vendor/bundle/
+
+# Local secrets override
+MyBusMapSwiftUI/Config.local.xcconfig
+Config.local
