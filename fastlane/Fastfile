@@ -11,7 +11,9 @@ platform :ios do
       project: "MyBusMapSwiftUI.xcodeproj",
       scheme: "MyBusMapSwiftUI",
       testplan: "MyBusMapSwiftUI",
-      destination: "generic/platform=iOS Simulator",
+      devices: (
+        ENV["SCAN_DEVICES"]&.split(",")&.map(&:strip) || ["iPhone 16 Pro", "iPhone 16e", "iPhone 15", "iPhone 14"]
+      ),
       clean: true
     )
   end
