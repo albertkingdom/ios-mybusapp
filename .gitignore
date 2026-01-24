@@ -65,6 +65,7 @@ Carthage/Build/
 
 
 *.xcconfig
+!MyBusMapSwiftUI/Config.xcconfig
 
 # fastlane
 fastlane/build/
