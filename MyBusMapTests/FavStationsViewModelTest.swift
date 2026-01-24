@@ -8,6 +8,7 @@
 import Realm
 import RealmSwift
 import Testing
+import FirebaseAuth
 
 @testable import MyBusMapSwiftUI
 
@@ -46,15 +47,13 @@ class MockRealmManger: RealmManagerProtocol {
     var realm: Realm!
     init() {
         let config = Realm.Configuration(
-            inMemoryIdentifier: "TEST")
+            inMemoryIdentifier: UUID().uuidString)
         // Open the realm
         do {
             self.realm = try Realm(configuration: config)
             do {
                 try realm?.write {
-                    for favorite in mockFavorites {
-                        self.realm.add(mockFavorites)
-                    }
+                    self.realm.add(mockFavorites)
                 }
             } catch let error {
                 print(error.localizedDescription)
@@ -72,7 +71,7 @@ class MockRealmManger: RealmManagerProtocol {
     func saveToDB(_ favorite: MyBusMapSwiftUI.FavoriteRealm) {
         do {
             try realm?.write {
-                realm?.add(mockFavorites)
+                realm?.add(favorite)
             }
         } catch let error {
             print(error.localizedDescription)
@@ -101,13 +100,30 @@ class MockRealmManger: RealmManagerProtocol {
             
 
 }
+
+final class MockFavStationsAuthManager: AuthManager {
+    override func checkIfLogin() -> FirebaseAuth.User? {
+        isLogin = false
+        email = ""
+        return nil
+    }
+
+    override func signIn(completion: @escaping (Result<AuthResult, Error>) -> Void) {
+    }
+
+    override func signOut() {
+        isLogin = false
+        email = ""
+    }
+}
 struct FavStationsViewModelTest {
 
     @Test func testGetRemoteData_success() async {
         var viewModel: FavStationsViewModel = FavStationsViewModel(
             firebaseService: MockFirebaseManagerService(
                 shouldReturnSuccess: true),
-            realmManager: MockRealmManger())
+            realmManager: MockRealmManger(),
+            authManager: MockFavStationsAuthManager())
         await viewModel.getRemoteData(email: "")
         #expect(viewModel.favoriteList.count == 2)
     }
@@ -116,7 +132,8 @@ struct FavStationsViewModelTest {
         var viewModel: FavStationsViewModel = FavStationsViewModel(
             firebaseService: MockFirebaseManagerService(
                 shouldReturnSuccess: false),
-            realmManager: MockRealmManger())
+            realmManager: MockRealmManger(),
+            authManager: MockFavStationsAuthManager())
         await viewModel.getRemoteData(email: "")
         #expect(viewModel.favoriteList.count == 0)
     }
@@ -125,7 +142,8 @@ struct FavStationsViewModelTest {
             shouldReturnSuccess: true)
         var viewModel: FavStationsViewModel = FavStationsViewModel(
             firebaseService: mockFirebaseService,
-            realmManager: MockRealmManger())
+            realmManager: MockRealmManger(),
+            authManager: MockFavStationsAuthManager())
         viewModel.favoriteList = mockFirebaseService.mockFavorites
         let preCount = viewModel.favoriteList.count
         let favoriteToBeDeleted = mockFirebaseService.mockFavorites[0]
@@ -140,7 +158,8 @@ struct FavStationsViewModelTest {
         let mockRealmManager = MockRealmManger()
         var viewModel: FavStationsViewModel = FavStationsViewModel(
             firebaseService: mockFirebaseService,
-            realmManager: mockRealmManager)
+            realmManager: mockRealmManager,
+            authManager: MockFavStationsAuthManager())
         
 //        viewModel.realmFavList = mockRealmManager.readAllFromDB()
 //        let preCount = viewModel.realmFavList.count
@@ -156,7 +175,8 @@ struct FavStationsViewModelTest {
         let mockRealmManager = MockRealmManger()
         let viewModel: FavStationsViewModel = FavStationsViewModel(
             firebaseService: mockFirebaseService,
-            realmManager: mockRealmManager)
+            realmManager: mockRealmManager,
+            authManager: MockFavStationsAuthManager())
         
         viewModel.readLocalData()
         #expect(viewModel.realmFavList.count == 2)
