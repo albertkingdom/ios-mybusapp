@@ -87,8 +87,7 @@
 		DF03DAEF29AF222800FD4377 /* GoogleSignInSwift in Frameworks */ = {isa = PBXBuildFile; productRef = DF03DAEE29AF222800FD4377 /* GoogleSignInSwift */; };
 		DF03DAF229AF229500FD4377 /* Kingfisher in Frameworks */ = {isa = PBXBuildFile; productRef = DF03DAF129AF229500FD4377 /* Kingfisher */; };
 		DF03DAF429AF452D00FD4377 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = DF03DAF329AF452D00FD4377 /* GoogleService-Info.plist */; };
-		DF03DAF729AF4DDF00FD4377 /* Realm in Frameworks */ = {isa = PBXBuildFile; productRef = DF03DAF629AF4DDF00FD4377 /* Realm */; };
-		DF03DAF929AF4DDF00FD4377 /* RealmSwift in Frameworks */ = {isa = PBXBuildFile; productRef = DF03DAF829AF4DDF00FD4377 /* RealmSwift */; };
+			DF03DAF929AF4DDF00FD4377 /* RealmSwift in Frameworks */ = {isa = PBXBuildFile; productRef = DF03DAF829AF4DDF00FD4377 /* RealmSwift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -217,11 +216,10 @@
 				DF03DAB229AF0C9400FD4377 /* CoreTelephony.framework in Frameworks */,
 				DF03DAB329AF0C9400FD4377 /* CoreGraphics.framework in Frameworks */,
 				A1F168522BDFF1250080F57E /* FirebaseInstallations in Frameworks */,
-				DF03DAB429AF0C9500FD4377 /* CoreLocation.framework in Frameworks */,
-				DF03DAF729AF4DDF00FD4377 /* Realm in Frameworks */,
-				A1E172432BEA6B6100ED5916 /* GoogleMapsBase in Frameworks */,
-				DF03DAF929AF4DDF00FD4377 /* RealmSwift in Frameworks */,
-				DF03DAF229AF229500FD4377 /* Kingfisher in Frameworks */,
+					DF03DAB429AF0C9500FD4377 /* CoreLocation.framework in Frameworks */,
+					A1E172432BEA6B6100ED5916 /* GoogleMapsBase in Frameworks */,
+					DF03DAF929AF4DDF00FD4377 /* RealmSwift in Frameworks */,
+					DF03DAF229AF229500FD4377 /* Kingfisher in Frameworks */,
 				A1F168462BDFF1250080F57E /* FirebaseFirestore in Frameworks */,
 				DF03DAB529AF0C9500FD4377 /* CoreText.framework in Frameworks */,
 				DF03DAB629AF0C9500FD4377 /* CoreData.framework in Frameworks */,
@@ -482,12 +480,11 @@
 			name = MyBusMapSwiftUI;
 			packageProductDependencies = (
 				DF03DAEC29AF222800FD4377 /* GoogleSignIn */,
-				DF03DAEE29AF222800FD4377 /* GoogleSignInSwift */,
-				DF03DAF129AF229500FD4377 /* Kingfisher */,
-				DF03DAF629AF4DDF00FD4377 /* Realm */,
-				DF03DAF829AF4DDF00FD4377 /* RealmSwift */,
-				A1F168412BDFF1250080F57E /* FirebaseAuth */,
-				A1F168432BDFF1250080F57E /* FirebaseCrashlytics */,
+					DF03DAEE29AF222800FD4377 /* GoogleSignInSwift */,
+					DF03DAF129AF229500FD4377 /* Kingfisher */,
+					DF03DAF829AF4DDF00FD4377 /* RealmSwift */,
+					A1F168412BDFF1250080F57E /* FirebaseAuth */,
+					A1F168432BDFF1250080F57E /* FirebaseCrashlytics */,
 				A1F168452BDFF1250080F57E /* FirebaseFirestore */,
 				A1F168472BDFF1250080F57E /* FirebaseFirestoreSwift */,
 				A1F168512BDFF1250080F57E /* FirebaseInstallations */,
