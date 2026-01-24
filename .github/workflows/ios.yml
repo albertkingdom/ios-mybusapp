@@ -12,7 +12,6 @@ jobs:
     env:
       FASTLANE_XCODEBUILD_SETTINGS_TIMEOUT: "60"
       FASTLANE_XCODEBUILD_SETTINGS_RETRIES: "10"
-      TMPDIR: ${{ runner.temp }}
     steps:
       - uses: actions/checkout@v4
 
@@ -29,9 +28,10 @@ jobs:
 
       - name: Ensure temp directories
         run: |
-          mkdir -p "$TMPDIR"
-          echo "TMPDIR=$TMPDIR"
-          ls -ld "$TMPDIR"
+          echo "TMPDIR=$RUNNER_TEMP" >> "$GITHUB_ENV"
+          mkdir -p "$RUNNER_TEMP"
+          echo "TMPDIR=$RUNNER_TEMP"
+          ls -ld "$RUNNER_TEMP"
 
       - name: Create xcconfig (CI)
         env:
@@ -53,7 +53,6 @@ jobs:
     env:
       FASTLANE_XCODEBUILD_SETTINGS_TIMEOUT: "60"
       FASTLANE_XCODEBUILD_SETTINGS_RETRIES: "10"
-      TMPDIR: ${{ runner.temp }}
     steps:
       - uses: actions/checkout@v4
 
@@ -70,9 +69,10 @@ jobs:
 
       - name: Ensure temp directories
         run: |
-          mkdir -p "$TMPDIR"
-          echo "TMPDIR=$TMPDIR"
-          ls -ld "$TMPDIR"
+          echo "TMPDIR=$RUNNER_TEMP" >> "$GITHUB_ENV"
+          mkdir -p "$RUNNER_TEMP"
+          echo "TMPDIR=$RUNNER_TEMP"
+          ls -ld "$RUNNER_TEMP"
 
       - name: Create xcconfig (CI)
         env:
