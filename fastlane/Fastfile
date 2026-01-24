@@ -12,7 +12,7 @@ platform :ios do
       scheme: "MyBusMapSwiftUI",
       testplan: "MyBusMapSwiftUI",
       devices: (
-        ENV["SCAN_DEVICES"]&.split(",")&.map(&:strip) || ["iPhone 16 Pro", "iPhone 16e", "iPhone 15", "iPhone 14"]
+        ENV["SCAN_DEVICES"]&.split(",")&.map(&:strip) || ["iPhone 16e", "iPhone 17", "iPhone 17 Pro", "iPhone 16 Pro", "iPhone 15", "iPhone 14"]
       ),
       output_style: "raw",
       xcargs: "-disable-concurrent-testing",
