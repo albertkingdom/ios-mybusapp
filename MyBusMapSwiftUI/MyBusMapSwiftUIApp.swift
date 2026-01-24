@@ -19,8 +19,9 @@ struct MyBusMapSwiftUIApp: App {
     @StateObject var firebaseManager = FirebaseManager()
     
     init() {
-        GMSServices.provideAPIKey("AIzaSyCBn-VSL1_pMBJhfImXl7c7YkcfSgx-pWI")
-        GMSPlacesClient.provideAPIKey("AIzaSyCBn-VSL1_pMBJhfImXl7c7YkcfSgx-pWI")
+        let apiKey = Bundle.main.object(forInfoDictionaryKey: "GMSApiKey") as? String ?? ""
+        GMSServices.provideAPIKey(apiKey)
+        GMSPlacesClient.provideAPIKey(apiKey)
         FirebaseApp.configure()
     }
 

@@ -4,6 +4,7 @@
 // Committed defaults (non-production). Override via `Config.local.xcconfig` or CI secrets.
 API_CLIENT_ID = ci
 API_CLIENT_KEY = ci
+GMS_API_KEY = ci
 
 // Local developer override (do NOT commit).
 // Create `Config.local.xcconfig`:

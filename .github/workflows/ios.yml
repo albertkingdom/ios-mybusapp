@@ -38,10 +38,12 @@ jobs:
         env:
           API_CLIENT_ID: ${{ secrets.API_CLIENT_ID }}
           API_CLIENT_KEY: ${{ secrets.API_CLIENT_KEY }}
+          GMS_API_KEY: ${{ secrets.GMS_API_KEY }}
         run: |
           cat > MyBusMapSwiftUI/Config.local.xcconfig <<EOF
           API_CLIENT_ID = ${API_CLIENT_ID:-ci}
           API_CLIENT_KEY = ${API_CLIENT_KEY:-ci}
+          GMS_API_KEY = ${GMS_API_KEY:-ci}
           EOF
 
       - name: Run tests (fastlane)
@@ -80,10 +82,12 @@ jobs:
         env:
           API_CLIENT_ID: ${{ secrets.API_CLIENT_ID }}
           API_CLIENT_KEY: ${{ secrets.API_CLIENT_KEY }}
+          GMS_API_KEY: ${{ secrets.GMS_API_KEY }}
         run: |
           cat > MyBusMapSwiftUI/Config.local.xcconfig <<EOF
           API_CLIENT_ID = ${API_CLIENT_ID:-ci}
           API_CLIENT_KEY = ${API_CLIENT_KEY:-ci}
+          GMS_API_KEY = ${GMS_API_KEY:-ci}
           EOF
 
       - name: Upload TestFlight (fastlane)
