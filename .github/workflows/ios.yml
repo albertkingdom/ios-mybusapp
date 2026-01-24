@@ -9,6 +9,9 @@ on:
 jobs:
   test:
     runs-on: macos-latest
+    env:
+      FASTLANE_XCODEBUILD_SETTINGS_TIMEOUT: "60"
+      FASTLANE_XCODEBUILD_SETTINGS_RETRIES: "10"
     steps:
       - uses: actions/checkout@v4
 
@@ -40,6 +43,9 @@ jobs:
     if: github.event_name == 'workflow_dispatch'
     runs-on: macos-latest
     needs: test
+    env:
+      FASTLANE_XCODEBUILD_SETTINGS_TIMEOUT: "60"
+      FASTLANE_XCODEBUILD_SETTINGS_RETRIES: "10"
     steps:
       - uses: actions/checkout@v4
 
