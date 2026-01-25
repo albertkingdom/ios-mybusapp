@@ -109,10 +109,30 @@ jobs:
         run: |
           set -euo pipefail
           mkdir -p fastlane/tmp
-          if echo "$ASC_KEY_CONTENT" | grep -q "BEGIN PRIVATE KEY"; then
-            printf "%s" "$ASC_KEY_CONTENT" > fastlane/tmp/AuthKey.p8
+          pem="$(printf '%b' "$ASC_KEY_CONTENT")"
+
+          if printf '%s' "$pem" | grep -q "BEGIN PRIVATE KEY"; then
+            if printf '%s' "$pem" | grep -q $'\\n'; then
+              printf '%s\n' "$pem" > fastlane/tmp/AuthKey.p8
+            else
+              body="$(printf '%s' "$pem" | sed -e 's/-----BEGIN PRIVATE KEY-----//' -e 's/-----END PRIVATE KEY-----//')"
+              body="$(printf '%s' "$body" | tr -d ' \t\r\n')"
+              {
+                echo "-----BEGIN PRIVATE KEY-----"
+                echo "$body" | fold -w 64
+                echo "-----END PRIVATE KEY-----"
+              } > fastlane/tmp/AuthKey.p8
+            fi
           else
-            printf "%s" "$ASC_KEY_CONTENT" | tr -d '\r\n' | base64 -D > fastlane/tmp/AuthKey.p8
+            b64="$(printf '%s' "$ASC_KEY_CONTENT" | tr -d ' \t\r\n')"
+            if printf '%s' "$b64" | base64 -D > fastlane/tmp/AuthKey.p8 2>/dev/null; then
+              :
+            elif printf '%s' "$b64" | base64 --decode > fastlane/tmp/AuthKey.p8 2>/dev/null; then
+              :
+            else
+              echo "::error::ASC_KEY_CONTENT is neither a PEM (.p8) nor valid base64."
+              exit 1
+            fi
           fi
           head -n 1 fastlane/tmp/AuthKey.p8 | grep -q "BEGIN PRIVATE KEY"
           echo "ASC_KEY_PATH=$PWD/fastlane/tmp/AuthKey.p8" >> "$GITHUB_ENV"

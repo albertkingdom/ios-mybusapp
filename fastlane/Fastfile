@@ -22,6 +22,7 @@ platform :ios do
 
   desc "Build app-store IPA (no upload)"
   lane :build do
+    match(type: "appstore", readonly: !!ENV["CI"])
     gym(
       project: "MyBusMapSwiftUI.xcodeproj",
       scheme: "MyBusMapSwiftUI",
