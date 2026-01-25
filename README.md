@@ -37,7 +37,18 @@ UI設計和功能模仿App Store上知名公車app: [Bus+](https://apps.apple.co
 ### 需要的 Secrets（TestFlight）
 - `FASTLANE_USER`：Apple ID（僅供 match 使用時需要）
 - `MATCH_GIT_URL`、`MATCH_PASSWORD`：fastlane match 的憑證 repo 與密碼
-- `ASC_KEY_ID`、`ASC_ISSUER_ID`、`ASC_KEY_CONTENT`：App Store Connect API Key（`ASC_KEY_CONTENT` 請放 `.p8` 的 base64）
+- （選用）`MATCH_GIT_PRIVATE_KEY`：若 `MATCH_GIT_URL` 使用 SSH（`git@...`）時，提供可讀取該私有 repo 的 deploy key
+- `ASC_KEY_ID`、`ASC_ISSUER_ID`、`ASC_KEY_CONTENT`：App Store Connect API Key（`ASC_KEY_CONTENT` 建議放 `.p8` 的 base64 單行字串）
+  - 產生方式（macOS）：`base64 -i AuthKey_XXXXXX.p8 | tr -d '\\n'`
+
+### fastlane match（憑證 / Provisioning Profiles）
+1) 建立一個私有 git repo 來存放 match 產出（不要放在 app repo）
+2) 設定環境變數（本機可用 `fastlane/.env`；範例見 `fastlane/.env.example`）：
+   - `MATCH_GIT_URL`、`MATCH_PASSWORD`、（必要時）`FASTLANE_USER`
+3) 初次建立/上傳（需要能登入 Apple Developer Portal）：
+   - `bundle exec fastlane match appstore`
+4) 只同步（不改 Portal；CI 常用）：
+   - `bundle exec fastlane ios sync_signing type:appstore readonly:true`
 
 ### 需要的 Secrets（CI build 用 xcconfig）
 - `API_CLIENT_ID`、`API_CLIENT_KEY`：用來在 CI 產生 `MyBusMapSwiftUI/Config.local.xcconfig`（PR 來源若拿不到 secrets 會用 `ci` 佔位值）

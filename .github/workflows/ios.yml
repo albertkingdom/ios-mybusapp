@@ -90,6 +90,32 @@ jobs:
           GMS_API_KEY = ${GMS_API_KEY:-ci}
           EOF
 
+      - name: Setup SSH for match repo (optional)
+        if: ${{ secrets.MATCH_GIT_PRIVATE_KEY != '' }}
+        uses: webfactory/ssh-agent@v0.9.0
+        with:
+          ssh-private-key: ${{ secrets.MATCH_GIT_PRIVATE_KEY }}
+
+      - name: Trust GitHub host key (optional)
+        if: ${{ secrets.MATCH_GIT_PRIVATE_KEY != '' }}
+        run: |
+          mkdir -p ~/.ssh
+          ssh-keyscan github.com >> ~/.ssh/known_hosts
+
+      - name: Create App Store Connect API key file (p8)
+        env:
+          ASC_KEY_CONTENT: ${{ secrets.ASC_KEY_CONTENT }}
+        run: |
+          set -euo pipefail
+          mkdir -p fastlane/tmp
+          if echo "$ASC_KEY_CONTENT" | grep -q "BEGIN PRIVATE KEY"; then
+            printf "%s" "$ASC_KEY_CONTENT" > fastlane/tmp/AuthKey.p8
+          else
+            printf "%s" "$ASC_KEY_CONTENT" | tr -d '\r\n' | base64 -D > fastlane/tmp/AuthKey.p8
+          fi
+          head -n 1 fastlane/tmp/AuthKey.p8 | grep -q "BEGIN PRIVATE KEY"
+          echo "ASC_KEY_PATH=$PWD/fastlane/tmp/AuthKey.p8" >> "$GITHUB_ENV"
+
       - name: Upload TestFlight (fastlane)
         env:
           FASTLANE_USER: ${{ secrets.FASTLANE_USER }}
@@ -97,5 +123,4 @@ jobs:
           MATCH_PASSWORD: ${{ secrets.MATCH_PASSWORD }}
           ASC_KEY_ID: ${{ secrets.ASC_KEY_ID }}
           ASC_ISSUER_ID: ${{ secrets.ASC_ISSUER_ID }}
-          ASC_KEY_CONTENT: ${{ secrets.ASC_KEY_CONTENT }}
         run: bundle exec fastlane ios beta

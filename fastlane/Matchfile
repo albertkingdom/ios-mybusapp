@@ -3,11 +3,16 @@
 # - Provide MATCH_GIT_URL + MATCH_PASSWORD via secrets
 
 storage_mode("git")
+if ENV["MATCH_GIT_URL"].to_s.empty?
+  UI.user_error!("Missing MATCH_GIT_URL. Set it to your private match repo (e.g. git@github.com:org/app-certs.git).")
+end
 git_url(ENV["MATCH_GIT_URL"])
+
+git_branch(ENV["MATCH_GIT_BRANCH"] || "main")
+shallow_clone(true)
 
 type("appstore")
 app_identifier(["com.a2006mike.MyBusMapSwiftUI"])
 team_id("UZ2Z639589")
 
 username(ENV["FASTLANE_USER"]) if ENV["FASTLANE_USER"]
-

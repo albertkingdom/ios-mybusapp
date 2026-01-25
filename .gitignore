@@ -80,3 +80,11 @@ vendor/bundle/
 # Local secrets override
 MyBusMapSwiftUI/Config.local.xcconfig
 Config.local
+
+# fastlane dotenv (keep examples committed)
+.env
+.env.*
+fastlane/.env
+fastlane/.env.*
+!.env.example
+!fastlane/.env.example
