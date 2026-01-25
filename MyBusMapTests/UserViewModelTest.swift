@@ -5,20 +5,23 @@
 //  Created by yklin on 2024/11/3.
 //
 
-import FirebaseAuth
 import Testing
+import Foundation
 
 @testable import MyBusMapSwiftUI
 
 enum MockAuthError: Error {
     case authError
 }
+
 class MockAuthManager: AuthManagerProtocol {
+    var isLogin: Bool = false
+    
     func signOut() {
         
     }
     
-    func checkIfLogin() -> User? {
+    func checkIfLogin() -> UserSession? {
         return nil
     }
     
@@ -39,7 +42,6 @@ class MockAuthManager: AuthManagerProtocol {
 }
 
 struct UserViewModelTest {
-
     @Test func testGoogleLogin_success() async throws {
         let mockAuthManager = MockAuthManager(isSuccess: true)
         let viewModel = UserViewModel(authManager: mockAuthManager)

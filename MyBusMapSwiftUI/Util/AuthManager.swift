@@ -10,29 +10,36 @@ import FirebaseCore
 import Foundation
 import GoogleSignIn
 
+struct UserSession {
+    let email: String
+    let photoURL: URL
+}
 
 struct AuthResult {
     let userEmail: String
     let imageUrl: URL
 }
 protocol AuthManagerProtocol {
+    var isLogin: Bool { get }
     func signIn(completion: @escaping (Result<AuthResult, Error>) -> Void)
     func signOut()
-    func checkIfLogin() -> User?
+    func checkIfLogin() -> UserSession?
 }
 
 class AuthManager: ObservableObject, AuthManagerProtocol {
     @Published var isLogin = false
     @Published var email: String = ""
     init() {
-        checkIfLogin()
+        
     }
-    func checkIfLogin() -> User? {
+
+    func checkIfLogin() -> UserSession? {
+        guard FirebaseApp.app() != nil else { return nil }
         if let user = Auth.auth().currentUser, let email = user.email, let imageUrl = user.photoURL {
             isLogin = true
             self.email = email
             print("isLogin")
-            return user
+            return UserSession(email: email, photoURL: imageUrl)
         } else {
             print("isNotLogin")
             return nil
@@ -40,6 +47,7 @@ class AuthManager: ObservableObject, AuthManagerProtocol {
     }
     
     func signIn(completion: @escaping (Result<AuthResult, Error>) -> Void) {
+        guard FirebaseApp.app() != nil else { return }
         guard let clientID = FirebaseApp.app()?.options.clientID else { return }
 
         // Create Google Sign In configuration object.
@@ -83,6 +91,7 @@ class AuthManager: ObservableObject, AuthManagerProtocol {
         }
     }
     func signOut() {
+        guard FirebaseApp.app() != nil else { return }
         let firebaseAuth = Auth.auth()
         do {
             try firebaseAuth.signOut()

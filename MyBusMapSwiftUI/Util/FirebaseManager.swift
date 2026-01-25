@@ -21,7 +21,7 @@ protocol FirebaseManagerProtocol {
 
 class FirebaseManager: FirebaseManagerProtocol, ObservableObject {
     static let shared = FirebaseManager()
-    let db = Firestore.firestore()
+    lazy var db = Firestore.firestore()
     
     func getRemoteData(email: String) async -> [Favorite] {
 

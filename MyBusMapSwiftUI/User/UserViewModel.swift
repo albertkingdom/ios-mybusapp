@@ -48,10 +48,10 @@ class UserViewModel: ObservableObject {
     }
     
     func checkIfSignIn() {
-        if let user = authManager.checkIfLogin(), let email = user.email, let imageUrl = user.photoURL {
+        if let session = authManager.checkIfLogin() {
             isLogin = true
-            userEmail = email
-            self.imageUrl = imageUrl
+            userEmail = session.email
+            self.imageUrl = session.photoURL
         }
     }
 }

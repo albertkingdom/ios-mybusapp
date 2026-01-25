@@ -1,0 +1,16 @@
+// Configuration settings file format documentation can be found at:
+// https://help.apple.com/xcode/#/dev745c5c974
+
+// Committed defaults (non-production). Override via `Config.local.xcconfig` or CI secrets.
+API_CLIENT_ID = ci
+API_CLIENT_KEY = ci
+GMS_API_KEY = ci
+
+// Local developer override (do NOT commit).
+// Create `Config.local.xcconfig`:
+// API_CLIENT_ID = ...
+// API_CLIENT_KEY = ...
+#include? "Config.local.xcconfig"
+
+// Backward-compatible local override at repo root (do NOT commit): `../Config.local`
+#include? "../Config.local"

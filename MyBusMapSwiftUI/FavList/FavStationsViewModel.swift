@@ -39,11 +39,11 @@ class FavStationsViewModel: ObservableObject {
     }
     let firebaseService: FirebaseManagerProtocol
     let realmManager: RealmManagerProtocol
-    let authManager: AuthManager
+    let authManager: AuthManagerProtocol
     init(
         firebaseService: FirebaseManagerProtocol,
         realmManager: RealmManagerProtocol,
-        authManager: AuthManager
+        authManager: AuthManagerProtocol
     ) {
         self.firebaseService = firebaseService
         self.realmManager = realmManager

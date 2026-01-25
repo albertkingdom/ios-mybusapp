@@ -48,6 +48,9 @@ struct HomeView: View {
                 await mapViewModel.fetchNearByStations(location: newLocation ?? CLLocation(latitude: 0, longitude: 0))
             }
         })
+        .onAppear {
+            _ = authManager.checkIfLogin()
+        }
         
         
     }

@@ -12,7 +12,76 @@
 
   },
   "testTargets" : [
-
+    {
+      "parallelizable" : true,
+      "selectedTests" : {
+        "suites" : [
+          {
+            "name" : "FavStationsViewModelTest",
+            "testFunctions" : [
+              "testDeleteLocalData()",
+              "testDeleteRemoteData()",
+              "testGetRemoteData_failure()",
+              "testGetRemoteData_success()",
+              "testReadLocalData()"
+            ]
+          },
+          {
+            "name" : "UserViewModelTest",
+            "testFunctions" : [
+              "testGoogleLogin_failure()",
+              "testGoogleLogin_success()"
+            ]
+          }
+        ],
+        "xctestClasses" : [
+          {
+            "name" : "TokenManagerTests",
+            "xctestMethods" : [
+              "testDeleteTokenFromKeychain()",
+              "testFetchNewToken_Failure_DecodingError()",
+              "testFetchNewToken_Failure_MissingClientID()",
+              "testFetchNewToken_Failure_MissingClientKey()",
+              "testFetchNewToken_Failure_NetworkError()",
+              "testFetchNewToken_Success()",
+              "testGetValidToken_NoCurrentToken_FetchesNewToken()",
+              "testGetValidToken_WhenTokenIsExpired_FetchesNewToken()",
+              "testGetValidToken_WhenTokenIsValid_ReturnsExistingToken()",
+              "testIsTokenExpired_False()",
+              "testIsTokenExpired_NoExpirationDate()",
+              "testIsTokenExpired_True()",
+              "testRetrieveTokenFromKeychain()",
+              "testRetrieveTokenFromKeychain_NoToken()",
+              "testSaveTokenExpiration()",
+              "testSaveTokenToKeychain()"
+            ]
+          }
+        ]
+      },
+      "target" : {
+        "containerPath" : "container:MyBusMapSwiftUI.xcodeproj",
+        "identifier" : "A1F22EE32C426E2C003DF7EE",
+        "name" : "MyBusMapTests"
+      }
+    },
+    {
+      "parallelizable" : true,
+      "selectedTests" : {
+        "suites" : [
+          {
+            "name" : "MyBusMapSwiftUITests",
+            "testFunctions" : [
+              "example()"
+            ]
+          }
+        ]
+      },
+      "target" : {
+        "containerPath" : "container:MyBusMapSwiftUI.xcodeproj",
+        "identifier" : "A1F4682A2EBF10C000A7AAE1",
+        "name" : "MyBusMapSwiftUITests"
+      }
+    }
   ],
   "version" : 1
 }
