@@ -57,6 +57,7 @@ jobs:
       FASTLANE_XCODEBUILD_SETTINGS_TIMEOUT: "60"
       FASTLANE_XCODEBUILD_SETTINGS_RETRIES: "10"
       SCAN_DEVICES: iPhone 16e
+      HAS_MATCH_GIT_PRIVATE_KEY: ${{ secrets.MATCH_GIT_PRIVATE_KEY != '' }}
     steps:
       - uses: actions/checkout@v4
 
@@ -91,13 +92,13 @@ jobs:
           EOF
 
       - name: Setup SSH for match repo (optional)
-        if: ${{ secrets.MATCH_GIT_PRIVATE_KEY != '' }}
+        if: ${{ env.HAS_MATCH_GIT_PRIVATE_KEY == 'true' }}
         uses: webfactory/ssh-agent@v0.9.0
         with:
           ssh-private-key: ${{ secrets.MATCH_GIT_PRIVATE_KEY }}
 
       - name: Trust GitHub host key (optional)
-        if: ${{ secrets.MATCH_GIT_PRIVATE_KEY != '' }}
+        if: ${{ env.HAS_MATCH_GIT_PRIVATE_KEY == 'true' }}
         run: |
           mkdir -p ~/.ssh
           ssh-keyscan github.com >> ~/.ssh/known_hosts
