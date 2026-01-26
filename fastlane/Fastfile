@@ -35,6 +35,7 @@ platform :ios do
           "com.a2006mike.MyBusMapSwiftUI" => "match AppStore com.a2006mike.MyBusMapSwiftUI"
         }
       },
+      xcargs: "CODE_SIGN_STYLE=Manual PROVISIONING_PROFILE_SPECIFIER='match AppStore com.a2006mike.MyBusMapSwiftUI' DEVELOPMENT_TEAM=UZ2Z639589",
       clean: true,
       output_directory: "fastlane/build"
     )
@@ -61,7 +62,25 @@ platform :ios do
 
     api_key = app_store_connect_api_key(**api_key_options)
 
-    build
+    match(type: "appstore", readonly: !!ENV["CI"], api_key: api_key)
+    
+    gym(
+      project: "MyBusMapSwiftUI.xcodeproj",
+      scheme: "MyBusMapSwiftUI",
+      configuration: "Release",
+      codesigning_identity: "Apple Distribution",
+      export_method: "app-store",
+      export_options: {
+        signingStyle: "manual",
+        provisioningProfiles: {
+          "com.a2006mike.MyBusMapSwiftUI" => "match AppStore com.a2006mike.MyBusMapSwiftUI"
+        }
+      },
+      xcargs: "CODE_SIGN_STYLE=Manual PROVISIONING_PROFILE_SPECIFIER='match AppStore com.a2006mike.MyBusMapSwiftUI' DEVELOPMENT_TEAM=UZ2Z639589",
+      clean: true,
+      output_directory: "fastlane/build"
+    )
+    
     pilot(api_key: api_key, skip_waiting_for_build_processing: true)
   end
 
