@@ -23,19 +23,32 @@ platform :ios do
   desc "Build app-store IPA (no upload)"
   lane :build do
     match(type: "appstore", readonly: !!ENV["CI"])
-    gym(
+    
+    # Override signing settings for all configurations (Only in CI to avoid modification of local project files)
+    if ENV["CI"]
+      update_code_signing_settings(
+        path: "MyBusMapSwiftUI.xcodeproj",
+        use_automatic_signing: false,
+        team_id: "UZ2Z639589",
+        code_sign_identity: "Apple Distribution",
+        profile_name: "match AppStore com.a2006mike.MyBusMapSwiftUI",
+        targets: ["MyBusMapSwiftUI"]
+      )
+    end
+    
+    build_app(
       project: "MyBusMapSwiftUI.xcodeproj",
       scheme: "MyBusMapSwiftUI",
       configuration: "Release",
       codesigning_identity: "Apple Distribution",
       export_method: "app-store",
+      skip_profile_detection: true,
       export_options: {
         signingStyle: "manual",
         provisioningProfiles: {
           "com.a2006mike.MyBusMapSwiftUI" => "match AppStore com.a2006mike.MyBusMapSwiftUI"
         }
       },
-      xcargs: "CODE_SIGN_STYLE=Manual PROVISIONING_PROFILE_SPECIFIER='match AppStore com.a2006mike.MyBusMapSwiftUI' DEVELOPMENT_TEAM=UZ2Z639589",
       clean: true,
       output_directory: "fastlane/build"
     )
@@ -64,19 +77,31 @@ platform :ios do
 
     match(type: "appstore", readonly: !!ENV["CI"], api_key: api_key)
     
-    gym(
+    # Override signing settings for all configurations (Only in CI to avoid modification of local project files)
+    if ENV["CI"]
+      update_code_signing_settings(
+        path: "MyBusMapSwiftUI.xcodeproj",
+        use_automatic_signing: false,
+        team_id: "UZ2Z639589",
+        code_sign_identity: "Apple Distribution",
+        profile_name: "match AppStore com.a2006mike.MyBusMapSwiftUI",
+        targets: ["MyBusMapSwiftUI"]
+      )
+    end
+    
+    build_app(
       project: "MyBusMapSwiftUI.xcodeproj",
       scheme: "MyBusMapSwiftUI",
       configuration: "Release",
       codesigning_identity: "Apple Distribution",
       export_method: "app-store",
+      skip_profile_detection: true,
       export_options: {
         signingStyle: "manual",
         provisioningProfiles: {
           "com.a2006mike.MyBusMapSwiftUI" => "match AppStore com.a2006mike.MyBusMapSwiftUI"
         }
       },
-      xcargs: "CODE_SIGN_STYLE=Manual PROVISIONING_PROFILE_SPECIFIER='match AppStore com.a2006mike.MyBusMapSwiftUI' DEVELOPMENT_TEAM=UZ2Z639589",
       clean: true,
       output_directory: "fastlane/build"
     )
