@@ -1,6 +1,15 @@
 default_platform(:ios)
 
 platform :ios do
+  def resolved_team_id
+    env_team = ENV["FASTLANE_TEAM_ID"].to_s.strip
+    return env_team unless env_team.empty?
+
+    appfile_team = CredentialsManager::AppfileConfig.try_fetch_value(:team_id).to_s.strip
+    UI.user_error!("Missing team_id. Set it in fastlane/Appfile or FASTLANE_TEAM_ID.") if appfile_team.empty?
+    appfile_team
+  end
+
   before_all do
     setup_ci if ENV["CI"]
   end
@@ -23,13 +32,15 @@ platform :ios do
   desc "Build app-store IPA (no upload)"
   lane :build do
     match(type: "appstore", readonly: !!ENV["CI"])
+
+    team_id = resolved_team_id
     
     # Override signing settings for all configurations (Only in CI to avoid modification of local project files)
     if ENV["CI"]
       update_code_signing_settings(
         path: "MyBusMapSwiftUI.xcodeproj",
         use_automatic_signing: false,
-        team_id: "UZ2Z639589",
+        team_id: team_id,
         code_sign_identity: "Apple Distribution",
         profile_name: "match AppStore com.a2006mike.MyBusMapSwiftUI",
         targets: ["MyBusMapSwiftUI"]
@@ -43,8 +54,10 @@ platform :ios do
       codesigning_identity: "Apple Distribution",
       export_method: "app-store",
       skip_profile_detection: true,
+      xcargs: "DEVELOPMENT_TEAM=#{team_id}",
       export_options: {
         signingStyle: "manual",
+        teamID: team_id,
         provisioningProfiles: {
           "com.a2006mike.MyBusMapSwiftUI" => "match AppStore com.a2006mike.MyBusMapSwiftUI"
         }
@@ -76,13 +89,15 @@ platform :ios do
     api_key = app_store_connect_api_key(**api_key_options)
 
     match(type: "appstore", readonly: !!ENV["CI"], api_key: api_key)
+
+    team_id = resolved_team_id
     
     # Override signing settings for all configurations (Only in CI to avoid modification of local project files)
     if ENV["CI"]
       update_code_signing_settings(
         path: "MyBusMapSwiftUI.xcodeproj",
         use_automatic_signing: false,
-        team_id: "UZ2Z639589",
+        team_id: team_id,
         code_sign_identity: "Apple Distribution",
         profile_name: "match AppStore com.a2006mike.MyBusMapSwiftUI",
         targets: ["MyBusMapSwiftUI"]
@@ -96,8 +111,10 @@ platform :ios do
       codesigning_identity: "Apple Distribution",
       export_method: "app-store",
       skip_profile_detection: true,
+      xcargs: "DEVELOPMENT_TEAM=#{team_id}",
       export_options: {
         signingStyle: "manual",
+        teamID: team_id,
         provisioningProfiles: {
           "com.a2006mike.MyBusMapSwiftUI" => "match AppStore com.a2006mike.MyBusMapSwiftUI"
         }
@@ -106,6 +123,64 @@ platform :ios do
       output_directory: "fastlane/build"
     )
     
+    pilot(api_key: api_key, skip_waiting_for_build_processing: true)
+  end
+
+  desc "Smoke: build + upload to TestFlight (no tests, less clean)"
+  lane :beta_smoke do
+    key_id = ENV["ASC_KEY_ID"].to_s
+    issuer_id = ENV["ASC_ISSUER_ID"].to_s
+    key_path = ENV["ASC_KEY_PATH"].to_s
+    key_content = ENV["ASC_KEY_CONTENT"].to_s
+
+    UI.user_error!("Missing ASC_KEY_ID") if key_id.empty?
+    UI.user_error!("Missing ASC_ISSUER_ID") if issuer_id.empty?
+
+    api_key_options =
+      if !key_path.empty?
+        { key_id: key_id, issuer_id: issuer_id, key_filepath: key_path }
+      else
+        UI.user_error!("Missing ASC_KEY_CONTENT (or set ASC_KEY_PATH)") if key_content.empty?
+        is_base64 = !key_content.include?("BEGIN PRIVATE KEY")
+        { key_id: key_id, issuer_id: issuer_id, key_content: key_content, is_key_content_base64: is_base64 }
+      end
+
+    api_key = app_store_connect_api_key(**api_key_options)
+
+    match(type: "appstore", readonly: !!ENV["CI"], api_key: api_key)
+
+    team_id = resolved_team_id
+
+    if ENV["CI"]
+      update_code_signing_settings(
+        path: "MyBusMapSwiftUI.xcodeproj",
+        use_automatic_signing: false,
+        team_id: team_id,
+        code_sign_identity: "Apple Distribution",
+        profile_name: "match AppStore com.a2006mike.MyBusMapSwiftUI",
+        targets: ["MyBusMapSwiftUI"]
+      )
+    end
+
+    build_app(
+      project: "MyBusMapSwiftUI.xcodeproj",
+      scheme: "MyBusMapSwiftUI",
+      configuration: "Release",
+      codesigning_identity: "Apple Distribution",
+      export_method: "app-store",
+      skip_profile_detection: true,
+      xcargs: "DEVELOPMENT_TEAM=#{team_id}",
+      export_options: {
+        signingStyle: "manual",
+        teamID: team_id,
+        provisioningProfiles: {
+          "com.a2006mike.MyBusMapSwiftUI" => "match AppStore com.a2006mike.MyBusMapSwiftUI"
+        }
+      },
+      clean: false,
+      output_directory: "fastlane/build"
+    )
+
     pilot(api_key: api_key, skip_waiting_for_build_processing: true)
   end
 
