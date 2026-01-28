@@ -35,25 +35,13 @@ platform :ios do
 
     team_id = resolved_team_id
     
-    # Override signing settings for all configurations (Only in CI to avoid modification of local project files)
-    if ENV["CI"]
-      update_code_signing_settings(
-        path: "MyBusMapSwiftUI.xcodeproj",
-        use_automatic_signing: false,
-        team_id: team_id,
-        code_sign_identity: "Apple Distribution",
-        profile_name: "match AppStore com.a2006mike.MyBusMapSwiftUI",
-        targets: ["MyBusMapSwiftUI"]
-      )
-    end
-    
     build_app(
       project: "MyBusMapSwiftUI.xcodeproj",
       scheme: "MyBusMapSwiftUI",
       configuration: "Release",
-      codesigning_identity: "Apple Distribution",
       export_method: "app-store",
       skip_profile_detection: true,
+      skip_codesigning: true,
       xcargs: "DEVELOPMENT_TEAM=#{team_id}",
       export_options: {
         signingStyle: "manual",
@@ -92,25 +80,13 @@ platform :ios do
 
     team_id = resolved_team_id
     
-    # Override signing settings for all configurations (Only in CI to avoid modification of local project files)
-    if ENV["CI"]
-      update_code_signing_settings(
-        path: "MyBusMapSwiftUI.xcodeproj",
-        use_automatic_signing: false,
-        team_id: team_id,
-        code_sign_identity: "Apple Distribution",
-        profile_name: "match AppStore com.a2006mike.MyBusMapSwiftUI",
-        targets: ["MyBusMapSwiftUI"]
-      )
-    end
-    
     build_app(
       project: "MyBusMapSwiftUI.xcodeproj",
       scheme: "MyBusMapSwiftUI",
       configuration: "Release",
-      codesigning_identity: "Apple Distribution",
       export_method: "app-store",
       skip_profile_detection: true,
+      skip_codesigning: true,
       xcargs: "DEVELOPMENT_TEAM=#{team_id}",
       export_options: {
         signingStyle: "manual",
@@ -151,24 +127,13 @@ platform :ios do
 
     team_id = resolved_team_id
 
-    if ENV["CI"]
-      update_code_signing_settings(
-        path: "MyBusMapSwiftUI.xcodeproj",
-        use_automatic_signing: false,
-        team_id: team_id,
-        code_sign_identity: "Apple Distribution",
-        profile_name: "match AppStore com.a2006mike.MyBusMapSwiftUI",
-        targets: ["MyBusMapSwiftUI"]
-      )
-    end
-
     build_app(
       project: "MyBusMapSwiftUI.xcodeproj",
       scheme: "MyBusMapSwiftUI",
       configuration: "Release",
-      codesigning_identity: "Apple Distribution",
       export_method: "app-store",
       skip_profile_detection: true,
+      skip_codesigning: true,
       xcargs: "DEVELOPMENT_TEAM=#{team_id}",
       export_options: {
         signingStyle: "manual",
