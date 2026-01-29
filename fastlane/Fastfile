@@ -54,6 +54,14 @@ platform :ios do
     }
   end
 
+  def beta_changelog
+    path = "beta_changelog.txt"
+    return nil unless File.exist?(path)
+
+    content = File.read(path).strip
+    content.empty? ? nil : content
+  end
+
   before_all do
     setup_ci if ENV["CI"]
   end
@@ -88,7 +96,11 @@ platform :ios do
     
     build_app(**app_store_build_options(clean: true))
     
-    pilot(api_key: api_key, skip_waiting_for_build_processing: true)
+    pilot_options = { api_key: api_key, skip_waiting_for_build_processing: true }
+    changelog = beta_changelog
+    pilot_options[:changelog] = changelog if changelog
+
+    pilot(**pilot_options)
   end
 
   desc "Smoke: build + upload to TestFlight (no tests, less clean)"
@@ -99,7 +111,11 @@ platform :ios do
     
     build_app(**app_store_build_options(clean: false))
 
-    pilot(api_key: api_key, skip_waiting_for_build_processing: true)
+    pilot_options = { api_key: api_key, skip_waiting_for_build_processing: true }
+    changelog = beta_changelog
+    pilot_options[:changelog] = changelog if changelog
+
+    pilot(**pilot_options)
   end
 
   desc "Build + upload + submit for App Store review"

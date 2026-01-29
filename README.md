@@ -29,6 +29,7 @@ UI設計和功能模仿App Store上知名公車app: [Bus+](https://apps.apple.co
 - 跑測試：`bundle exec fastlane ios test`
 - 建置（不上傳）：`bundle exec fastlane ios build`
 - 送審 App Store（上傳並提交審查）：`bundle exec fastlane ios submit_app_store`
+- TestFlight changelog：建立 `beta_changelog.txt`（內容為 changelog），`beta` / `beta_smoke` 會自動讀取上傳
 
 ### GitHub Actions
 - Workflow：`.github/workflows/ios.yml`
