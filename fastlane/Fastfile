@@ -62,6 +62,14 @@ platform :ios do
     content.empty? ? nil : content
   end
 
+  def release_changelog
+    path = "release_change_log.txt"
+    return nil unless File.exist?(path)
+
+    content = File.read(path).strip
+    content.empty? ? nil : content
+  end
+
   before_all do
     setup_ci if ENV["CI"]
   end
@@ -126,13 +134,17 @@ platform :ios do
     
     build_app(**app_store_build_options(clean: true))
 
-    deliver(
+    deliver_options = {
       api_key: api_key,
       skip_metadata: true,
       skip_screenshots: true,
       force: true,
       submit_for_review: true
-    )
+    }
+    changelog = release_changelog
+    deliver_options[:release_notes] = changelog if changelog
+
+    deliver(**deliver_options)
   end
 
   desc "Sync code signing assets via match (type: development|adhoc|appstore)"
