@@ -50,7 +50,7 @@ jobs:
         run: bundle exec fastlane ios ci
 
   beta:
-    if: github.event_name == 'workflow_dispatch' || (github.event_name == 'push' && startsWith(github.ref, 'refs/heads/release') && contains(toLower(github.event.head_commit.message), 'beta'))
+    if: github.event_name == 'workflow_dispatch' || (github.event_name == 'push' && startsWith(github.ref, 'refs/heads/release') && (contains(github.event.head_commit.message, 'beta') || contains(github.event.head_commit.message, 'Beta') || contains(github.event.head_commit.message, 'BETA')))
     runs-on: macos-latest
     needs: test
     env:
