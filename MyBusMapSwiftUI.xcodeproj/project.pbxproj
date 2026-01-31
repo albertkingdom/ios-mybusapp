@@ -894,7 +894,7 @@
 				CODE_SIGN_IDENTITY = "Apple Distribution";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "Apple Distribution";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 202601292310;
+				CURRENT_PROJECT_VERSION = 202601311200;
 				DEVELOPMENT_ASSET_PATHS = "\"MyBusMapSwiftUI/Preview Content\"";
 				DEVELOPMENT_TEAM = UZ2Z639589;
 				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = UZ2Z639589;
