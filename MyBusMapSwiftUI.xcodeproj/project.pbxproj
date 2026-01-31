@@ -168,9 +168,6 @@
 		A1F468262EBF102A00A7AAE1 /* MyBusMapSwiftUI.xctestplan */ = {isa = PBXFileReference; lastKnownFileType = text; path = MyBusMapSwiftUI.xctestplan; sourceTree = "<group>"; };
 		A1F4682B2EBF10C000A7AAE1 /* MyBusMapSwiftUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MyBusMapSwiftUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		A1F468362EC076E600A7AAE1 /* ToastView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToastView.swift; sourceTree = "<group>"; };
-		DF03DA9E29AF0BD900FD4377 /* GoogleMapsCore.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = GoogleMapsCore.xcframework; path = Carthage/Build/GoogleMapsCore.xcframework; sourceTree = "<group>"; };
-		DF03DA9F29AF0BD900FD4377 /* GoogleMapsBase.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = GoogleMapsBase.xcframework; path = Carthage/Build/GoogleMapsBase.xcframework; sourceTree = "<group>"; };
-		DF03DAA029AF0BDA00FD4377 /* GoogleMaps.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = GoogleMaps.xcframework; path = Carthage/Build/GoogleMaps.xcframework; sourceTree = "<group>"; };
 		DF03DAAA29AF0C7100FD4377 /* Accelerate.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Accelerate.framework; path = System/Library/Frameworks/Accelerate.framework; sourceTree = SDKROOT; };
 		DF03DAAC29AF0C9400FD4377 /* CoreTelephony.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreTelephony.framework; path = System/Library/Frameworks/CoreTelephony.framework; sourceTree = SDKROOT; };
 		DF03DAAD29AF0C9400FD4377 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -187,11 +184,6 @@
 		DF03DAC429AF0CDD00FD4377 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		DF03DAC629AF0CE400FD4377 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		DF03DAC829AF0CEA00FD4377 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
-		DF03DACA29AF0D8900FD4377 /* GooglePlaces.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = GooglePlaces.xcframework; path = Carthage/Build/GooglePlaces.xcframework; sourceTree = "<group>"; };
-		DF03DAD229AF0FFA00FD4377 /* Kingfisher.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Kingfisher.framework; path = Carthage/Build/iOS/Kingfisher.framework; sourceTree = "<group>"; };
-		DF03DADB29AF18FC00FD4377 /* RealmSwift.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = RealmSwift.xcframework; path = Carthage/Build/RealmSwift.xcframework; sourceTree = "<group>"; };
-		DF03DADC29AF18FD00FD4377 /* Realm.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = Realm.xcframework; path = Carthage/Build/Realm.xcframework; sourceTree = "<group>"; };
-		DF03DAE129AF193400FD4377 /* FirebaseCoreExtension.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = FirebaseCoreExtension.xcframework; path = Carthage/Build/FirebaseCoreExtension.xcframework; sourceTree = "<group>"; };
 		DF03DAF329AF452D00FD4377 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		DF81285F29B05D98008095FE /* Config.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Config.xcconfig; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -441,11 +433,6 @@
 		DF03DA9D29AF0BD900FD4377 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				DF03DAE129AF193400FD4377 /* FirebaseCoreExtension.xcframework */,
-				DF03DADC29AF18FD00FD4377 /* Realm.xcframework */,
-				DF03DADB29AF18FC00FD4377 /* RealmSwift.xcframework */,
-				DF03DAD229AF0FFA00FD4377 /* Kingfisher.framework */,
-				DF03DACA29AF0D8900FD4377 /* GooglePlaces.xcframework */,
 				DF03DAC829AF0CEA00FD4377 /* UIKit.framework */,
 				DF03DAC629AF0CE400FD4377 /* SystemConfiguration.framework */,
 				DF03DAC429AF0CDD00FD4377 /* QuartzCore.framework */,
@@ -462,9 +449,6 @@
 				DF03DAAC29AF0C9400FD4377 /* CoreTelephony.framework */,
 				DF03DAAF29AF0C9400FD4377 /* CoreText.framework */,
 				DF03DAAA29AF0C7100FD4377 /* Accelerate.framework */,
-				DF03DAA029AF0BDA00FD4377 /* GoogleMaps.xcframework */,
-				DF03DA9F29AF0BD900FD4377 /* GoogleMapsBase.xcframework */,
-				DF03DA9E29AF0BD900FD4377 /* GoogleMapsCore.xcframework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
