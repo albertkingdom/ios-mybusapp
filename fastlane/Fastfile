@@ -40,7 +40,6 @@ platform :ios do
       configuration: "Release",
       export_method: "app-store",
       skip_profile_detection: true,
-      skip_codesigning: true,
       xcargs: "DEVELOPMENT_TEAM=#{team_id}",
       export_options: {
         signingStyle: "manual",
