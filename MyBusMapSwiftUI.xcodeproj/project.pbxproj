@@ -23,6 +23,9 @@
 		A120216E288FA00800C8746A /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A120216D288FA00800C8746A /* Preview Assets.xcassets */; };
 		A1296EB12E9370C200B93B80 /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = A1296EB02E9370C200B93B80 /* Alamofire */; };
 		A1296EB62E93719500B93B80 /* KeychainAccess in Frameworks */ = {isa = PBXBuildFile; productRef = A1296EB52E93719500B93B80 /* KeychainAccess */; };
+		A14E8E782F2E0B2100D5A06F /* RealmSwift in Frameworks */ = {isa = PBXBuildFile; productRef = A14E8E772F2E0B2100D5A06F /* RealmSwift */; };
+		A14E8E7A2F2E0B7F00D5A06F /* RealmSwift in Frameworks */ = {isa = PBXBuildFile; productRef = A14E8E792F2E0B7F00D5A06F /* RealmSwift */; };
+		A14E8E7B2F2E0B8C00D5A06F /* RealmSwift in Embed Frameworks */ = {isa = PBXBuildFile; productRef = A14E8E772F2E0B2100D5A06F /* RealmSwift */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		A15E1E642CC53BB400F2F7EF /* CurrentLocationButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = A15E1E632CC53BB400F2F7EF /* CurrentLocationButton.swift */; };
 		A162B8CD28A4FB6A00FF82FE /* GoogleSignInButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = A162B8CC28A4FB6A00FF82FE /* GoogleSignInButton.swift */; };
 		A162B8CF28A550CC00FF82FE /* Favorite.swift in Sources */ = {isa = PBXBuildFile; fileRef = A162B8CE28A550CC00FF82FE /* Favorite.swift */; };
@@ -66,10 +69,8 @@
 		A1F168522BDFF1250080F57E /* FirebaseInstallations in Frameworks */ = {isa = PBXBuildFile; productRef = A1F168512BDFF1250080F57E /* FirebaseInstallations */; };
 		A1F22EDC2C424688003DF7EE /* TokenManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1F22EDB2C424688003DF7EE /* TokenManager.swift */; };
 		A1F22EE72C426E2C003DF7EE /* TokenManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1F22EE62C426E2C003DF7EE /* TokenManagerTests.swift */; };
-		A1F22EEF2C426E2C003DF7EE /* RealmSwift in Frameworks */ = {isa = PBXBuildFile; productRef = DF03DAF829AF4DDF00FD4377 /* RealmSwift */; };
 		A1F22EF02C426E2C003DF7EE /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = A1F168412BDFF1250080F57E /* FirebaseAuth */; };
 		A1F468372EC076E600A7AAE1 /* ToastView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1F468362EC076E600A7AAE1 /* ToastView.swift */; };
-		A1F4683F2EBF10C000A7AAE1 /* RealmSwift in Frameworks */ = {isa = PBXBuildFile; productRef = DF03DAF829AF4DDF00FD4377 /* RealmSwift */; };
 		A1F468402EBF10C000A7AAE1 /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = A1F168412BDFF1250080F57E /* FirebaseAuth */; };
 		DF03DAAB29AF0C7100FD4377 /* Accelerate.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DF03DAAA29AF0C7100FD4377 /* Accelerate.framework */; };
 		DF03DAB229AF0C9400FD4377 /* CoreTelephony.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DF03DAAC29AF0C9400FD4377 /* CoreTelephony.framework */; };
@@ -91,7 +92,6 @@
 		DF03DAEF29AF222800FD4377 /* GoogleSignInSwift in Frameworks */ = {isa = PBXBuildFile; productRef = DF03DAEE29AF222800FD4377 /* GoogleSignInSwift */; };
 		DF03DAF229AF229500FD4377 /* Kingfisher in Frameworks */ = {isa = PBXBuildFile; productRef = DF03DAF129AF229500FD4377 /* Kingfisher */; };
 		DF03DAF429AF452D00FD4377 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = DF03DAF329AF452D00FD4377 /* GoogleService-Info.plist */; };
-		DF03DAF929AF4DDF00FD4377 /* RealmSwift in Frameworks */ = {isa = PBXBuildFile; productRef = DF03DAF829AF4DDF00FD4377 /* RealmSwift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -110,6 +110,20 @@
 			remoteInfo = MyBusMapSwiftUI;
 		};
 /* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		A14E8E7C2F2E0B8C00D5A06F /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				A14E8E7B2F2E0B8C00D5A06F /* RealmSwift in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		A10503A6288FA90900EF461D /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -214,7 +228,6 @@
 				A1F168522BDFF1250080F57E /* FirebaseInstallations in Frameworks */,
 				DF03DAB429AF0C9500FD4377 /* CoreLocation.framework in Frameworks */,
 				A1E172432BEA6B6100ED5916 /* GoogleMapsBase in Frameworks */,
-				DF03DAF929AF4DDF00FD4377 /* RealmSwift in Frameworks */,
 				DF03DAF229AF229500FD4377 /* Kingfisher in Frameworks */,
 				A1F168462BDFF1250080F57E /* FirebaseFirestore in Frameworks */,
 				DF03DAB529AF0C9500FD4377 /* CoreText.framework in Frameworks */,
@@ -227,6 +240,7 @@
 				A1F168442BDFF1250080F57E /* FirebaseCrashlytics in Frameworks */,
 				DF03DAED29AF222800FD4377 /* GoogleSignIn in Frameworks */,
 				A1E172452BEA6B6100ED5916 /* GoogleMapsCore in Frameworks */,
+				A14E8E782F2E0B2100D5A06F /* RealmSwift in Frameworks */,
 				A1F168422BDFF1250080F57E /* FirebaseAuth in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -235,7 +249,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				A1F22EEF2C426E2C003DF7EE /* RealmSwift in Frameworks */,
+				A14E8E7A2F2E0B7F00D5A06F /* RealmSwift in Frameworks */,
 				A1F22EF02C426E2C003DF7EE /* FirebaseAuth in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -244,7 +258,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				A1F4683F2EBF10C000A7AAE1 /* RealmSwift in Frameworks */,
 				A1F468402EBF10C000A7AAE1 /* FirebaseAuth in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -464,6 +477,7 @@
 				A1202160288FA00400C8746A /* Frameworks */,
 				A1202161288FA00400C8746A /* Resources */,
 				A1E1723E2BEA623A00ED5916 /* ShellScript */,
+				A14E8E7C2F2E0B8C00D5A06F /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
@@ -474,7 +488,6 @@
 				DF03DAEC29AF222800FD4377 /* GoogleSignIn */,
 				DF03DAEE29AF222800FD4377 /* GoogleSignInSwift */,
 				DF03DAF129AF229500FD4377 /* Kingfisher */,
-				DF03DAF829AF4DDF00FD4377 /* RealmSwift */,
 				A1F168412BDFF1250080F57E /* FirebaseAuth */,
 				A1F168432BDFF1250080F57E /* FirebaseCrashlytics */,
 				A1F168452BDFF1250080F57E /* FirebaseFirestore */,
@@ -486,6 +499,7 @@
 				A1E172472BEA6BDD00ED5916 /* GooglePlaces */,
 				A1296EB02E9370C200B93B80 /* Alamofire */,
 				A1296EB52E93719500B93B80 /* KeychainAccess */,
+				A14E8E772F2E0B2100D5A06F /* RealmSwift */,
 			);
 			productName = MyBusMapSwiftUI;
 			productReference = A1202163288FA00400C8746A /* MyBusMapSwiftUI.app */;
@@ -507,7 +521,7 @@
 			name = MyBusMapTests;
 			packageProductDependencies = (
 				A1F168412BDFF1250080F57E /* FirebaseAuth */,
-				DF03DAF829AF4DDF00FD4377 /* RealmSwift */,
+				A14E8E792F2E0B7F00D5A06F /* RealmSwift */,
 			);
 			productName = MyBusMapTests;
 			productReference = A1F22EE42C426E2C003DF7EE /* MyBusMapTests.xctest */;
@@ -532,7 +546,6 @@
 			name = MyBusMapSwiftUITests;
 			packageProductDependencies = (
 				A1F168412BDFF1250080F57E /* FirebaseAuth */,
-				DF03DAF829AF4DDF00FD4377 /* RealmSwift */,
 			);
 			productName = MyBusMapSwiftUITests;
 			productReference = A1F4682B2EBF10C000A7AAE1 /* MyBusMapSwiftUITests.xctest */;
@@ -573,12 +586,12 @@
 			packageReferences = (
 				DF03DAEB29AF222700FD4377 /* XCRemoteSwiftPackageReference "GoogleSignIn-iOS" */,
 				DF03DAF029AF229500FD4377 /* XCRemoteSwiftPackageReference "Kingfisher" */,
-				DF03DAF529AF4DDE00FD4377 /* XCRemoteSwiftPackageReference "realm-swift" */,
 				A1F168342BDFF1250080F57E /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
 				A1E1723F2BEA6B6100ED5916 /* XCRemoteSwiftPackageReference "ios-maps-sdk" */,
 				A1E172462BEA6BDD00ED5916 /* XCRemoteSwiftPackageReference "ios-places-sdk" */,
 				A1296EAF2E9370C200B93B80 /* XCRemoteSwiftPackageReference "Alamofire" */,
 				A1296EB42E93719500B93B80 /* XCRemoteSwiftPackageReference "KeychainAccess" */,
+				A14E8E762F2E0B2100D5A06F /* XCRemoteSwiftPackageReference "realm-swift" */,
 			);
 			productRefGroup = A1202164288FA00400C8746A /* Products */;
 			projectDirPath = "";
@@ -847,6 +860,7 @@
 		A1202172288FA00800C8746A /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_IDENTITY = "Apple Development";
@@ -889,6 +903,7 @@
 		A1202173288FA00800C8746A /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_IDENTITY = "Apple Distribution";
@@ -1097,6 +1112,14 @@
 				kind = branch;
 			};
 		};
+		A14E8E762F2E0B2100D5A06F /* XCRemoteSwiftPackageReference "realm-swift" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/realm/realm-swift.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 10.0.0;
+			};
+		};
 		A1E1723F2BEA6B6100ED5916 /* XCRemoteSwiftPackageReference "ios-maps-sdk" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/googlemaps/ios-maps-sdk";
@@ -1137,14 +1160,6 @@
 				kind = branch;
 			};
 		};
-		DF03DAF529AF4DDE00FD4377 /* XCRemoteSwiftPackageReference "realm-swift" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/realm/realm-swift.git";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 10.0.0;
-			};
-		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -1157,6 +1172,16 @@
 			isa = XCSwiftPackageProductDependency;
 			package = A1296EB42E93719500B93B80 /* XCRemoteSwiftPackageReference "KeychainAccess" */;
 			productName = KeychainAccess;
+		};
+		A14E8E772F2E0B2100D5A06F /* RealmSwift */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = A14E8E762F2E0B2100D5A06F /* XCRemoteSwiftPackageReference "realm-swift" */;
+			productName = RealmSwift;
+		};
+		A14E8E792F2E0B7F00D5A06F /* RealmSwift */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = A14E8E762F2E0B2100D5A06F /* XCRemoteSwiftPackageReference "realm-swift" */;
+			productName = RealmSwift;
 		};
 		A1E172402BEA6B6100ED5916 /* GoogleMaps */ = {
 			isa = XCSwiftPackageProductDependency;
@@ -1217,11 +1242,6 @@
 			isa = XCSwiftPackageProductDependency;
 			package = DF03DAF029AF229500FD4377 /* XCRemoteSwiftPackageReference "Kingfisher" */;
 			productName = Kingfisher;
-		};
-		DF03DAF829AF4DDF00FD4377 /* RealmSwift */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = DF03DAF529AF4DDE00FD4377 /* XCRemoteSwiftPackageReference "realm-swift" */;
-			productName = RealmSwift;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};
