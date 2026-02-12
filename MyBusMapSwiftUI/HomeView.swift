@@ -33,12 +33,12 @@ struct HomeView: View {
                         Image(systemName: "map")
                         Text("地圖")
                     }.tag(0).environmentObject(locationManager)
-            FavStationsView(favStationsViewModel: favStationsViewModel, selectedTab: $selectedTab)
+            FavStationsView(store: favoriteStore, selectedTab: $selectedTab)
                     .tabItem {
                         Image(systemName: "list.bullet")
                         Text("路線蒐藏")
                     }.tag(1)
-            UserView()
+            UserView(store: userStore)
                 .tabItem {
                     Image(systemName: "person.fill")
                     Text("我")
@@ -53,7 +53,7 @@ struct HomeView: View {
                             ?? CLLocation(latitude: 0, longitude: 0))
                 }
             }
-        })
+        )
         .onAppear {
             _ = authManager.checkIfLogin()
         }
