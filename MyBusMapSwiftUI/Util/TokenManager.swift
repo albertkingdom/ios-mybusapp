@@ -91,7 +91,6 @@ class TokenManager {
             throw error
         }
     }
-
     
     func fetchNewToken() async throws -> String {
         guard let url = URL(string: TOKEN_URL) else {
@@ -119,7 +118,6 @@ class TokenManager {
         }
     }
 }
-
 
 enum KeychainError: Error {
     case unexpectedData

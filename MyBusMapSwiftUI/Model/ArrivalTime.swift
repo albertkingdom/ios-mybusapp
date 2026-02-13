@@ -41,11 +41,11 @@ struct ArrivalTime: Codable, Identifiable {
 }
 
 // MARK: - Name
-//struct Name: Codable {
+// struct Name: Codable {
 //    let zhTw, en: String
 //
 //    enum CodingKeys: String, CodingKey {
 //        case zhTw = "Zh_tw"
 //        case en = "En"
 //    }
-//}
+// }

@@ -5,8 +5,8 @@
 //  Created by 林煜凱 on 7/31/22.
 //
 
-import SwiftUI
 import CoreLocation
+import SwiftUI
 
 struct HomeView: View {
     @EnvironmentObject var locationManager: LocationManager
@@ -51,8 +51,6 @@ struct HomeView: View {
         .onAppear {
             _ = authManager.checkIfLogin()
         }
-        
-        
     }
 }
 

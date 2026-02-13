@@ -460,10 +460,10 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = A1202171288FA00800C8746A /* Build configuration list for PBXNativeTarget "MyBusMapSwiftUI" */;
 			buildPhases = (
+				A18F35182F3F6D4E00E8E812 /* ShellScript */,
 				A120215F288FA00400C8746A /* Sources */,
 				A1202160288FA00400C8746A /* Frameworks */,
 				A1202161288FA00400C8746A /* Resources */,
-				A1E1723E2BEA623A00ED5916 /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -620,10 +620,10 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		A1E1723E2BEA623A00ED5916 /* ShellScript */ = {
+		A18F35182F3F6D4E00E8E812 /* ShellScript */ = {
 			isa = PBXShellScriptBuildPhase;
 			alwaysOutOfDate = 1;
-			buildActionMask = 12;
+			buildActionMask = 2147483647;
 			files = (
 			);
 			inputFileListPaths = (
@@ -636,7 +636,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "# Type a script or drag a script file from your workspace to insert its path.\nexport PATH=\"$PATH:/opt/homebrew/bin\"\n\nif which swiftlint >/dev/null; then\n    swiftlint\nelse\n    echo \"warning: SwiftLint not installed, download from https://github.com/realm/SwiftLint\"\nfi\n";
+			shellScript = "# Type a script or drag a script file from your workspace to insert its path.\nset -e\n\nexport PATH=\"/opt/homebrew/bin:/usr/local/bin:$PATH\"\n\nif [ -n \"$CI\" ]; then\n    exit 0\nfi\n\nif command -v swiftlint >/dev/null 2>&1; then\n    swiftlint --fix --config \"$SRCROOT/.swiftlint.yml\" || true\n    swiftlint lint --config \"$SRCROOT/.swiftlint.yml\"\nelse\n    echo \"warning: swiftlint not found; skip auto-fix\"\nfi\n";
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -857,6 +857,7 @@
 				DEVELOPMENT_TEAM = UZ2Z639589;
 				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = UZ2Z639589;
 				ENABLE_PREVIEWS = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = NO;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = MyBusMapSwiftUI/Info.plist;
 				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "The app need access location.";
@@ -899,6 +900,7 @@
 				DEVELOPMENT_TEAM = UZ2Z639589;
 				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = UZ2Z639589;
 				ENABLE_PREVIEWS = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = NO;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = MyBusMapSwiftUI/Info.plist;
 				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "The app need access location.";

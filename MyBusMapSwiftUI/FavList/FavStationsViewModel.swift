@@ -56,7 +56,6 @@ class FavStationsViewModel: ObservableObject {
         let favorites = await firebaseService.getRemoteData(email: email)
         print("favorites \(favorites)")
         self.favoriteList = favorites
-
     }
 
     func deleteRemoteData(indexSet: IndexSet) {

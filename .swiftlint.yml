@@ -1,6 +1,64 @@
+included:
+  - MyBusMapSwiftUI
+  - MyBusMapTests
+  - MyBusMapSwiftUITests
+
+excluded:
+  - Pods
+  - Carthage
+  - .build
+  - DerivedData
+
+disabled_rules:
+  - todo
+
+opt_in_rules:
+  - contains_over_filter_count
+  - contains_over_filter_is_empty
+  - contains_over_first_not_nil
+  - empty_count
+  - empty_string
+  - explicit_init
+  - first_where
+  - redundant_nil_coalescing
+  - sorted_imports
+  - vertical_whitespace_closing_braces
+  - yoda_condition
+
 identifier_name:
   allowed_symbols: "_"
-disabled_rules:
-  - trailing_whitespace
+  min_length:
+    warning: 2
+    error: 1
+  excluded:
+    - id
+    - x
+    - y
 
-    
+line_length:
+  warning: 140
+  error: 200
+  ignores_urls: true
+  ignores_comments: true
+
+type_body_length:
+  warning: 300
+  error: 450
+
+file_length:
+  warning: 700
+  error: 1000
+
+function_body_length:
+  warning: 60
+  error: 100
+
+cyclomatic_complexity:
+  warning: 12
+  error: 20
+
+trailing_whitespace:
+  ignores_empty_lines: true
+
+vertical_whitespace:
+  max_empty_lines: 1

@@ -13,7 +13,6 @@ class FavoriteRealm: Object, ObjectKeyIdentifiable {
     @Persisted var name: String = ""
     @Persisted var stationID: String = ""
     
-    
     convenience init(name: String, stationID: String) {
         self.init()
         self.name = name

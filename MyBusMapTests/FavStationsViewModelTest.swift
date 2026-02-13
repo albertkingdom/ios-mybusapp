@@ -19,7 +19,7 @@ final class MockFirebaseManagerService: FirebaseManagerProtocol {
     private let shouldReturnSuccess: Bool
     var mockFavorites: [Favorite] = [
         Favorite(name: "station1", stationID: "1"),
-        Favorite(name: "station2", stationID: "2"),
+        Favorite(name: "station2", stationID: "2")
     ]
 
     init(shouldReturnSuccess: Bool) {
@@ -42,7 +42,7 @@ final class MockRealmManger: RealmManagerProtocol {
 
     private let mockFavorites: [FavoriteRealm] = [
         FavoriteRealm(name: "station1", stationID: "1"),
-        FavoriteRealm(name: "station2", stationID: "2"),
+        FavoriteRealm(name: "station2", stationID: "2")
     ]
 
     init() {
@@ -118,7 +118,7 @@ struct FavStationsViewModelTest {
             authManager: MockFavStationsAuthManager()
         )
         await viewModel.getRemoteData(email: "")
-        #expect(viewModel.favoriteList.count == 0)
+        #expect(viewModel.favoriteList.isEmpty)
     }
 
     @Test func testDeleteRemoteData() async {
@@ -156,4 +156,3 @@ struct FavStationsViewModelTest {
         #expect(viewModel.realmFavList.count == 2)
     }
 }
-

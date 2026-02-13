@@ -6,8 +6,8 @@
 //
 
 import Foundation
-import SwiftUI
 import GooglePlaces
+import SwiftUI
 
 struct PlacesSearch: UIViewControllerRepresentable {
     @EnvironmentObject var locationManager: LocationManager
@@ -31,7 +31,6 @@ struct PlacesSearch: UIViewControllerRepresentable {
     }
     
     func updateUIViewController(_ uiViewController: GMSAutocompleteViewController, context: Context) {
-        
     }
     
     func makeCoordinator() -> PlacesSearchCoordinator {
@@ -51,7 +50,7 @@ struct PlacesSearch: UIViewControllerRepresentable {
         @Binding var query: String
         var updateLocation: (CLLocation) -> Void
         
-        init(parent: PlacesSearch, showLocationSearch: Binding<Bool>, location: CLLocation?, query: Binding<String>, updateCurrentLocation: @escaping (CLLocation)->Void) {
+        init(parent: PlacesSearch, showLocationSearch: Binding<Bool>, location: CLLocation?, query: Binding<String>, updateCurrentLocation: @escaping (CLLocation) -> Void) {
             self.parent = parent
             _showLocationSearch = showLocationSearch
             self.location = location
@@ -83,14 +82,10 @@ struct PlacesSearch: UIViewControllerRepresentable {
         
         // Turn the network activity indicator on and off again.
         func didRequestAutocompletePredictions(_ viewController: GMSAutocompleteViewController) {
-            
         }
         
         func didUpdateAutocompletePredictions(_ viewController: GMSAutocompleteViewController) {
-            
         }
-        
     }
     typealias UIViewControllerType = GMSAutocompleteViewController
-    
 }

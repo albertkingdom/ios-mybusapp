@@ -5,8 +5,8 @@
 //  Created by yklin on 2024/11/3.
 //
 
-import Testing
 import Foundation
+import Testing
 
 @testable import MyBusMapSwiftUI
 
@@ -18,7 +18,6 @@ class MockAuthManager: AuthManagerProtocol {
     var isLogin: Bool = false
     
     func signOut() {
-        
     }
     
     func checkIfLogin() -> UserSession? {
@@ -38,7 +37,6 @@ class MockAuthManager: AuthManagerProtocol {
             completion(.failure(MockAuthError.authError))
         }
     }
-
 }
 
 struct UserViewModelTest {
@@ -59,6 +57,5 @@ struct UserViewModelTest {
             performing: {
                 let result = try await viewModel.siginIn()
             })
-
     }
 }

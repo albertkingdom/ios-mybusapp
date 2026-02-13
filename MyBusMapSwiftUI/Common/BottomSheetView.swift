@@ -79,12 +79,10 @@ struct BottomSheetView<Content: View>: View {
                     print("初始高度 \(frameH) 最高\(maxViewH)")
                 }
                 
-                
                 .onDisappear {
                     print("onDisappear")
                 }
             }
-            
         }
     }
 }

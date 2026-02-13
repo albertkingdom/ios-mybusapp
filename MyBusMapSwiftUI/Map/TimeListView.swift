@@ -5,12 +5,12 @@
 //  Created by 林煜凱 on 7/29/22.
 //
 
-import Foundation
-import SwiftUI
+import FirebaseAuth
 import FirebaseFirestore
 import FirebaseFirestoreSwift
-import FirebaseAuth
+import Foundation
 import RealmSwift
+import SwiftUI
 
 struct TimeListItem: View {
     var status: String
@@ -75,7 +75,7 @@ struct TimeListView: View {
                 }
             }
             var isSaved: Bool {
-                return checkStatus(stopID: arrivalTime.stopID, 
+                return checkStatus(stopID: arrivalTime.stopID,
                                    routeName: arrivalTime.routeName.zhTw,
                                    isLogin: isLogin)
             }
@@ -100,14 +100,12 @@ struct TimeListView: View {
         .listStyle(.plain)
         .listRowSeparator(.hidden)
         .navigationBarHidden(true)
-        
     }
 
     var body: some View {
         if #available(iOS 15.0, *) {
             timeList
             .listRowSeparator(.hidden)
-
         } else {
            timeList
         }
@@ -131,7 +129,6 @@ struct TimeListView: View {
         
         return str
     }
-    
 
     private func checkStatus(stopID: String?, routeName: String?, isLogin: Bool) -> Bool {
         if let routeName = routeName {
@@ -154,7 +151,6 @@ struct TimeListView: View {
         let favToDelete = realmFavList.first(where: {$0.name == routeName}) ?? FavoriteRealm()
         RealmManager.shared.deleteFromDB(objectToDelete: favToDelete)
     }
-   
 }
 // 愛心(實心、空心) or 車牌
 struct Aux: View {
@@ -191,8 +187,7 @@ struct Aux: View {
                         let favoriteRealm = FavoriteRealm(name: arrivalTime.routeName.zhTw, stationID: "")
                         if isLogin {
                             print("isLogin save to remote")
-                            FirebaseManager.shared.saveToRemote(email: authManager.email ,favorite: favorite)
-                            
+                            FirebaseManager.shared.saveToRemote(email: authManager.email, favorite: favorite)
                         } else {
                             print("is not Login save to local")
                             RealmManager.shared.saveToDB(favoriteRealm)
@@ -202,11 +197,11 @@ struct Aux: View {
             }
           
         case .stopName:
-            PlateView(estimateTime: arrivalTime.estimateTime)        
+            PlateView(estimateTime: arrivalTime.estimateTime)
         }
     }
 }
-//struct TabContent_Previews: PreviewProvider {
+// struct TabContent_Previews: PreviewProvider {
 //    static var previews: some View {
 //        TimeListView(arrivalTimes: [
 //            ArrivalTime(stopID: "100",
@@ -232,7 +227,7 @@ struct Aux: View {
 //                   isLogin: .constant(false)
 //        )
 //    }
-//}
+// }
 
 #Preview {
     TimeListView(

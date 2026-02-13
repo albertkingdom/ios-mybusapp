@@ -75,8 +75,7 @@ struct Tabs: View {
                     .onChange(of: selectedTab) { target in
                         withAnimation {
                             // Find the index of the selected Direction and scroll to it
-                            if let index = directionKeys.firstIndex(of: target)
-                            {
+                            if let index = directionKeys.firstIndex(of: target) {
                                 proxy.scrollTo(tabs[index].title)  // Scroll to the title as ID
                             }
                         }

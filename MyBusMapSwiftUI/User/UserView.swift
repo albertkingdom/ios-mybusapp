@@ -19,25 +19,23 @@ struct UserView: View {
             if userViewModel.imageUrl == nil {
                 Image(systemName: "person.fill")
                     .resizable()
-                    //.border(.black, width: 1)
+                    // .border(.black, width: 1)
                     .frame(width: 100, height: 100, alignment: .center)
                     .clipShape(.circle)
                     .shadow(radius: 3)
                     .overlay {
                         Circle().stroke(.gray, lineWidth: 3)
                     }
-
             } else {
                 KFImage(userViewModel.imageUrl)
                     .resizable()
-                    //.border(.black, width: 1)
+                    // .border(.black, width: 1)
                     .frame(width: 100, height: 100, alignment: .center)
                     .clipShape(.circle)
                     .shadow(radius: 3)
                     .overlay {
                         Circle().stroke(.green, lineWidth: 3)
                     }
-
             }
             Text(userViewModel.userEmail)
             if !userViewModel.isLogin {
@@ -68,7 +66,6 @@ struct UserView: View {
             userViewModel.checkIfSignIn()
         }
     }
-
 }
 
 struct UserView_Previews: PreviewProvider {

@@ -12,7 +12,6 @@ struct SearchBarView: View {
     @Binding var showLocationSearch: Bool
     
     var body: some View {
-       
             
                 Button(action: {
                     showLocationSearch = true
@@ -28,7 +27,6 @@ struct SearchBarView: View {
                             .onTapGesture {
                                 query = "Tap to search"
                             }
-
                 })
                 .padding([.horizontal], 10)
                 .frame(height: 50)

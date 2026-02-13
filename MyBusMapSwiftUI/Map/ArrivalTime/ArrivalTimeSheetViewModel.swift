@@ -111,7 +111,6 @@ class ArrivalTimeSheetViewModel: NSObject, ObservableObject {
                     self.errorMessage = "解析收藏路線數據失敗：\(error.localizedDescription)"
                 }
             }
-        
     }
 
     deinit {

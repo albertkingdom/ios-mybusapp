@@ -5,10 +5,10 @@
 //  Created by 林煜凱 on 7/26/22.
 //
 
-import Foundation
-import SwiftUI
-import Security
 import CoreLocation
+import Foundation
+import Security
+import SwiftUI
 
 let cities = [
               "NewTaipei",
@@ -120,11 +120,10 @@ class NetworkManager {
             print(error)
             throw NetworkError.invalidData
         }
-        
     }
     
     func fetchArrivalTimeForRouteNameAsync(cityName: String, routeName: String) async throws -> [ArrivalTime] {
-        //https://tdx.transportdata.tw/api/basic/v2/Bus/EstimatedTimeOfArrival/City/NewTaipei/99?%24filter=RouteName%2FZh_tw%20eq%20%2799%27&%24orderby=StopID&%24format=JSON
+        // https://tdx.transportdata.tw/api/basic/v2/Bus/EstimatedTimeOfArrival/City/NewTaipei/99?%24filter=RouteName%2FZh_tw%20eq%20%2799%27&%24orderby=StopID&%24format=JSON
         
         var request = NetworkManager.Endpoint.arrivalTimeForRouteName(cityName: cityName, routeName: routeName).request
         do {
@@ -151,7 +150,6 @@ class NetworkManager {
             throw NetworkError.invalidData
         }
     }
-   
 }
 enum NetworkError: Error {
     case invalidURL
@@ -255,7 +253,6 @@ extension NetworkManager {
         }
     }
 }
-
 
 extension NetworkManager.Endpoint {
     var stub: Data {
@@ -382,7 +379,7 @@ extension NetworkManager.Endpoint {
   }
 ]
 """
-        case .arrivalTimeForRouteName(_, _):
+        case .arrivalTimeForRouteName:
             string = """
 [
   {
@@ -434,7 +431,7 @@ extension NetworkManager {
                 var cityName = placemark.subAdministrativeArea!
                 print("cityName \(cityName)")
                 if let targetCityName = cities.first(where: { city in
-                    return cityName.replacingOccurrences(of: " ",with: "").contains(city)
+                    return cityName.replacingOccurrences(of: " ", with: "").contains(city)
                 }) {
                     print("targetCityName \(String(describing: targetCityName))")
                     return targetCityName

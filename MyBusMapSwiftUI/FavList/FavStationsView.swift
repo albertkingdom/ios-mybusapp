@@ -54,7 +54,6 @@ struct FavStationsView: View {
                                     }
                                 }
                             )
-
                         }
                         .onDelete { indexSet in
                             if authManager.isLogin {
@@ -65,7 +64,6 @@ struct FavStationsView: View {
                                     indexSet: indexSet)
                             }
                         }
-
                     }
                     .onAppear {
                         if authManager.isLogin {
@@ -84,5 +82,4 @@ struct FavStationsView: View {
 }
 
 #Preview {
-
 }

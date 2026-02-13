@@ -13,7 +13,6 @@ struct NearByStation: Identifiable {
     var subStations: [SubStation]
 }
 
-
 struct SubStation {
     let stationID: String
     let stationPosition: StationPosition
