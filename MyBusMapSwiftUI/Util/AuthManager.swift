@@ -9,6 +9,7 @@ import FirebaseAuth
 import FirebaseCore
 import Foundation
 import GoogleSignIn
+import UIKit
 
 struct UserSession {
     let email: String
@@ -17,7 +18,7 @@ struct UserSession {
 
 struct AuthResult {
     let userEmail: String
-    let imageUrl: URL
+    let imageUrl: URL?
 }
 protocol AuthManagerProtocol {
     var isLogin: Bool { get }
@@ -46,45 +47,48 @@ class AuthManager: ObservableObject, AuthManagerProtocol {
     }
     
     func signIn(completion: @escaping (Result<AuthResult, Error>) -> Void) {
-        guard FirebaseApp.app() != nil else { return }
-        guard let clientID = FirebaseApp.app()?.options.clientID else { return }
+        Task { @MainActor in
+            guard FirebaseApp.app() != nil else { return }
+            guard let clientID = FirebaseApp.app()?.options.clientID else { return }
 
-        // Create Google Sign In configuration object.
-        let config = GIDConfiguration(clientID: clientID)
-
-        guard
-            let presentingViewController =
-                (UIApplication.shared.connectedScenes.first as? UIWindowScene)?
-                .windows.first?.rootViewController
-        else { return }
-
-        GIDSignIn.sharedInstance.signIn(
-            with: config, presenting: presentingViewController
-        ) { user, error in
-            if let error = error {
-                print(error.localizedDescription)
-                return
-            }
+            // Create Google Sign In configuration object.
+            let config = GIDConfiguration(clientID: clientID)
 
             guard
-                let authentication = user?.authentication,
-                let idToken = authentication.idToken
-            else {
-                return
-            }
+                let presentingViewController =
+                    (UIApplication.shared.connectedScenes.first as? UIWindowScene)?
+                    .windows.first?.rootViewController
+            else { return }
 
-            let credential = GoogleAuthProvider.credential(
-                withIDToken: idToken,
-                accessToken: authentication.accessToken)
-
-            Auth.auth().signIn(with: credential) { authResult, error in
+            GIDSignIn.sharedInstance.signIn(
+                with: config, presenting: presentingViewController
+            ) { user, error in
                 if let error = error {
-                    print("authentication error \(error.localizedDescription)")
-                    completion(.failure(error))
+                    print(error.localizedDescription)
+                    return
                 }
-                print(authResult ?? "none")
-                if let userEmail = authResult?.user.email, let imageURL = authResult?.user.photoURL {
-                    completion(.success(AuthResult(userEmail: userEmail, imageUrl: imageURL)))
+
+                guard
+                    let authentication = user?.authentication,
+                    let idToken = authentication.idToken
+                else {
+                    return
+                }
+
+                let credential = GoogleAuthProvider.credential(
+                    withIDToken: idToken,
+                    accessToken: authentication.accessToken)
+
+                Auth.auth().signIn(with: credential) { authResult, error in
+                    if let error = error {
+                        print("authentication error \(error.localizedDescription)")
+                        completion(.failure(error))
+                        return
+                    }
+                    print(authResult ?? "none")
+                    if let userEmail = authResult?.user.email, let imageURL = authResult?.user.photoURL {
+                        completion(.success(AuthResult(userEmail: userEmail, imageUrl: imageURL)))
+                    }
                 }
             }
         }

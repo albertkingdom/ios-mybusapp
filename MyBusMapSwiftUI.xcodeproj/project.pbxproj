@@ -17,22 +17,26 @@
 		A112952528911A9C0093D936 /* NearByStationSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = A112952428911A9C0093D936 /* NearByStationSheet.swift */; };
 		A11295282891834C0093D936 /* ArrivalTimeSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = A11295272891834C0093D936 /* ArrivalTimeSheet.swift */; };
 		A112952A28918E4E0093D936 /* ArrivalTime.swift in Sources */ = {isa = PBXBuildFile; fileRef = A112952928918E4E0093D936 /* ArrivalTime.swift */; };
+		A11D02382D97EF7300A041A7 /* ComposableArchitecture in Frameworks */ = {isa = PBXBuildFile; productRef = A11D02372D97EF7300A041A7 /* ComposableArchitecture */; };
+		A11D023A2D97EFB200A041A7 /* AuthClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = A11D02392D97EFB200A041A7 /* AuthClient.swift */; };
+		A11D023C2D98437800A041A7 /* UserFeatureTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A11D023B2D98437800A041A7 /* UserFeatureTests.swift */; };
 		A1202167288FA00400C8746A /* MyBusMapSwiftUIApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1202166288FA00400C8746A /* MyBusMapSwiftUIApp.swift */; };
 		A1202169288FA00400C8746A /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1202168288FA00400C8746A /* ContentView.swift */; };
 		A120216B288FA00800C8746A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A120216A288FA00800C8746A /* Assets.xcassets */; };
 		A120216E288FA00800C8746A /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A120216D288FA00800C8746A /* Preview Assets.xcassets */; };
 		A1296EB12E9370C200B93B80 /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = A1296EB02E9370C200B93B80 /* Alamofire */; };
 		A1296EB62E93719500B93B80 /* KeychainAccess in Frameworks */ = {isa = PBXBuildFile; productRef = A1296EB52E93719500B93B80 /* KeychainAccess */; };
+		A1379C532D998634003B59E4 /* FirebaseClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1379C522D998634003B59E4 /* FirebaseClient.swift */; };
+		A1379C552D998804003B59E4 /* RealmClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1379C542D998804003B59E4 /* RealmClient.swift */; };
 		A15E1E642CC53BB400F2F7EF /* CurrentLocationButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = A15E1E632CC53BB400F2F7EF /* CurrentLocationButton.swift */; };
 		A162B8CD28A4FB6A00FF82FE /* GoogleSignInButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = A162B8CC28A4FB6A00FF82FE /* GoogleSignInButton.swift */; };
 		A162B8CF28A550CC00FF82FE /* Favorite.swift in Sources */ = {isa = PBXBuildFile; fileRef = A162B8CE28A550CC00FF82FE /* Favorite.swift */; };
 		A162B8D228A61CA200FF82FE /* FirebaseManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A162B8D128A61CA200FF82FE /* FirebaseManager.swift */; };
 		A162B8D428A63C4F00FF82FE /* UserDefaultManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A162B8D328A63C4E00FF82FE /* UserDefaultManager.swift */; };
-		A176B2912CD67D19002954BB /* FavStationsViewModelTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = A176B28F2CD67D19002954BB /* FavStationsViewModelTest.swift */; };
+		A166200C2E891F80004D0C5A /* FavoriteDisplayItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = A166200B2E891F80004D0C5A /* FavoriteDisplayItem.swift */; };
 		A176B2932CD7AE2D002954BB /* UserViewModelTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = A176B2922CD7AE2D002954BB /* UserViewModelTest.swift */; };
 		A176B2952CD7AFE3002954BB /* UserViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A176B2942CD7AFE3002954BB /* UserViewModel.swift */; };
 		A178B13B2CBFFB73000DB801 /* SearchBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = A178B13A2CBFFB72000DB801 /* SearchBar.swift */; };
-		A178B13D2CC0022C000DB801 /* FavStationsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A178B13C2CC0022C000DB801 /* FavStationsViewModel.swift */; };
 		A178B1422CC2C883000DB801 /* LocationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A178B1412CC2C883000DB801 /* LocationManager.swift */; };
 		A178B1442CC36087000DB801 /* AuthManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A178B1432CC36087000DB801 /* AuthManager.swift */; };
 		A17DDF0B28B3352300D04296 /* FavoriteRealm.swift in Sources */ = {isa = PBXBuildFile; fileRef = A17DDF0A28B3352300D04296 /* FavoriteRealm.swift */; };
@@ -46,6 +50,7 @@
 		A1A7B7502895010500893EF3 /* PlateView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1A7B74F2895010500893EF3 /* PlateView.swift */; };
 		A1A7B7522896372500893EF3 /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1A7B7512896372500893EF3 /* HomeView.swift */; };
 		A1A7B7542896395800893EF3 /* FavStationsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1A7B7532896395800893EF3 /* FavStationsView.swift */; };
+		A1B22C092E87A127003E17D9 /* UserFeature.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1B22C082E87A127003E17D9 /* UserFeature.swift */; };
 		A1BDB5652CC3EEDE0077D3E0 /* BottomSheetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1BDB5642CC3EEDE0077D3E0 /* BottomSheetView.swift */; };
 		A1BDB5682CC3F86F0077D3E0 /* View+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1BDB5672CC3F86F0077D3E0 /* View+Extension.swift */; };
 		A1D56B0B2D97B81F0041C438 /* Tabs.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1D56B0A2D97B81F0041C438 /* Tabs.swift */; };
@@ -122,21 +127,24 @@
 		A112952428911A9C0093D936 /* NearByStationSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NearByStationSheet.swift; sourceTree = "<group>"; };
 		A11295272891834C0093D936 /* ArrivalTimeSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArrivalTimeSheet.swift; sourceTree = "<group>"; };
 		A112952928918E4E0093D936 /* ArrivalTime.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArrivalTime.swift; sourceTree = "<group>"; };
+		A11D02392D97EFB200A041A7 /* AuthClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthClient.swift; sourceTree = "<group>"; };
+		A11D023B2D98437800A041A7 /* UserFeatureTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserFeatureTests.swift; sourceTree = "<group>"; };
 		A1202163288FA00400C8746A /* MyBusMapSwiftUI.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MyBusMapSwiftUI.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A1202166288FA00400C8746A /* MyBusMapSwiftUIApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyBusMapSwiftUIApp.swift; sourceTree = "<group>"; };
 		A1202168288FA00400C8746A /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		A120216A288FA00800C8746A /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		A120216D288FA00800C8746A /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		A1379C522D998634003B59E4 /* FirebaseClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseClient.swift; sourceTree = "<group>"; };
+		A1379C542D998804003B59E4 /* RealmClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealmClient.swift; sourceTree = "<group>"; };
 		A15E1E632CC53BB400F2F7EF /* CurrentLocationButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrentLocationButton.swift; sourceTree = "<group>"; };
 		A162B8CC28A4FB6A00FF82FE /* GoogleSignInButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoogleSignInButton.swift; sourceTree = "<group>"; };
 		A162B8CE28A550CC00FF82FE /* Favorite.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Favorite.swift; sourceTree = "<group>"; };
 		A162B8D128A61CA200FF82FE /* FirebaseManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseManager.swift; sourceTree = "<group>"; };
 		A162B8D328A63C4E00FF82FE /* UserDefaultManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultManager.swift; sourceTree = "<group>"; };
-		A176B28F2CD67D19002954BB /* FavStationsViewModelTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavStationsViewModelTest.swift; sourceTree = "<group>"; };
+		A166200B2E891F80004D0C5A /* FavoriteDisplayItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteDisplayItem.swift; sourceTree = "<group>"; };
 		A176B2922CD7AE2D002954BB /* UserViewModelTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserViewModelTest.swift; sourceTree = "<group>"; };
 		A176B2942CD7AFE3002954BB /* UserViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserViewModel.swift; sourceTree = "<group>"; };
 		A178B13A2CBFFB72000DB801 /* SearchBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchBar.swift; sourceTree = "<group>"; };
-		A178B13C2CC0022C000DB801 /* FavStationsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavStationsViewModel.swift; sourceTree = "<group>"; };
 		A178B1412CC2C883000DB801 /* LocationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationManager.swift; sourceTree = "<group>"; };
 		A178B1432CC36087000DB801 /* AuthManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthManager.swift; sourceTree = "<group>"; };
 		A17DDF0A28B3352300D04296 /* FavoriteRealm.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteRealm.swift; sourceTree = "<group>"; };
@@ -151,6 +159,7 @@
 		A1A7B74F2895010500893EF3 /* PlateView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlateView.swift; sourceTree = "<group>"; };
 		A1A7B7512896372500893EF3 /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
 		A1A7B7532896395800893EF3 /* FavStationsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavStationsView.swift; sourceTree = "<group>"; };
+		A1B22C082E87A127003E17D9 /* UserFeature.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserFeature.swift; sourceTree = "<group>"; };
 		A1BDB5642CC3EEDE0077D3E0 /* BottomSheetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BottomSheetView.swift; sourceTree = "<group>"; };
 		A1BDB5672CC3F86F0077D3E0 /* View+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View+Extension.swift"; sourceTree = "<group>"; };
 		A1D56B0A2D97B81F0041C438 /* Tabs.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tabs.swift; sourceTree = "<group>"; };
@@ -216,6 +225,7 @@
 				A1E172432BEA6B6100ED5916 /* GoogleMapsBase in Frameworks */,
 				DF03DAF929AF4DDF00FD4377 /* RealmSwift in Frameworks */,
 				DF03DAF229AF229500FD4377 /* Kingfisher in Frameworks */,
+				A11D02382D97EF7300A041A7 /* ComposableArchitecture in Frameworks */,
 				A1F168462BDFF1250080F57E /* FirebaseFirestore in Frameworks */,
 				DF03DAB529AF0C9500FD4377 /* CoreText.framework in Frameworks */,
 				DF03DAB629AF0C9500FD4377 /* CoreData.framework in Frameworks */,
@@ -336,8 +346,11 @@
 		A162B8D028A61C3200FF82FE /* Util */ = {
 			isa = PBXGroup;
 			children = (
+				A1379C522D998634003B59E4 /* FirebaseClient.swift */,
+				A11D02392D97EFB200A041A7 /* AuthClient.swift */,
 				A162B8D128A61CA200FF82FE /* FirebaseManager.swift */,
 				A162B8D328A63C4E00FF82FE /* UserDefaultManager.swift */,
+				A1379C542D998804003B59E4 /* RealmClient.swift */,
 				A17DDF0C28B336C400D04296 /* RealmManager.swift */,
 				A112951B289033A80093D936 /* NetworkManager.swift */,
 				A1F22EDB2C424688003DF7EE /* TokenManager.swift */,
@@ -345,6 +358,14 @@
 				A178B1432CC36087000DB801 /* AuthManager.swift */,
 			);
 			path = Util;
+			sourceTree = "<group>";
+		};
+		A166200A2E891F76004D0C5A /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				A166200B2E891F80004D0C5A /* FavoriteDisplayItem.swift */,
+			);
+			path = Model;
 			sourceTree = "<group>";
 		};
 		A178B1402CC15135000DB801 /* ViewModel */ = {
@@ -355,11 +376,20 @@
 			path = ViewModel;
 			sourceTree = "<group>";
 		};
+		A1A541F22D9921E000DE211B /* User */ = {
+			isa = PBXGroup;
+			children = (
+				A11D023B2D98437800A041A7 /* UserFeatureTests.swift */,
+			);
+			path = User;
+			sourceTree = "<group>";
+		};
 		A1D56B052D97AE790041C438 /* User */ = {
 			isa = PBXGroup;
 			children = (
 				A162B8CC28A4FB6A00FF82FE /* GoogleSignInButton.swift */,
 				A1DA523A28A4F5ED006CB3D4 /* UserView.swift */,
+				A1B22C082E87A127003E17D9 /* UserFeature.swift */,
 				A176B2942CD7AFE3002954BB /* UserViewModel.swift */,
 			);
 			path = User;
@@ -368,8 +398,8 @@
 		A1D56B062D97AF8C0041C438 /* FavList */ = {
 			isa = PBXGroup;
 			children = (
+				A166200A2E891F76004D0C5A /* Model */,
 				A1A7B7532896395800893EF3 /* FavStationsView.swift */,
-				A178B13C2CC0022C000DB801 /* FavStationsViewModel.swift */,
 			);
 			path = FavList;
 			sourceTree = "<group>";
@@ -414,7 +444,7 @@
 		A1F22EE52C426E2C003DF7EE /* MyBusMapTests */ = {
 			isa = PBXGroup;
 			children = (
-				A176B28F2CD67D19002954BB /* FavStationsViewModelTest.swift */,
+				A1A541F22D9921E000DE211B /* User */,
 				A1F22EE62C426E2C003DF7EE /* TokenManagerTests.swift */,
 				A176B2922CD7AE2D002954BB /* UserViewModelTest.swift */,
 			);
@@ -486,6 +516,7 @@
 				A1E172472BEA6BDD00ED5916 /* GooglePlaces */,
 				A1296EB02E9370C200B93B80 /* Alamofire */,
 				A1296EB52E93719500B93B80 /* KeychainAccess */,
+				A11D02372D97EF7300A041A7 /* ComposableArchitecture */,
 			);
 			productName = MyBusMapSwiftUI;
 			productReference = A1202163288FA00400C8746A /* MyBusMapSwiftUI.app */;
@@ -579,6 +610,7 @@
 				A1E172462BEA6BDD00ED5916 /* XCRemoteSwiftPackageReference "ios-places-sdk" */,
 				A1296EAF2E9370C200B93B80 /* XCRemoteSwiftPackageReference "Alamofire" */,
 				A1296EB42E93719500B93B80 /* XCRemoteSwiftPackageReference "KeychainAccess" */,
+				A11D02362D97EF7300A041A7 /* XCRemoteSwiftPackageReference "swift-composable-architecture" */,
 			);
 			productRefGroup = A1202164288FA00400C8746A /* Products */;
 			projectDirPath = "";
@@ -646,6 +678,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				A178B1442CC36087000DB801 /* AuthManager.swift in Sources */,
+				A11D023A2D97EFB200A041A7 /* AuthClient.swift in Sources */,
 				A176B2952CD7AFE3002954BB /* UserViewModel.swift in Sources */,
 				A162B8D428A63C4F00FF82FE /* UserDefaultManager.swift in Sources */,
 				A1F037282C02F2D000141F16 /* URLSession+.swift in Sources */,
@@ -653,6 +686,7 @@
 				A1821A2528937E73003CB0EB /* District.swift in Sources */,
 				A1129521289048DE0093D936 /* Token.swift in Sources */,
 				A1DA523B28A4F5ED006CB3D4 /* UserView.swift in Sources */,
+				A166200C2E891F80004D0C5A /* FavoriteDisplayItem.swift in Sources */,
 				A10503A7288FA90900EF461D /* AppDelegate.swift in Sources */,
 				A1A7B7502895010500893EF3 /* PlateView.swift in Sources */,
 				A1202169288FA00400C8746A /* ContentView.swift in Sources */,
@@ -660,10 +694,11 @@
 				A1A7B7542896395800893EF3 /* FavStationsView.swift in Sources */,
 				A1D56B0B2D97B81F0041C438 /* Tabs.swift in Sources */,
 				A1A7B7522896372500893EF3 /* HomeView.swift in Sources */,
-				A178B13D2CC0022C000DB801 /* FavStationsViewModel.swift in Sources */,
 				A112952528911A9C0093D936 /* NearByStationSheet.swift in Sources */,
 				A1BDB5682CC3F86F0077D3E0 /* View+Extension.swift in Sources */,
 				A1BDB5652CC3EEDE0077D3E0 /* BottomSheetView.swift in Sources */,
+				A1379C552D998804003B59E4 /* RealmClient.swift in Sources */,
+				A1B22C092E87A127003E17D9 /* UserFeature.swift in Sources */,
 				A162B8CD28A4FB6A00FF82FE /* GoogleSignInButton.swift in Sources */,
 				A1955AC02D6A2E7A0090F44C /* SearchAndLocationBar.swift in Sources */,
 				A1821A2A2893A4A8003CB0EB /* TimeListView.swift in Sources */,
@@ -675,6 +710,7 @@
 				A1DA52362898E1D0006CB3D4 /* ArrivalTimeSheetViewModel.swift in Sources */,
 				A11295282891834C0093D936 /* ArrivalTimeSheet.swift in Sources */,
 				A11295232890E8FE0093D936 /* NearByStation.swift in Sources */,
+				A1379C532D998634003B59E4 /* FirebaseClient.swift in Sources */,
 				A1821A462893D2BB003CB0EB /* StopOfRoute.swift in Sources */,
 				A112951C289033A80093D936 /* NetworkManager.swift in Sources */,
 				A1F468372EC076E600A7AAE1 /* ToastView.swift in Sources */,
@@ -698,6 +734,7 @@
 				A1F22EE72C426E2C003DF7EE /* TokenManagerTests.swift in Sources */,
 				A176B2932CD7AE2D002954BB /* UserViewModelTest.swift in Sources */,
 				A176B2912CD67D19002954BB /* FavStationsViewModelTest.swift in Sources */,
+				A11D023C2D98437800A041A7 /* UserFeatureTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -705,6 +742,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A1F22EE72C426E2C003DF7EE /* TokenManagerTests.swift in Sources */,
+				A176B2932CD7AE2D002954BB /* UserViewModelTest.swift in Sources */,
+				A11D023C2D98437800A041A7 /* UserFeatureTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1099,6 +1139,14 @@
 				kind = branch;
 			};
 		};
+		A11D02362D97EF7300A041A7 /* XCRemoteSwiftPackageReference "swift-composable-architecture" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/pointfreeco/swift-composable-architecture";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.18.0;
+			};
+		};
 		A1E1723F2BEA6B6100ED5916 /* XCRemoteSwiftPackageReference "ios-maps-sdk" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/googlemaps/ios-maps-sdk";
@@ -1159,6 +1207,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = A1296EB42E93719500B93B80 /* XCRemoteSwiftPackageReference "KeychainAccess" */;
 			productName = KeychainAccess;
+		};
+		A11D02372D97EF7300A041A7 /* ComposableArchitecture */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = A11D02362D97EF7300A041A7 /* XCRemoteSwiftPackageReference "swift-composable-architecture" */;
+			productName = ComposableArchitecture;
 		};
 		A1E172402BEA6B6100ED5916 /* GoogleMaps */ = {
 			isa = XCSwiftPackageProductDependency;
