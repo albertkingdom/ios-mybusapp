@@ -1,6 +1,15 @@
 default_platform(:ios)
 
 platform :ios do
+  def shared_xcargs(extra: nil)
+    args = [
+      "-skipMacroValidation",
+      "-skipPackagePluginValidation"
+    ]
+    args << extra if extra
+    args.join(" ")
+  end
+
   def resolved_team_id
     env_team = ENV["FASTLANE_TEAM_ID"].to_s.strip
     return env_team unless env_team.empty?
@@ -41,7 +50,7 @@ platform :ios do
       export_method: "app-store",
       skip_profile_detection: true,
       skip_codesigning: true,
-      xcargs: "DEVELOPMENT_TEAM=#{team_id}",
+      xcargs: "#{shared_xcargs} DEVELOPMENT_TEAM=#{team_id}",
       export_options: {
         signingStyle: "manual",
         teamID: team_id,
@@ -84,7 +93,7 @@ platform :ios do
         ENV["SCAN_DEVICES"]&.split(",")&.map(&:strip) || ["iPhone 16e", "iPhone 17", "iPhone 17 Pro", "iPhone 16 Pro", "iPhone 15", "iPhone 14"]
       ),
       output_style: "raw",
-      xcargs: "-disable-concurrent-testing",
+      xcargs: shared_xcargs(extra: "-disable-concurrent-testing"),
       clean: true
     )
   end
