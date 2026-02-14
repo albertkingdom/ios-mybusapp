@@ -34,7 +34,6 @@ class RealmManager: RealmManagerProtocol {
             print("Error saving to Realm: \(error)")
         }
         print("Realm is located at: \(realm.configuration.fileURL!)")
-        
     }
     func readAllFromDB() -> Results<FavoriteRealm> {
         let favorites = realm.objects(FavoriteRealm.self)

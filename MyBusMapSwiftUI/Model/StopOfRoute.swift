@@ -14,22 +14,18 @@ struct StopOfRoute: Codable {
         case direction = "Direction"
         case stops = "Stops"
     }
-    
 }
 struct StopForRouteName: Codable {
     
     let stopName: Name
     let stopSequence: Int
     let stopPosition: StopPosition
-    
-    
 
     enum CodingKeys: String, CodingKey {
     
         case stopName = "StopName"
         case stopSequence = "StopSequence"
         case stopPosition = "StopPosition"
-        
     }
 }
 

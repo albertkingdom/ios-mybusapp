@@ -5,8 +5,8 @@
 //  Created by 林煜凱 on 7/26/22.
 //
 
-import SwiftUI
 import GoogleMaps
+import SwiftUI
 
 struct ContentView: View {
     @State private var mapView: GMSMapView? // 保存 GMSMapView 的引用
@@ -86,7 +86,6 @@ struct ContentView: View {
     //        viewModel.sortedArrivalTimes.removeAll()
     //    }
 
-
 }
 
 private extension ContentView {
@@ -105,8 +104,6 @@ private extension ContentView {
         .edgesIgnoringSafeArea(.top)
     }
 }
-
-
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {

@@ -5,8 +5,8 @@
 //  Created by yklin on 2024/7/13.
 //
 
-import XCTest
 @testable import MyBusMapSwiftUI
+import XCTest
 
 // 1. A flexible MockURLSession that can be configured for different test scenarios.
 class MockURLSession: URLSessionProtocol {
@@ -29,7 +29,6 @@ class MockURLSession: URLSessionProtocol {
         return (mockData ?? Data(), response)
     }
 }
-
 
 final class TokenManagerTests: XCTestCase {
     

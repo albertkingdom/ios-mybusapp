@@ -30,7 +30,6 @@ class MapViewModel: ObservableObject {
     @Published var query: String = "Tap to search"
 
     init() {
-
     }
 
     func fetchNearByStations(location: CLLocation) async {
@@ -55,8 +54,7 @@ class MapViewModel: ObservableObject {
 
             if var existedNearByStation = nearbyStationsDict[stationName] {
                 if let subStationIndex = existedNearByStation.subStations
-                    .firstIndex(where: { $0.stationID == station.stationID })
-                {
+                    .firstIndex(where: { $0.stationID == station.stationID }) {
                     existedNearByStation.subStations[subStationIndex].routes
                         .append(contentsOf: routes)
                 } else {
@@ -79,7 +77,6 @@ class MapViewModel: ObservableObject {
                 nearbyStationsDict[stationName] = NearByStation(
                     stationName: stationName, subStations: [subStation])
             }
-
         }
         let nearbyStations = Array(nearbyStationsDict.values)
 
@@ -157,7 +154,7 @@ class MapViewModel: ObservableObject {
         subStations.forEach {
             output.append([
                 "lat": $0.stationPosition.positionLat,
-                "lon": $0.stationPosition.positionLon,
+                "lon": $0.stationPosition.positionLon
             ])
         }
         // return output

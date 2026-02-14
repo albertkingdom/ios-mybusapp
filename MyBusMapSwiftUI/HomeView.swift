@@ -4,6 +4,7 @@
 //
 //  Created by 林煜凱 on 7/31/22.
 //
+
 import ComposableArchitecture
 import CoreLocation
 import SwiftUI
@@ -57,8 +58,6 @@ struct HomeView: View {
         .onAppear {
             _ = authManager.checkIfLogin()
         }
-        
-        
     }
 }
 

@@ -76,7 +76,6 @@ struct NearByStationSheet: View {
             showCloseButton: false,
             onClose: {}
         )
-
     }
 }
 

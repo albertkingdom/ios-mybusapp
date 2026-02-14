@@ -59,7 +59,6 @@ struct GoogleMapsView: UIViewRepresentable {
         // put markers on map
         for marker in markers {
             marker.map = uiView
-            
         }
     }
     func updateHighlightMarkersOnMap(uiView: GMSMapView) {
@@ -118,7 +117,7 @@ struct GoogleMapsView: UIViewRepresentable {
         }
     }
     
-    func prepareMarkers() -> [GMSMarker]{
+    func prepareMarkers() -> [GMSMarker] {
         var markers: [GMSMarker] = []
         for station in nearByStations {
             for sub in station.subStations {
@@ -126,7 +125,6 @@ struct GoogleMapsView: UIViewRepresentable {
                 marker.position = CLLocationCoordinate2D(latitude: sub.stationPosition.positionLat, longitude: sub.stationPosition.positionLon)
                 marker.title = "\(station.stationName)"
                 markers.append(marker)
-                
             }
         }
         print("prepareMarkers \(markers)")

@@ -30,7 +30,6 @@ class AuthManager: ObservableObject, AuthManagerProtocol {
     @Published var isLogin = false
     @Published var email: String = ""
     init() {
-        
     }
 
     func checkIfLogin() -> UserSession? {

@@ -43,7 +43,6 @@ struct ArrivalTimeSheet: View {
             )
         }
         .frame(height: 50)
-
     }
 
     @State private var timeRemaining = 30  // 倒數計時30sec 下次更新到站時間
@@ -109,7 +108,7 @@ struct ArrivalTimeSheet: View {
                 await viewModel.fetchArrivalTime()
             }
         }
-        .onReceive(timer) { time in
+        .onReceive(timer) { _ in
             guard isActive, !viewModel.isLoading else { return }
 
             if timeRemaining > 0 {

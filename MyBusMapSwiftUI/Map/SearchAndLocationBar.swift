@@ -23,7 +23,6 @@ struct SearchAndLocationBar: View {
         .frame(width: UIScreen.main.bounds.width)
         .position(CGPoint(x: UIScreen.main.bounds.width / 2, y: 40.0))
     }
-    
 }
 
 #Preview {

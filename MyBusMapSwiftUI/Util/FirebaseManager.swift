@@ -6,12 +6,12 @@
 //
 
 import FirebaseAuth
+import FirebaseCore
 import FirebaseFirestore
 import FirebaseFirestoreSwift
 import Foundation
-import SwiftUI
-import FirebaseCore
 import GoogleSignIn
+import SwiftUI
 
 protocol FirebaseManagerProtocol {
     func getRemoteData(email: String) async -> [Favorite]
@@ -37,7 +37,7 @@ class FirebaseManager: FirebaseManagerProtocol, ObservableObject {
             let list = try document.data(as: FavoriteList.self)
             print("getRemoteData favoriteList \(list)")
             return list.list ?? []
-        } catch (let error) {
+        } catch let error {
             print(error.localizedDescription)
         }
         return []
@@ -67,7 +67,6 @@ class FirebaseManager: FirebaseManagerProtocol, ObservableObject {
                 }
             }
         }
-
     }
 
     func removeFromRemote(favorite: Favorite) {
@@ -82,5 +81,4 @@ class FirebaseManager: FirebaseManagerProtocol, ObservableObject {
             print("update data error \(error)")
         }
     }
-    
 }

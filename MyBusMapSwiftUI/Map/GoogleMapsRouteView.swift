@@ -12,7 +12,7 @@ import SwiftUI
 struct GoogleMapsRouteView: UIViewRepresentable {
     // when binding property changes, will call updateUIView method
     @Binding var location: CLLocation?
-    @Binding var stops: [Int:[StopForRouteName]]
+    @Binding var stops: [Int: [StopForRouteName]]
     
     func makeUIView(context: Context) -> GMSMapView {
         let camera = GMSCameraPosition.london
@@ -36,11 +36,9 @@ struct GoogleMapsRouteView: UIViewRepresentable {
         for marker in markers {
             marker.map = uiView
         }
-       
     }
     
-    
-    func prepareMarkers() -> [GMSMarker]{
+    func prepareMarkers() -> [GMSMarker] {
         var markers: [GMSMarker] = []
         guard let stopsFirst = stops[0] else { return [] }
         for stop in stopsFirst {
@@ -49,9 +47,7 @@ struct GoogleMapsRouteView: UIViewRepresentable {
                 marker.position = CLLocationCoordinate2D(latitude: stop.stopPosition.positionLat, longitude: stop.stopPosition.positionLon)
                 marker.title = stop.stopName.zhTw
                 markers.append(marker)
-            
         }
         return markers
     }
 }
-

@@ -158,5 +158,4 @@ struct FavStationsView: View {
 }
 
 #Preview {
-
 }

@@ -10,7 +10,6 @@ import Foundation
 struct District: Codable {
     let city: String
     let cityName: String
-
     
     enum CodingKeys: String, CodingKey {
         case city = "City"

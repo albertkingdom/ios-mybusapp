@@ -6,8 +6,8 @@
 //
 
 import Foundation
-import GoogleSignInSwift
 import GoogleSignIn
+import GoogleSignInSwift
 
 class UserViewModel: ObservableObject {
     var authManager: AuthManagerProtocol
@@ -33,8 +33,6 @@ class UserViewModel: ObservableObject {
                 case .failure(let error):
                     print(error)
                     continuation.resume(throwing: error)
-                    
-                    
                 }
             }
         }
