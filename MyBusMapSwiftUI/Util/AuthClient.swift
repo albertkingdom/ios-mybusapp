@@ -3,6 +3,7 @@ import FirebaseAuth
 import FirebaseCore
 import Foundation
 import GoogleSignIn
+import UIKit
 
 struct AuthClient {
     var signIn: () async throws -> AuthResult
@@ -15,46 +16,48 @@ extension AuthClient: DependencyKey {
     static let liveValue = Self(
         signIn: {
             try await withCheckedThrowingContinuation { (continuation: CheckedContinuation<AuthResult, Error>) in
-                guard let clientID = FirebaseApp.app()?.options.clientID else {
-                    continuation.resume(throwing: AuthError.clientIDNotFound)
-                    return
-                }
-                
-                let config = GIDConfiguration(clientID: clientID)
-                
-                guard let presentingViewController = (UIApplication.shared.connectedScenes.first as? UIWindowScene)?.windows.first?.rootViewController else {
-                    continuation.resume(throwing: AuthError.noPresentingViewController)
-                    return
-                }
-                
-                GIDSignIn.sharedInstance.signIn(with: config, presenting: presentingViewController) { user, error in
-                    if let error = error {
-                        continuation.resume(throwing: error)
+                Task { @MainActor in
+                    guard let clientID = FirebaseApp.app()?.options.clientID else {
+                        continuation.resume(throwing: AuthError.clientIDNotFound)
                         return
                     }
-                    
-                    guard let authentication = user?.authentication,
-                          let idToken = authentication.idToken else {
-                        continuation.resume(throwing: AuthError.noAuthentication)
+
+                    let config = GIDConfiguration(clientID: clientID)
+
+                    guard let presentingViewController = (UIApplication.shared.connectedScenes.first as? UIWindowScene)?.windows.first?.rootViewController else {
+                        continuation.resume(throwing: AuthError.noPresentingViewController)
                         return
                     }
-                    
-                    let credential = GoogleAuthProvider.credential(
-                        withIDToken: idToken,
-                        accessToken: authentication.accessToken
-                    )
-                    
-                    Auth.auth().signIn(with: credential) { authResult, error in
+
+                    GIDSignIn.sharedInstance.signIn(with: config, presenting: presentingViewController) { user, error in
                         if let error = error {
                             continuation.resume(throwing: error)
                             return
                         }
-                        
-                        if let userEmail = authResult?.user.email,
-                           let imageURL = authResult?.user.photoURL {
-                            continuation.resume(returning: AuthResult(userEmail: userEmail, imageUrl: imageURL))
-                        } else {
-                            continuation.resume(throwing: AuthError.invalidUserData)
+
+                        guard let authentication = user?.authentication,
+                              let idToken = authentication.idToken else {
+                            continuation.resume(throwing: AuthError.noAuthentication)
+                            return
+                        }
+
+                        let credential = GoogleAuthProvider.credential(
+                            withIDToken: idToken,
+                            accessToken: authentication.accessToken
+                        )
+
+                        Auth.auth().signIn(with: credential) { authResult, error in
+                            if let error = error {
+                                continuation.resume(throwing: error)
+                                return
+                            }
+
+                            if let userEmail = authResult?.user.email,
+                               let imageURL = authResult?.user.photoURL {
+                                continuation.resume(returning: AuthResult(userEmail: userEmail, imageUrl: imageURL))
+                            } else {
+                                continuation.resume(throwing: AuthError.invalidUserData)
+                            }
                         }
                     }
                 }
