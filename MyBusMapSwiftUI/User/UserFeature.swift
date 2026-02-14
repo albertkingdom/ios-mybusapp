@@ -7,7 +7,6 @@
 import ComposableArchitecture
 import SwiftUI
 
-
 @Reducer
 struct UserFeature: Reducer {
     @ObservableState
@@ -78,9 +77,7 @@ struct UserFeature: Reducer {
                 state.userEmail = nil
                 state.imageUrl = nil
                 return .none
-
             }
         }
     }
-
 }

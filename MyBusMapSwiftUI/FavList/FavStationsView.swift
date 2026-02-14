@@ -59,7 +59,6 @@ struct FavStations {
 
                 return .run { _ in
                     await firebaseClient.removeFromRemote(favorite)
-
                 }
 
             case .deleteLocalData(let indexSet):
@@ -154,7 +153,6 @@ struct FavStationsView: View {
             }
         }
     }
-    
 }
 
 #Preview {

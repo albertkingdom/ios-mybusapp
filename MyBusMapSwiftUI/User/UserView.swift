@@ -118,7 +118,7 @@ struct UserView: View {
                 // Background gradient
                 LinearGradient(
                     gradient: Gradient(colors: [
-                        Color.blue.opacity(0.1), Color.white,
+                        Color.blue.opacity(0.1), Color.white
                     ]),
                     startPoint: .top,
                     endPoint: .bottom

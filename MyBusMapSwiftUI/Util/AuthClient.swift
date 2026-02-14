@@ -1,7 +1,7 @@
-import Foundation
 import ComposableArchitecture
 import FirebaseAuth
 import FirebaseCore
+import Foundation
 import GoogleSignIn
 
 struct AuthClient {
@@ -81,7 +81,6 @@ extension DependencyValues {
         set { self[AuthClient.self] = newValue }
     }
 }
-
 
 enum AuthError: LocalizedError {
     case clientIDNotFound
