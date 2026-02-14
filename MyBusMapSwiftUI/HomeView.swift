@@ -37,7 +37,7 @@ struct HomeView: View {
             FavStationsView(store: favoriteStore, selectedTab: $selectedTab)
                     .tabItem {
                         Image(systemName: "list.bullet")
-                        Text("路線蒐藏")
+                        Text("路線收藏")
                     }.tag(1)
             UserView(store: userStore)
                 .tabItem {
